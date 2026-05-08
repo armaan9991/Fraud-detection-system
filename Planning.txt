@@ -1,0 +1,72 @@
+Fraud System
+
+what problem we are solving?
+
+detect suspicious financial transactions using ML and business rule.
+
+
+Users :
+Bank
+admins,
+automated systems
+
+what is system doing:
+
+accept transactions, analyze risk , flag suspicious activities , store fraud , show dashboard
+
+
+Function Requirements
+
+user can make a transaction, predict fraud probability, store transaction history, view fraud alerts, logs suspicious activities.
+
+
+Draw architecture now
+
+[Frontend Dashboard]
+         |
+         v
+[C# ASP.NET API]
+         |
+   ----------------
+   |              |
+   v              v
+[SQL DB]     [ML Service]
+                   |
+                   v
+           Fraud Prediction
+
+
+data base design:
+
+SQL
+
+Entities   
+
+Users
+  	UserId , Name, Email , Createdat
+
+Transactions 
+	TransactionId, UserId , Amount , Timestamp , Location, DeviceId , FraudScore , status
+Fraud Alerts
+	AlertId , TransitionId , RiskLevel , reason , createdAt
+
+
+API endpoints 
+
+Submit transactions 
+
+	POST / Transactions
+
+Analyze fraud: 
+
+	POST/ fraud/analyze
+
+Get alerts:
+	
+	GET / fraud-alerts
+
+/docs
+architecture.md
+api-design.md
+database-schema.md
+	
