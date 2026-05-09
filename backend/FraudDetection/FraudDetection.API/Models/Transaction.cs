@@ -7,10 +7,10 @@ public class Transaction
     public decimal Amount {get; set;}
     public DateTime TransactionTime {get; set;} = DateTime.UtcNow;
     public string Currency {get; set;} = "CAD";
-    public string Country { get;set;}
+    public string Country { get;set;} =  string.Empty;
     public int FraudScore {get;set;} = 0;
     public string Status {get; set;} = "PENDING";
 
-    public  User? user  {get;set;}
-    public List<FraudAlert> FraudAlerts {get; set;} =new();
+    public  User? User  {get;set;}
+    public List<FraudAlert> FraudAlerts {get; set;} = new();
 }
