@@ -1,6 +1,6 @@
 namespace FraudDetection.API.DTOs;
 
-public class CreateTranscationDtos
+public class CreateTransactionDtos
 {
     public int UserId {get;set;}
     public decimal Amount {get;set;}
