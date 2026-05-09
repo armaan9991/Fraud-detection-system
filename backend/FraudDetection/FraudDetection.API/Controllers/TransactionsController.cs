@@ -44,7 +44,7 @@ public class TransactionsController: ControllerBase
         await _context.SaveChangesAsync();
         
         return CreatedAtAction(
-            nameof(getTransactionById),
+            nameof(GetTransactionById),
             new { id = transaction.TransactionId}, transaction
         );
     }
@@ -62,9 +62,9 @@ public class TransactionsController: ControllerBase
 
 
    [HttpGet("{id}")] 
-   public async Task<IActionResult> getTransactionById(int id)
+   public async Task<IActionResult> GetTransactionById(int id)
     {
-        var transaction = await _context.Transactions.Include(t=>t.User).FirstOrDefaultAsync(t=>t.UserId == id);
+        var transaction = await _context.Transactions.Include(t=>t.User).FirstOrDefaultAsync(t=>t.TransactionId == id);
 
         if (transaction == null)
         {
