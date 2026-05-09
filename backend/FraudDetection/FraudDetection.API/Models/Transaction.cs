@@ -8,9 +8,9 @@ public class Transaction
     public DateTime TransactionTime {get; set;} = DateTime.UtcNow;
     public string Currency {get; set;} = "CAD";
     public string Country { get;set;}
-    public string FraudScore {get;set;}
+    public int FraudScore {get;set;} = 0;
     public string Status {get; set;} = "PENDING";
 
     public  User? user  {get;set;}
-    // public List<FraudAlert> FraudAlerts {get; set;} =new();
+    public List<FraudAlert> FraudAlerts {get; set;} =new();
 }
