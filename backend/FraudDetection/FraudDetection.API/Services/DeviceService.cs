@@ -2,6 +2,7 @@ using FraudDetection.API.Controllers;
 using FraudDetection.API.Data;
 using FraudDetection.API.DTOs;
 using FraudDetection.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace FraudDetection.API.Services;
@@ -26,11 +27,24 @@ public  class  DeviceService : IDeviceService
         return found_device;
     }
 
-    public async Task<Device> CreateDeviceAsync(Device device)
+    public async Task<Device> CreateDeviceAsync(CreateDeviceDtos dtos)
     {
-       await _context.Devices.AddAsync(device);
+       var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == dtos.UserId);
+
+       if (user == null)
+        {
+            return null;
+        }
+        var dev = new Device
+        {
+            UserId = dtos.UserId,
+            DeviceName = dtos.DeviceName,
+            IPAddress = dtos.IPAddress,
+            LastUsed = DateTime.UtcNow
+        };
+       _context.Devices.Add(dev);
        await _context.SaveChangesAsync();
 
-       return device;
+       return dev;
     }
 }
