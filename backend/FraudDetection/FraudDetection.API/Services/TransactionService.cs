@@ -13,7 +13,7 @@ public class TransactionService : ITransactionService
         _context = context;
     }
 
-    public async Task<Transaction>? CreateTransactionAsync(CreateTransactionDtos dto)
+    public async Task<Transaction?> CreateTransactionAsync(CreateTransactionDtos dto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u=>u.UserId ==dto.UserId);
         
@@ -30,8 +30,11 @@ public class TransactionService : ITransactionService
             FraudScore = 0 ,
             Status = "PENDING"
         };
-        _context.SaveChangesAsync();
+
+        await _context.Transactions.AddAsync(transaction);
+        await _context.SaveChangesAsync();
         
+
         return transaction;
     }
 
