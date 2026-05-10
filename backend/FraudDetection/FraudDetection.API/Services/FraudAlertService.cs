@@ -16,13 +16,13 @@ public class FraudAlertService : IFraudAlertService
 
     public async Task<List<FraudAlert>> GetAlertAsync()
     {
-        var alert_list  = await _context.FraudAlerts.Include(t => t.transaction).ToListAsync();
+        var alert_list  = await _context.FraudAlerts.Include(t => t.Transaction).ToListAsync();
         return alert_list;
     }
 
     public async Task<FraudAlert?> GetAlertByIdAsync(int id)
     {
-        var found_alert = await _context.FraudAlerts.Include(u => u.transaction).FirstOrDefaultAsync(f => f.FraudAlertId == id);
+        var found_alert = await _context.FraudAlerts.Include(u => u.Transaction).FirstOrDefaultAsync(f => f.FraudAlertId == id);
         return found_alert;
     }
 
