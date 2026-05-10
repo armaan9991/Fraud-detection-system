@@ -2,6 +2,7 @@ using FraudDetection.API.Models;
 using FraudDetection.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using FraudDetection.API.DTOs;
 
 namespace FraudDetection.API.Services;
 
@@ -27,10 +28,19 @@ public class UserService : IUserService
         return found_user;
     }
 
-    public async Task<User> CreateUserAsync(User user)
+    public async Task<User> CreateUserAsync(CreateUserDto  dto)
     {
+        var user = new User
+        {
+            Name = dto.Name,
+            Email = dto.Email,
+            CreatedAt = DateTime.UtcNow
+        };
+        
         _context.Users.Add(user);
+        
         await _context.SaveChangesAsync();
+        
         return user;
     }
 }
