@@ -1,4 +1,5 @@
 using FraudDetection.API.Data;
+using FraudDetection.API.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
+builder.Services.AddScoped<ITransactionService , TransactionService>();
+builder.Services.AddScoped<IUserService , UserService>();
+builder.Services.AddScoped<IDeviceService, DeviceService>();
+ // need to add fraudalert as well.
 
 var app = builder.Build();
 
