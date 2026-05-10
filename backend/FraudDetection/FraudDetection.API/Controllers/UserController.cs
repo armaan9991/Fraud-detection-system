@@ -1,4 +1,5 @@
 using FraudDetection.API.Data;
+using FraudDetection.API.DTOs;
 using FraudDetection.API.Models;
 using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -36,9 +37,9 @@ public class UserController :ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser(User user)
+    public async Task<IActionResult> CreateUser(CreateUserDto dto)
     {
-        var  createdUser = await _userService.CreateUserAsync(user);
+        var  createdUser = await _userService.CreateUserAsync(dto);
         return CreatedAtAction(
             nameof(GetUserById),
             new { id = createdUser.UserId},
