@@ -30,8 +30,11 @@ public class TransactionService : ITransactionService
             FraudScore = 0 ,
             Status = "PENDING"
         };
-        _context.SaveChangesAsync();
+
+        await _context.Transactions.AddAsync(transaction);
+        await _context.SaveChangesAsync();
         
+
         return transaction;
     }
 

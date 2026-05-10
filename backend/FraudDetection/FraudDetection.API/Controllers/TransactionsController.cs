@@ -24,8 +24,8 @@ public class TransactionsController: ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTransaction(CreateTransactionDtos dto)
     {
-        var user = await _transactionService.CreateTransactionAsync(dto);
-         if(user == null)
+        var transaction_c = await _transactionService.CreateTransactionAsync(dto);
+         if(transaction_c == null)
         {
             return NotFound("User is not present!");
         }
