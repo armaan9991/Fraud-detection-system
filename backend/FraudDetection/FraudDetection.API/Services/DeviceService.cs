@@ -14,7 +14,7 @@ public  class  DeviceService : IDeviceService
         _context = context;
     }
 
-    public async Task<List<Device>> GetDeviceAsync()
+    public async Task<List<Device>> GetDeviceAllAsync()
     {
         var device_list = await _context.Devices.Include(d => d.User).ToListAsync();
         return device_list;
