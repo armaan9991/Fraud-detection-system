@@ -1,7 +1,7 @@
 using FraudDetection.API.Data;
 using FraudDetection.API.Services;
 using Microsoft.EntityFrameworkCore;
-
+using FraudDetection.API.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
