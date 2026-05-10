@@ -37,9 +37,14 @@ public class DeviceController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult>  CreateDevice(Device device)
+    public async Task<IActionResult>  CreateDevice(CreateDeviceDtos dtos)
     {
-     var CreateDevice = await _deviceService.CreateDeviceAsync(device);
+     var CreateDevice = await _deviceService.CreateDeviceAsync(dtos);
+     
+     if (CreateDevice == null)
+        {
+            return NotFound();
+        }
      return CreatedAtAction(
         nameof(GetDeviceById),
         new {id = CreateDevice.DeviceId}
