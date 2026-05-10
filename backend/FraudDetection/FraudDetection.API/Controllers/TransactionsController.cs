@@ -3,6 +3,7 @@ using FraudDetection.API.DTOs;
 using FraudDetection.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using FraudDetection.API.Services;
 
 
 namespace FraudDetection.API.Controllers;
@@ -11,19 +12,19 @@ namespace FraudDetection.API.Controllers;
 [Route("api/[controller]")]
 public class TransactionsController: ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ITransactionService _transactionService;
 
-    public TransactionsController(ApplicationDbContext context)
+    public TransactionsController(ITransactionService transactionService)
     {
-        _context = context;
+        
+        _transactionService = transactionService;
     }
 
 // post   api/transactions
     [HttpPost]
     public async Task<IActionResult> CreateTransaction(CreateTransactionDtos dto)
     {
-         var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == dto.UserId);
-
+        var user = await _transactionService.CreateTransactionAsync(dto);
          if(user == null)
         {
             return NotFound("User is not present!");
@@ -35,14 +36,9 @@ public class TransactionsController: ControllerBase
             Amount = dto.Amount,
             Currency = dto.Currency,
             Country = dto.Country,
-            FraudScore = 0,
+            FraudScore = 0 ,
             Status = "PENDING"
         };
-
-        _context.Transactions.Add(transaction);
-
-        await _context.SaveChangesAsync();
-        
         return CreatedAtAction(
             nameof(GetTransactionById),
             new { id = transaction.TransactionId}, transaction
@@ -55,7 +51,7 @@ public class TransactionsController: ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetTransactions()
     {
-        var transactions =await _context.Transactions.Include(t =>t.User).ToListAsync();
+        var transactions =await _transactionService.GetAllTransactionsAsync();
 
         return Ok(transactions);
     }
@@ -64,8 +60,7 @@ public class TransactionsController: ControllerBase
    [HttpGet("{id}")] 
    public async Task<IActionResult> GetTransactionById(int id)
     {
-        var transaction = await _context.Transactions.Include(t=>t.User).FirstOrDefaultAsync(t=>t.TransactionId == id);
-
+        var transaction = await _transactionService.GetTransactionByIdAsync(id);
         if (transaction == null)
         {
             return NotFound();
