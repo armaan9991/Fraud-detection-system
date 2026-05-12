@@ -48,4 +48,19 @@ public class FraudAlertService : IFraudAlertService
         await _context.SaveChangesAsync();
         return alert;
     }
+    public async Task<FraudAlert> CreateAutomaticAlertAsync(int transactionId , string risklevel , string reason)
+    {
+        var alert = new FraudAlert
+        {
+            TransactionId = transactionId,
+            RiskLevel = risklevel,
+            Reason = reason,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.FraudAlerts.Add(alert);
+
+        await _context.SaveChangesAsync();
+        return alert;
+    }
 }
