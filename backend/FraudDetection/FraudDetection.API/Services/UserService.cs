@@ -28,7 +28,7 @@ public class UserService : IUserService
         return found_user;
     }
 
-    public async Task<User> CreateUserAsync(CreateUserDto  dto)
+    public async Task<User> CreateUserAsync(CreateUserDtos  dto)
     {
         var user = new User
         {
