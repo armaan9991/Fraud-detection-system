@@ -68,4 +68,12 @@ public class TransactionsController: ControllerBase
         return Ok(transaction);
     }
 
+    [HttpGet("ml-data")]
+    public async Task<IActionResult> GetMLTrainingData()
+    {
+        var data = await _transactionService.GetMLTrainingDataAsync();
+
+        return Ok(data);
+    }
+
 }
