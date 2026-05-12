@@ -57,6 +57,20 @@ public class TransactionService : ITransactionService
     {
         return  await _context.Transactions.Include(u=>u.User).FirstOrDefaultAsync(t=>t.TransactionId == id);
     }
+    private TransactionResponseDto MapToTransactionResponseDto(Transaction transaction)
+    {
+        return new TransactionResponseDto
+        {
+            TransactionId = transaction.TransactionId,
+            UserId = transaction.UserId,
+            Amount = transaction.Amount,
+            Currency = transaction.Currency,
+            Country = transaction.Country,
+            FraudScore = transaction.FraudScore,
+            Status = transaction.Status,
+            TransactionTime = transaction.TransactionTime
+        };
+    }
 
     public int CalculateFraudScore(CreateTransactionDtos dto)
     {
