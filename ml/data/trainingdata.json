@@ -1,0 +1,9 @@
+[
+  {
+    "amount": 5200,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  }
+]
