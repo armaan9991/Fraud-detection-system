@@ -15,7 +15,7 @@ public class TransactionService : ITransactionService
         _IFraudAlertService = fraudalertservice;
     }
 
-    public async Task<Transaction?> CreateTransactionAsync(CreateTransactionDtos dto)
+    public async Task<TransactionResponseDto?> CreateTransactionAsync(CreateTransactionDtos dto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u=>u.UserId ==dto.UserId);
         
@@ -45,17 +45,20 @@ public class TransactionService : ITransactionService
         {
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , risk_level, "Suspicious transaction!!");
         }
-        return transaction;
+        return MapToTransactionResponseDto(transaction);
     }
 
-    public async Task<List<Transaction>> GetAllTransactionsAsync()
+    public async Task<List<TransactionResponseDto>> GetAllTransactionsAsync()
     {
-        return await _context.Transactions.Include(u=>u.User).ToListAsync();
+        var all_transactions = await _context.Transactions.Include(u=>u.User).ToListAsync();
+        return all_transactions.Select(MapToTransactionResponseDto).ToList();
     }
 
-    public async Task<Transaction?> GetTransactionByIdAsync(int id)
+    public async Task<TransactionResponseDto?> GetTransactionByIdAsync(int id)
     {
-        return  await _context.Transactions.Include(u=>u.User).FirstOrDefaultAsync(t=>t.TransactionId == id);
+        var transaction =  await _context.Transactions.Include(u=>u.User).FirstOrDefaultAsync(t=>t.TransactionId == id);
+        if (transaction == null){return null;}
+        return MapToTransactionResponseDto(transaction);
     }
     private TransactionResponseDto MapToTransactionResponseDto(Transaction transaction)
     {
