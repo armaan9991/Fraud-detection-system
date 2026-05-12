@@ -8,9 +8,11 @@ namespace FraudDetection.API.Services;
 public class TransactionService : ITransactionService
 {
     private readonly ApplicationDbContext _context;
-    public TransactionService(ApplicationDbContext context)
+    private readonly IFraudAlertService _IFraudAlertService;
+    public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice)
     {
         _context = context;
+        _IFraudAlertService = fraudalertservice;
     }
 
     public async Task<Transaction?> CreateTransactionAsync(CreateTransactionDtos dto)
