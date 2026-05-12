@@ -75,6 +75,20 @@ public class TransactionService : ITransactionService
         };
     }
 
+    public async Task<List<TransactionMLDto>> GetMLTrainingDataAsync()
+    {
+        var found_transaction = await _context.Transactions.ToListAsync();
+        return found_transaction.Select(t=>
+        new TransactionMLDto
+        {
+            Amount = t.Amount,
+            IsForeignTransaction = t.Country.ToLower() == "canada" ? 0 : 1,
+            IsNightTransaction = (t.TransactionTime.Hour >=0 && t.TransactionTime.Hour <= 5) ? 1 :0,
+            FraudScore = t.FraudScore,
+            IsFraud = t.FraudScore >60 ? 1:0
+        }).ToList();
+    }
+
     public int CalculateFraudScore(CreateTransactionDtos dto)
     {
         int f_score = 0 ;
