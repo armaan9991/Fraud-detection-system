@@ -32,14 +32,21 @@ public class TransactionService : ITransactionService
             Amount = dto.Amount,
             Currency = dto.Currency,
             Country = dto.Country,
-            FraudScore = 0 ,
-            Status = "PENDING"
+            FraudScore = fraud_score ,
+            Status = risk_level
         };
 
         await _context.Transactions.AddAsync(transaction);
         await _context.SaveChangesAsync();
         
-
+        if (fraud_score >= 60)
+        {
+            var fraudalert = new FraudAlert
+            {
+                TransactionId = transaction.TransactionId,
+                RiskLevel
+            }
+        }
         return transaction;
     }
 
