@@ -21,6 +21,9 @@ public class TransactionService : ITransactionService
         {
             return null;
         }
+
+        int fraud_score = CalculateFraudScore(dto);
+
         var transaction = new Transaction
         {
             UserId = dto.UserId,
@@ -46,5 +49,26 @@ public class TransactionService : ITransactionService
     public async Task<Transaction?> GetTransactionByIdAsync(int id)
     {
         return  await _context.Transactions.Include(u=>u.User).FirstOrDefaultAsync(t=>t.TransactionId == id);
+    }
+
+    public int CalculateFraudScore(CreateTransactionDtos dto)
+    {
+        int f_score = 0 ;
+        if (dto.Amount > 5000)
+        {
+            f_score += 40;
+        }
+        if (dto.Country != "canada")
+        {
+            f_score += 25;
+        }
+        int Hour = DateTime.UtcNow.Hour;
+    
+        if (Hour >=0 && Hour <=5)
+        {
+            f_score += 15;
+        }
+
+        return f_score;
     }
 }
