@@ -43,11 +43,7 @@ public class TransactionService : ITransactionService
         
         if (fraud_score >= 60)
         {
-            var fraudalert = new FraudAlert
-            {
-                TransactionId = transaction.TransactionId,
-                RiskLevel
-            }
+           await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , risk_level, "Suspicious transaction!!");
         }
         return transaction;
     }
