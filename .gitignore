@@ -2,3 +2,12 @@ bin/
 obj/
 .vs/
 .vscode/
+
+# Python virtual environment
+ml/venv/
+
+# Python cache
+__pycache__/
+
+# ML models
+ml/models/*.pkl
