@@ -37,7 +37,7 @@ public class UserController :ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser(CreateUserDto dto)
+    public async Task<IActionResult> CreateUser(CreateUserDtos dto)
     {
         var  createdUser = await _userService.CreateUserAsync(dto);
         return CreatedAtAction(
