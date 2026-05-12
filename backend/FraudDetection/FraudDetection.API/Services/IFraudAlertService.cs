@@ -7,4 +7,5 @@ public interface IFraudAlertService
     Task<List<FraudAlert>> GetAlertAsync();
     Task<FraudAlert?> GetAlertByIdAsync(int id);
     Task<FraudAlert?> CreateAlertAsync(CreateFraudAlertDto dto);
+    Task<FraudAlert> CreateAutomaticAlertAsync(int transactionId , string risklevel, string reason);
 }
