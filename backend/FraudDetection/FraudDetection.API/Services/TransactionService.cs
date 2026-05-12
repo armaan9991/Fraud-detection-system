@@ -24,6 +24,8 @@ public class TransactionService : ITransactionService
 
         int fraud_score = CalculateFraudScore(dto);
 
+        string risk_level = GetRiskLevel(fraud_score);
+
         var transaction = new Transaction
         {
             UserId = dto.UserId,
@@ -70,5 +72,20 @@ public class TransactionService : ITransactionService
         }
 
         return f_score;
+    }
+    public string GetRiskLevel(int f_score)
+    {
+        if (f_score >= 60)
+        {
+            return "HIGH";
+        }
+        else if(f_score >= 30)
+        {
+            return "MEDIUM";
+        }
+        else
+        {
+            return"LOW";
+        }
     }
 }
