@@ -7,4 +7,5 @@ public interface ITransactionService
     Task<TransactionResponseDto?> CreateTransactionAsync(CreateTransactionDtos dto);
     Task<List<TransactionResponseDto>> GetAllTransactionsAsync();
     Task<TransactionResponseDto?> GetTransactionByIdAsync(int id);
+    Task<List<TransactionMLDto>> GetMLTrainingDataAsync();
 }
