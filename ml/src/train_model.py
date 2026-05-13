@@ -13,7 +13,7 @@ df = pd.read_json("../data/trainingdata.json")
 print(df)
 
 #  Features
-X = df [df[
+X = df [[
     "amount",
     "isForeignTransaction",
     "isNightTransaction",
@@ -34,3 +34,12 @@ predictions = model.predict(X_test)
 
 accuracy = accuracy_score(y_test,predictions)
 
+print(f"Accuracy: {accuracy}")
+
+print( classification_report ( y_test , predictions))
+
+# save model
+joblib.dump(model , "../model/fraud_model.pk1")
+
+
+print("model saved")
