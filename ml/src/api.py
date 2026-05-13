@@ -34,6 +34,6 @@ def predict_fraud(data: Transactiondata):
 
     return {
         "prediction" : int(prediction),
-        "fraudProbablity" : float(probabilty)
+        "fraudProbability" : float(probabilty)
     }
 
