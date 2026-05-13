@@ -5,5 +5,705 @@
     "isNightTransaction": 1,
     "fraudScore": 80,
     "isFraud": 1
+  },
+  {
+    "amount": 5634,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 12245,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 7837,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 17655,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 2147,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 6210,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 14726,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 11513,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 55,
+    "isFraud": 0
+  },
+  {
+    "amount": 11200,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 9226,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  },
+  {
+    "amount": 10985,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 3732,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 17849,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 19328,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 2231,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 18800,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 55,
+    "isFraud": 0
+  },
+  {
+    "amount": 9554,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 16494,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 1477,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 15324,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 15239,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 4167,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 17998,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 4107,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 9210,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 19817,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 4189,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 0,
+    "isFraud": 0
+  },
+  {
+    "amount": 12122,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  },
+  {
+    "amount": 11394,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 4761,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 2618,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 0,
+    "isFraud": 0
+  },
+  {
+    "amount": 4967,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 15,
+    "isFraud": 0
+  },
+  {
+    "amount": 6899,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 55,
+    "isFraud": 0
+  },
+  {
+    "amount": 5187,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  },
+  {
+    "amount": 16403,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 1063,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 10647,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 18869,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 800,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 2964,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 13837,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 17092,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 1655,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 9361,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 4753,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 0,
+    "isFraud": 0
+  },
+  {
+    "amount": 11370,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 2258,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 5231,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 464,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 1781,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 14709,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 15068,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 2625,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 17389,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 5875,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 8370,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 3261,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 1256,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 1540,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 19125,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 5623,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 12067,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 1200,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 6736,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  },
+  {
+    "amount": 13109,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 1194,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 11950,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 13284,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 7210,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 9622,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 3094,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 9439,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  },
+  {
+    "amount": 15565,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  },
+  {
+    "amount": 18711,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  },
+  {
+    "amount": 5707,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 11751,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 3063,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 15090,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 10354,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 1195,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 0,
+    "isFraud": 0
+  },
+  {
+    "amount": 18010,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 15630,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 55,
+    "isFraud": 0
+  },
+  {
+    "amount": 2132,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 2104,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 4735,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 2697,
+    "isForeignTransaction": 0,
+    "isNightTransaction": 1,
+    "fraudScore": 0,
+    "isFraud": 0
+  },
+  {
+    "amount": 2665,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 16443,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 80,
+    "isFraud": 1
+  },
+  {
+    "amount": 15309,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 16723,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 3122,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 16831,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 2850,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 2501,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 1029,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 25,
+    "isFraud": 0
+  },
+  {
+    "amount": 10084,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 2616,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 15942,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
+  },
+  {
+    "amount": 1117,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 40,
+    "isFraud": 0
+  },
+  {
+    "amount": 8474,
+    "isForeignTransaction": 1,
+    "isNightTransaction": 1,
+    "fraudScore": 65,
+    "isFraud": 1
   }
 ]

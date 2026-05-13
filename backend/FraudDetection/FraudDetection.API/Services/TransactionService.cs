@@ -131,7 +131,7 @@ public class TransactionService : ITransactionService
 
         var transaction = new Transaction
             {
-                UserId = 1000,
+                UserId = 2,
                 Amount = Amount,
                 Currency = "CAD",
                 Country = country,
