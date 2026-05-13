@@ -9,10 +9,12 @@ public class TransactionService : ITransactionService
 {
     private readonly ApplicationDbContext _context;
     private readonly IFraudAlertService _IFraudAlertService;
-    public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice)
+    private readonly IMLPredictionService _mLPredictionService;
+    public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice, IMLPredictionService mLPredictionService)
     {
         _context = context;
         _IFraudAlertService = fraudalertservice;
+        _mLPredictionService = mLPredictionService;
     }
 
     public async Task<TransactionResponseDto?> CreateTransactionAsync(CreateTransactionDtos dto)
@@ -37,6 +39,25 @@ public class TransactionService : ITransactionService
             FraudScore = fraud_score ,
             Status = risk_level
         };
+
+        var mlrequest = new MLPredictionRequestDto
+        {
+            Amount = transaction.Amount,
+            IsForeignTransaction = transaction.Country!="canada"?1:0,
+            IsNightTransaction = DateTime.UtcNow.Hour<6 ?1:0,
+            FraudScore = transaction.FraudScore
+        };
+
+        var prediction = await _mLPredictionService.PredictFraudAsync(mlrequest);
+        
+        if (prediction != null)
+        {
+            transaction.FraudScore=(int)(prediction.FraudProbality *100);
+            if (prediction.Prediction == 1)
+            {
+                transaction.Status = "HIGH RISK";
+            }
+        }
 
         await _context.Transactions.AddAsync(transaction);
         await _context.SaveChangesAsync();
@@ -147,6 +168,8 @@ public class TransactionService : ITransactionService
         await _context.SaveChangesAsync();
         return transactions.Count;
     }
+
+     
     public int CalculateFraudScore(CreateTransactionDtos dto)
     {
         int f_score = 0 ;
