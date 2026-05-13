@@ -76,4 +76,13 @@ public class TransactionsController: ControllerBase
         return Ok(data);
     }
 
+    // to generate random data.
+    [HttpPost("seed")]
+    public async Task<IActionResult> SeedTransaction()
+    {
+        int count = await _transactionService.SeedTransactionAsync();
+
+        return Ok($"{count}  transactions are created!");
+    }
+
 }
