@@ -39,7 +39,7 @@ print(f"Accuracy: {accuracy}")
 print( classification_report ( y_test , predictions))
 
 # save model
-joblib.dump(model , "../model/fraud_model.pk1")
+joblib.dump(model , "../models/fraud_model.pkl")
 
 
 print("model saved")
