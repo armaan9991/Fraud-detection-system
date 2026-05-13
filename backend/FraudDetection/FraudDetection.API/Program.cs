@@ -21,6 +21,7 @@ builder.Services.AddScoped<ITransactionService , TransactionService>();
 builder.Services.AddScoped<IUserService , UserService>();
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IFraudAlertService, FraudAlertService>();
+builder.Services.AddScoped<IMLPredictionService,MLPredictionService>();
 
 var app = builder.Build();
 
