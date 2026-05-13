@@ -89,6 +89,64 @@ public class TransactionService : ITransactionService
         }).ToList();
     }
 
+    // generate random data 
+    public async Task<int> SeedTransactionAsync()
+    {
+        var random = new Random();
+
+        var Countries = new[]
+        {
+            "canada",
+            "russia",
+            "uk",
+            "usa",
+            "china"
+        };
+
+        var transactions = new List<Transaction>();
+
+        for (int i=0; i<100 ; i++)
+        {
+            decimal Amount = random.Next(100,20000);
+            string country = Countries[random.Next(Countries.Length)];
+
+            int fraud_score = 0;
+
+            if (Amount > 5000)
+        {
+            fraud_score += 40;
+        }
+        if (country != "canada")
+        {
+            fraud_score += 25;
+        }
+        int Hour = random.Next(0,23);
+    
+        if (Hour >=0 && Hour <=5)
+        {
+            fraud_score += 15;
+        }
+
+         string riskLevel = fraud_score >= 60 ? "HIGH" : fraud_score >= 30 ? "MEDIUM": "LOW";
+
+        var transaction = new Transaction
+            {
+                UserId = 1000,
+                Amount = Amount,
+                Currency = "CAD",
+                Country = country,
+                FraudScore = fraud_score,
+                Status = riskLevel
+            };
+            transactions.Add(transaction);
+        }
+
+
+        await _context.Transactions.AddRangeAsync(transactions);
+
+        await _context.SaveChangesAsync();
+        return transactions.Count;
+    }
     public int CalculateFraudScore(CreateTransactionDtos dto)
     {
         int f_score = 0 ;
