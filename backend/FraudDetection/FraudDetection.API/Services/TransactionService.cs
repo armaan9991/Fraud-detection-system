@@ -184,6 +184,10 @@ public class TransactionService : ITransactionService
         {
             f_score += 25;
         }
+        if(dto.Currency.ToLower() != "cad")
+        {
+            f_score +=10;
+        }
         int Hour = DateTime.UtcNow.Hour;
     
         if (Hour >=0 && Hour <=5)
@@ -199,7 +203,7 @@ public class TransactionService : ITransactionService
         {
             return "HIGH";
         }
-        else if(f_score >= 30)
+        else if(f_score >= 35)
         {
             return "MEDIUM";
         }

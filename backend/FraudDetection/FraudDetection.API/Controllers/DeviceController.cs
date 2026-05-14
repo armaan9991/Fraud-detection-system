@@ -21,6 +21,10 @@ public class DeviceController : ControllerBase
     public  async Task<IActionResult> GetAllDevice()
     {
         var device_list = await _deviceService.GetDeviceAllAsync();
+        if (device_list == null)
+        {
+            return NotFound();
+        }
         return Ok(device_list);
     }
 

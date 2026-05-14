@@ -17,13 +17,13 @@ public class UserService : IUserService
 
     public async Task<List<User>> GetAllUsersAsync()
     {
-        var user_list = await _context.Users.ToListAsync();
+        var user_list = await _context.Users.ToListAsync(); // get all user in list and doesnt block thread here. wait in background. .
         return user_list;
     }
 
     public async Task<User?> GetUserByIdAsync(int id)
     {
-        var  found_user = await _context.Users.FirstOrDefaultAsync(t => t.UserId == id );
+        var  found_user = await _context.Users.FirstOrDefaultAsync(t => t.UserId == id );    // first or null
         
         return found_user;
     }
@@ -36,7 +36,6 @@ public class UserService : IUserService
             Email = dto.Email,
             CreatedAt = DateTime.UtcNow, 
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-            Role = "user"
         };
         
         _context.Users.Add(user);

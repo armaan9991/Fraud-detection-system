@@ -9,7 +9,7 @@ public class Transaction
     public string Currency {get; set;} = "CAD";
     public string Country { get;set;} =  string.Empty;
     public int FraudScore {get;set;} = 0;
-    public string Status {get; set;} = "PENDING";
+    public string Status {get; set;} = "PENDING"; // 
 
     public  User? User  {get;set;}
     public List<FraudAlert> FraudAlerts {get; set;} = new();

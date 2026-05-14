@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 // using ]
 namespace FraudDetection.API.Controllers;
 
+
+// need to remove createdUser as it contains password Hash.. 
+// create Response DTO.
+
+
 [ApiController]
 [Route("api/[Controller]")]
 public class UserController :ControllerBase
@@ -21,6 +26,10 @@ public class UserController :ControllerBase
     public async Task<IActionResult> GetUsers()
     {
         var user_list = await _userService.GetAllUsersAsync();
+        if (user_list == null)
+        {
+            return NotFound(null);
+        }
         return Ok(user_list);
     }
 
