@@ -42,27 +42,30 @@ public class TransactionService : ITransactionService
 
         var mlrequest = new MLPredictionRequestDto
         {
-            Amount = transaction.Amount,
-            IsForeignTransaction = transaction.Country!="canada"?1:0,
-            IsNightTransaction = DateTime.UtcNow.Hour<6 ?1:0,
-            FraudScore = transaction.FraudScore
+        Amount = transaction.Amount,
+
+        IsForeignTransaction = transaction.Country.ToLower() != "Canada"  ? 1 : 0,
+
+        IsNightTransaction =  DateTime.UtcNow.Hour < 6 ? 1 : 0,
+
+        FraudScore = transaction.FraudScore
         };
 
         var prediction = await _mLPredictionService.PredictFraudAsync(mlrequest);
         
         if (prediction != null)
         {
-            transaction.FraudScore=(int)(prediction.FraudProbality *100);
+            transaction.FraudScore=(int)(prediction.FraudProbability *100);
             if (prediction.Prediction == 1)
             {
-                transaction.Status = "HIGH RISK";
+                transaction.Status = "HIGH_RISK";
             }
         }
 
-        await _context.Transactions.AddAsync(transaction);
+         _context.Transactions.Add(transaction);
         await _context.SaveChangesAsync();
         
-        if (fraud_score >= 60)
+        if (transaction.FraudScore >= 60)
         {
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , risk_level, "Suspicious transaction!!");
         }

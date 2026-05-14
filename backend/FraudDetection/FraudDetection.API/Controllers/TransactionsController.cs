@@ -30,18 +30,10 @@ public class TransactionsController: ControllerBase
             return NotFound("User is not present!");
         }
 
-        var transaction = new Transaction
-        {
-            UserId = dto.UserId,
-            Amount = dto.Amount,
-            Currency = dto.Currency,
-            Country = dto.Country,
-            FraudScore = 0 ,
-            Status = "PENDING"
-        };
+       
         return CreatedAtAction(
             nameof(GetTransactionById),
-            new { id = transaction.TransactionId}, transaction
+            new { id = transaction_c.TransactionId}, transaction_c
         );
     }
 

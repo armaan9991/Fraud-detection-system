@@ -11,20 +11,31 @@ public class MLPredictionService : IMLPredictionService
 
     public async Task<MLPredictionResponseDto?> PredictFraudAsync(MLPredictionRequestDto dto)
     {
-        var json = JsonSerializer.Serialize(dto);
+       var json =JsonSerializer.Serialize( dto, new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+
+        Console.WriteLine(json);
 
         var content = new StringContent(json,System.Text.Encoding.UTF8,"application/json");
 
         var response = await _httpClient.PostAsync("http://127.0.0.1:8000/predict",content);
+
+        Console.WriteLine(json);
+
 
         if (!response.IsSuccessStatusCode)
         {
             return null;
         }
         var responseContent = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<MLPredictionResponseDto>(responseContent , new JsonSerializerOptions
+        var result= JsonSerializer.Deserialize<MLPredictionResponseDto>(responseContent , new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive =true
         });
+        Console.WriteLine(result?.Prediction);
+        Console.WriteLine(result?.FraudProbability);
+        return result;
     }
 }
