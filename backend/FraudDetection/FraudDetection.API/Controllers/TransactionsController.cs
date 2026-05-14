@@ -4,12 +4,14 @@ using FraudDetection.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using FraudDetection.API.Services;
+using  Microsoft.AspNetCore.Authorization;
 
 
 namespace FraudDetection.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class TransactionsController: ControllerBase
 {
     private readonly ITransactionService _transactionService;

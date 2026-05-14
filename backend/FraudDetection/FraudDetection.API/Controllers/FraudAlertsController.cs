@@ -1,11 +1,13 @@
 using FraudDetection.API.DTOs;
 using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using  Microsoft.AspNetCore.Authorization;
 
 namespace FraudDetection.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles ="Admin")]
 public class FraudAlertController : ControllerBase
 {
     private readonly IFraudAlertService _fraudAlert;

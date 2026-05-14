@@ -4,6 +4,8 @@ using FraudDetection.API.Models;
 using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Mvc;
 // using ]
+using  Microsoft.AspNetCore.Authorization;
+
 namespace FraudDetection.API.Controllers;
 
 
@@ -13,6 +15,7 @@ namespace FraudDetection.API.Controllers;
 
 [ApiController]
 [Route("api/[Controller]")]
+[Authorize]
 public class UserController :ControllerBase
 {
     private readonly IUserService _userService;

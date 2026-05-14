@@ -3,6 +3,7 @@ using FraudDetection.API.DTOs;
 using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
+using  Microsoft.AspNetCore.Authorization;
 
 namespace FraudDetection.API.Controllers;
 
@@ -37,5 +38,35 @@ public class AuthController : ControllerBase
         }
 
         return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public IActionResult GetCurrentUser()
+    {
+        var userId =
+            User.FindFirst(
+                System.Security.Claims
+                .ClaimTypes.NameIdentifier
+            )?.Value;
+
+        var email =
+            User.FindFirst(
+                System.Security.Claims
+                .ClaimTypes.Email
+            )?.Value;
+
+        var role =
+            User.FindFirst(
+                System.Security.Claims
+                .ClaimTypes.Role
+            )?.Value;
+
+        return Ok(new
+        {
+            UserId = userId,
+            Email = email,
+            Role = role
+        });
     }
 }
