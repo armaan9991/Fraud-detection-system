@@ -35,7 +35,8 @@ public class UserService : IUserService
             Name = dto.Name,
             Email = dto.Email,
             CreatedAt = DateTime.UtcNow, 
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+            Role = "user"
         };
         
         _context.Users.Add(user);
