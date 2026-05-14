@@ -55,6 +55,28 @@ public class AuthService : IAuthService
             Role = user.Role
         };
     }
+
+    public async Task<AuthResponseDto?> LoginAsync(LoginDto dto)
+    {
+        var user =  await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+        if (user == null)
+        {
+            return null;
+        }
+        bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password,user.PasswordHash);
+
+        if (!isPasswordValid)
+        {
+            return null;
+        }
+        string token = GenerateJwtToken(user);
+        return new AuthResponseDto
+        {
+            Token = token,
+            Email = user.Email,
+            Role = user.Role
+        };
+    }
     private string GenerateJwtToken(User user)
     {
         var claims = new[]
