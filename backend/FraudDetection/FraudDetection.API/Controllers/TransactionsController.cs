@@ -58,7 +58,7 @@ public class TransactionsController: ControllerBase
         return Ok(transactions);
     }
 
-
+    [Authorize]
    [HttpGet("{id}")] 
    public async Task<IActionResult> GetTransactionById(int id)
     {
@@ -67,6 +67,15 @@ public class TransactionsController: ControllerBase
         {
             return NotFound();
         }
+
+        var role = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        int userid = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        if (role == "Admin" && transaction.UserId != userid)
+        {
+            return Forbid();
+        }
+
         return Ok(transaction);
     }
 
