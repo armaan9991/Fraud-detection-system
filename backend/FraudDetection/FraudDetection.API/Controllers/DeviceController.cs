@@ -26,9 +26,11 @@ public class DeviceController : ControllerBase
         var device_list = await _deviceService.GetDeviceAllAsync();
         if (device_list == null)
         {
-            return NotFound();
+            return NotFound(ApiResponse<string>.ErrorResponse("no device present"));
+            // return NotFound();
         }
-        return Ok(device_list);
+        return Ok(ApiResponse<List<Device>>.SuccessResponse(device_list,"Device present"));
+        // return Ok(device_list);
     }
 
     [HttpGet("{id}")]
@@ -38,9 +40,11 @@ public class DeviceController : ControllerBase
 
         if (found_device == null)
         {
-            return NotFound();
+            return NotFound(ApiResponse<string>.ErrorResponse($"No device of {id} is present!"));
+            // return NotFound();
         }
-        return Ok(found_device);
+        return Ok(ApiResponse<Device>.SuccessResponse(found_device ,$"Device with id {id} is found"));
+        // return Ok(found_device);
     }
 
     [HttpPost]
@@ -50,12 +54,12 @@ public class DeviceController : ControllerBase
      
      if (CreateDevice == null)
         {
-            return NotFound();
+            return NotFound(ApiResponse<string>.ErrorResponse("Couldnt find user with this id to register Device with user."));
         }
      return CreatedAtAction(
         nameof(GetDeviceById),
         new {id = CreateDevice.DeviceId}
-        ,CreateDevice
+        ,ApiResponse<Device>.SuccessResponse(CreateDevice, "device is created!!")
      );
 
     }
