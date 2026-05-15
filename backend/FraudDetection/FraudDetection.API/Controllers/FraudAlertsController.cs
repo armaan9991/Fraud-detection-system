@@ -18,11 +18,11 @@ public class FraudAlertController : ControllerBase
     }
 
      [HttpGet]
-    public async Task<IActionResult> GetAlerts()
+    public async Task<IActionResult> GetAlerts(int page =1,int pageSize =20)
     {
-        var alerts = await _fraudAlert.GetAlertAsync();
+        var alerts = await _fraudAlert.GetAlertAsync(page,pageSize);
 
-        return Ok(ApiResponse<List<FraudAlert>>.SuccessResponse(alerts,"Alerts found!!!"));
+        return Ok(ApiResponse<PagedResult<FraudAlertDto>>.SuccessResponse(alerts,"Alerts found!!!"));
     }
 
 

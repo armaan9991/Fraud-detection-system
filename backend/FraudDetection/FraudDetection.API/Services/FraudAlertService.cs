@@ -3,6 +3,7 @@ using FraudDetection.API.Models;
 using Microsoft.EntityFrameworkCore;
 using FraudDetection.API.Data;
 using FraudDetection.API.Controllers;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FraudDetection.API.Services;
 
@@ -14,10 +15,28 @@ public class FraudAlertService : IFraudAlertService
         _context = context;
     }
 
-    public async Task<List<FraudAlert>> GetAlertAsync()
+    public async Task<PageResult<FraudAlertDto>> GetAlertAsync(int page , int pageSize)
     {
-        var alert_list  = await _context.FraudAlerts.Include(t => t.Transaction).ToListAsync();
-        return alert_list;
+        var alert_list  =  _context.FraudAlerts.Include(t => t.Transaction).AsQueryable();
+        var totalrecords = await alert_list.CountAsync();
+
+        var items =  await alert_list.OrderByDescending(t => t.FraudAlertId).Skip((page-1)*pageSize).Take(pageSize).Select(t=> new FraudAlertDto
+        {
+            FraudAlertId = t.FraudAlertId,
+            TransactionId = t.TransactionId,
+            RiskLevel = t.RiskLevel,
+            Reason = t.Reason,
+            CreatedAt = t.CreatedAt
+        }).ToListAsync();
+
+        return new PagedResult<FraudAlertDto>
+        {
+            Items =items,
+            Page = page,
+            PageSize = pageSize,
+            TotalRecords =totalrecords,
+            TotalPages = (int)Math.Ceiling(totalrecords/(double)pageSize)
+        };
     }
 
     public async Task<FraudAlert?> GetAlertByIdAsync(int id)
