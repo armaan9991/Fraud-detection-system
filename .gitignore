@@ -4,8 +4,7 @@ obj/
 .vscode/
 
 # Python virtual environment
-ml/venv/
-
+ml/src/venv/
 # Python cache
 __pycache__/
 
