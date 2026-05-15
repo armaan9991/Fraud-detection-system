@@ -97,6 +97,7 @@ public class TransactionService : ITransactionService
     public async Task<TransactionResponseDto?> GetTransactionByIdAsync(int id)
     {
         var transaction =  await _context.Transactions.Include(u=>u.User).FirstOrDefaultAsync(t=>t.TransactionId == id);
+        
         if (transaction == null){return null;}
         return MapToTransactionResponseDto(transaction);
     }

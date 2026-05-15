@@ -22,7 +22,7 @@ public class FraudAlertController : ControllerBase
     {
         var alerts = await _fraudAlert.GetAlertAsync();
 
-        return Ok(ApiResponse<List<FraudAlert>>.SuccessResponse(alerts,"Alert found!!!"));
+        return Ok(ApiResponse<List<FraudAlert>>.SuccessResponse(alerts,"Alerts found!!!"));
     }
 
 

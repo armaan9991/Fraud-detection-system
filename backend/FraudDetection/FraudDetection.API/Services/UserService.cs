@@ -15,10 +15,28 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<List<User>> GetAllUsersAsync()
+    public async Task<PagedResult<UserResponseDto>> GetAllUsersAsync(int page, int pageSize)
     {
-        var user_list = await _context.Users.ToListAsync(); // get all user in list and doesnt block thread here. wait in background. .
-        return user_list;
+        var user_list = _context.Users.AsQueryable(); // get all user in list and doesnt block thread here. wait in background. .
+        int list_length = await user_list.CountAsync();
+
+        var items = await user_list.OrderByDescending( t =>t.UserId).Skip((page - 1)*pageSize).Take(pageSize).Select(t => new UserResponseDto
+        {
+            UserId = t.UserId,
+            Name = t.Name,
+            Email = t.Email,
+            Role = t.Role,
+            CreatedAt = t.CreatedAt
+        }).ToListAsync();
+        // adding user DTO
+        return new PagedResult<UserResponseDto>
+        {
+            Items =items,
+            Page = page,
+            PageSize = pageSize,
+            TotalRecords = list_length,
+            TotalPages = (int)Math.Ceiling(list_length/(double)pageSize)
+        };
     }
 
     public async Task<User?> GetUserByIdAsync(int id)

@@ -26,14 +26,14 @@ public class UserController :ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUsers()
+    public async Task<IActionResult> GetUsers(int page=1, int pageSize=20)
     {
-        var user_list = await _userService.GetAllUsersAsync();
+        var user_list = await _userService.GetAllUsersAsync(page,pageSize);
         if (user_list == null)
         {
             return NotFound(ApiResponse<string>.ErrorResponse("no user is present!"));
         }
-        return Ok(ApiResponse<List<User>>.SuccessResponse(user_list,"List of all user present!"));
+        return Ok(ApiResponse<PagedResult<UserResponseDto>>.SuccessResponse(user_list,"List of all user present!"));
     }
 
     [HttpGet("{id}")]
