@@ -17,9 +17,9 @@ public class TransactionService : ITransactionService
         _mLPredictionService = mLPredictionService;
     }
 
-    public async Task<TransactionResponseDto?> CreateTransactionAsync(CreateTransactionDtos dto)
+    public async Task<TransactionResponseDto?> CreateTransactionAsync(int UserId, CreateTransactionDtos dto)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u=>u.UserId ==dto.UserId);
+        var user = await _context.Users.FirstOrDefaultAsync(u=>u.UserId == UserId);
         
         if (user == null)
         {
@@ -32,7 +32,7 @@ public class TransactionService : ITransactionService
 
         var transaction = new Transaction
         {
-            UserId = dto.UserId,
+            UserId = UserId,
             Amount = dto.Amount,
             Currency = dto.Currency,
             Country = dto.Country,
