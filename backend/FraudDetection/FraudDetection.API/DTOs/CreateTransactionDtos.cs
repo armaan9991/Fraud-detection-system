@@ -4,8 +4,7 @@ namespace FraudDetection.API.DTOs;
 
 public class CreateTransactionDtos
 {
-    [Required]
-    public int UserId {get;set;}
+    
     [Required]
     [Range(1, 1000000)]
     public decimal Amount {get;set;}
