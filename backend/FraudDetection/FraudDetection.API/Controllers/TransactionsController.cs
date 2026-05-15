@@ -71,10 +71,10 @@ public class TransactionsController: ControllerBase
             return NotFound();
         }
 
-        var role = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        var role = User.FindFirst(ClaimTypes.Role)!.Value;
         int userid = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        if (role == "Admin" && transaction.UserId != userid)
+        if (role != "Admin" && transaction.UserId != userid)
         {
             return Forbid();
         }
