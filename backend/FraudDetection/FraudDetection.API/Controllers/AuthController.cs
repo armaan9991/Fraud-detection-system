@@ -23,9 +23,11 @@ public class AuthController : ControllerBase
         var response = await _authService.RegisterAsync(dto);
         if (response == null)
         {
-            return BadRequest("User is already present!");
+            return BadRequest(ApiResponse<string>.ErrorResponse("User is already Present!"));
+            // return BadRequest("User is already present!");
         }
-        return Ok(response);
+        return Ok(ApiResponse<AuthResponseDto>.SuccessResponse(response,"User Register"));
+        // return Ok(response);
     }
 
     [HttpPost("login")]
@@ -34,10 +36,10 @@ public class AuthController : ControllerBase
         var response = await _authService.LoginAsync(dto);
         if (response == null)
         {
-            return NotFound("no User found!");
+            return NotFound(ApiResponse<string>.ErrorResponse("no User found!"));
         }
 
-        return Ok(response);
+        return Ok(ApiResponse<AuthResponseDto>.SuccessResponse(response, "Login successfull!"));
     }
 
     [Authorize]
