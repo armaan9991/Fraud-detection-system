@@ -31,19 +31,19 @@ public class TransactionsController: ControllerBase
 
         if (userIdclaim == null)
         {
-            return Unauthorized();
+            return Unauthorized(ApiResponse<string>.ErrorResponse("User Id is not present!"));
         }
         int userId = int.Parse(userIdclaim);
         var transaction_c = await _transactionService.CreateTransactionAsync(userId,dto);
          if(transaction_c == null)
         {
-            return NotFound("User is not present!");
+            return NotFound(ApiResponse<string>.ErrorResponse("User is not present!"));
         }
 
        
         return CreatedAtAction(
             nameof(GetTransactionById),
-            new { id = transaction_c.TransactionId}, transaction_c
+            new { id = transaction_c.TransactionId},ApiResponse<TransactionResponseDto>.SuccessResponse(transaction_c, "Transaction created successfull!")
         );
     }
 
@@ -58,7 +58,7 @@ public class TransactionsController: ControllerBase
         
         var transactions =await _transactionService.GetAllTransactionsAsync(userId, role);
 
-        return Ok(transactions);
+        return Ok(ApiResponse<List<TransactionResponseDto>>.SuccessResponse(transactions,"All Transactions present!"));
     }
 
     [Authorize]
@@ -68,7 +68,7 @@ public class TransactionsController: ControllerBase
         var transaction = await _transactionService.GetTransactionByIdAsync(id);
         if (transaction == null)
         {
-            return NotFound();
+            return NotFound(ApiResponse<string>.ErrorResponse($"No transaction of {id} is present!"));
         }
 
         var role = User.FindFirst(ClaimTypes.Role)!.Value;
@@ -79,7 +79,7 @@ public class TransactionsController: ControllerBase
             return Forbid();
         }
 
-        return Ok(transaction);
+        return Ok(ApiResponse<TransactionResponseDto>.SuccessResponse(transaction, "found !"));
     }
 
     [HttpGet("ml-data")]
@@ -87,7 +87,7 @@ public class TransactionsController: ControllerBase
     {
         var data = await _transactionService.GetMLTrainingDataAsync();
 
-        return Ok(data);
+        return Ok(ApiResponse<List<TransactionMLDto>>.SuccessResponse(data,"Training data"));
     }
 
     // to generate random data.
