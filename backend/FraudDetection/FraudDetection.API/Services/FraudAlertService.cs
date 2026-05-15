@@ -15,7 +15,7 @@ public class FraudAlertService : IFraudAlertService
         _context = context;
     }
 
-    public async Task<PageResult<FraudAlertDto>> GetAlertAsync(int page , int pageSize)
+    public async Task<PagedResult<FraudAlertDto>> GetAlertAsync(int page , int pageSize)
     {
         var alert_list  =  _context.FraudAlerts.Include(t => t.Transaction).AsQueryable();
         var totalrecords = await alert_list.CountAsync();
@@ -39,13 +39,13 @@ public class FraudAlertService : IFraudAlertService
         };
     }
 
-    public async Task<FraudAlert?> GetAlertByIdAsync(int id)
+    public async Task<FraudAlertDto?> GetAlertByIdAsync(int id)
     {
         var found_alert = await _context.FraudAlerts.Include(u => u.Transaction).FirstOrDefaultAsync(f => f.FraudAlertId == id);
         return found_alert;
     }
 
-    public async Task<FraudAlert?> CreateAlertAsync(CreateFraudAlertDto dto)
+    public async Task<FraudAlertDto?> CreateAlertAsync(CreateFraudAlertDto dto)
     {
         var transaction = await _context.Transactions.FirstOrDefaultAsync( t => t.TransactionId == dto.TransactionId);
 
@@ -67,9 +67,9 @@ public class FraudAlertService : IFraudAlertService
         await _context.SaveChangesAsync();
         return alert;
     }
-    public async Task<FraudAlert> CreateAutomaticAlertAsync(int transactionId , string risklevel , string reason)
+    public async Task<FraudAlertDto> CreateAutomaticAlertAsync(int transactionId , string risklevel , string reason)
     {
-        var alert = new FraudAlert
+        var alert = new FraudAlertDto
         {
             TransactionId = transactionId,
             RiskLevel = risklevel,

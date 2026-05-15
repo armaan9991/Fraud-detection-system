@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using FraudDetection.API.Services;
 using  Microsoft.AspNetCore.Authorization;
+using FraudAlert.API.DTOs;
 
 
 
@@ -21,15 +22,15 @@ public class DeviceController : ControllerBase
     }
 
     [HttpGet]
-    public  async Task<IActionResult> GetAllDevice()
+    public  async Task<IActionResult> GetAllDevice(int page =1 , int pageSize =20)
     {
-        var device_list = await _deviceService.GetDeviceAllAsync();
+        var device_list = await _deviceService.GetDeviceAllAsync(page,pageSize);
         if (device_list == null)
         {
             return NotFound(ApiResponse<string>.ErrorResponse("no device present"));
             // return NotFound();
         }
-        return Ok(ApiResponse<List<Device>>.SuccessResponse(device_list,"Device present"));
+        return Ok(ApiResponse<PagedResult<DeviceResponseDto>>.SuccessResponse(device_list,"Device present"));
         // return Ok(device_list);
     }
 

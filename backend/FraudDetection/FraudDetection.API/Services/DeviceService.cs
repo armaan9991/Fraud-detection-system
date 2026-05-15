@@ -1,3 +1,4 @@
+using FraudAlert.API.DTOs;
 using FraudDetection.API.Controllers;
 using FraudDetection.API.Data;
 using FraudDetection.API.DTOs;
@@ -15,10 +16,29 @@ public  class  DeviceService : IDeviceService
         _context = context;
     }
 
-    public async Task<List<Device>> GetDeviceAllAsync()
+    public async Task<PagedResult<DeviceResponseDto>> GetDeviceAllAsync(int page,int pageSize)
     {
-        var device_list = await _context.Devices.Include(d => d.User).ToListAsync();
-        return device_list;
+        var device_list = _context.Devices.Include(d => d.User).AsQueryable();
+        var totalrecords = await device_list.CountAsync();
+
+        var items = await device_list.OrderByDescending(t =>t.DeviceId).Skip((page-1)*pageSize)
+        .Take(pageSize).Select(t=> new DeviceResponseDto
+        {
+            DeviceId = t.DeviceId,
+            UserId = t.UserId,
+            DeviceName =t.DeviceName,
+            IPAddress = t.IPAddress,
+            LastUsed =t.LastUsed
+        }).ToListAsync();
+
+        return new PagedResult<DeviceResponseDto>
+        {
+            Items = items,
+            Page = page,
+            PageSize = pageSize,
+            TotalRecords = totalrecords,
+            TotalPages = (int)Math.Ceiling(totalrecords/(double)pageSize)
+        };
     }
 
     public  async Task<Device?> GetDeviceByIdAsync(int id)
