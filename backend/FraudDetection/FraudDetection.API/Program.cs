@@ -9,7 +9,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Models;
-
+using FraudDetection.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,6 +90,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
