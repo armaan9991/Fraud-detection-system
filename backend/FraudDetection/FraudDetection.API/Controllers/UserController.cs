@@ -31,9 +31,9 @@ public class UserController :ControllerBase
         var user_list = await _userService.GetAllUsersAsync();
         if (user_list == null)
         {
-            return NotFound(null);
+            return NotFound(ApiResponse<string>.ErrorResponse("no user is present!"));
         }
-        return Ok(user_list);
+        return Ok(ApiResponse<List<User>>.SuccessResponse(user_list,"List of all user present!"));
     }
 
     [HttpGet("{id}")]
@@ -43,9 +43,9 @@ public class UserController :ControllerBase
 
         if (found_user == null)
         {
-            return NotFound();
+            return NotFound(ApiResponse<string>.ErrorResponse("no user of this id is present!"));
         }
-        return Ok(found_user);
+        return Ok(ApiResponse<User>.SuccessResponse(found_user,"user found!!"));
     }
 
     [HttpPost]
@@ -55,7 +55,7 @@ public class UserController :ControllerBase
         return CreatedAtAction(
             nameof(GetUserById),
             new { id = createdUser.UserId},
-            createdUser
+            ApiResponse<User>.SuccessResponse(createdUser,"user is created!")
         );
     }
 
