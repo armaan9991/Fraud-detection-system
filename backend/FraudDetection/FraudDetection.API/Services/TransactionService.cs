@@ -72,14 +72,26 @@ public class TransactionService : ITransactionService
         return MapToTransactionResponseDto(transaction);
     }
 
-    public async Task<List<TransactionResponseDto>> GetAllTransactionsAsync(int userId , string role)
+    public async Task<PagedResult<TransactionResponseDto>> GetAllTransactionsAsync(int userId , string role ,int page, int pageSize)
     {
-        if (role == "Admin"){
-        var all_transactions = await _context.Transactions.Include(u=>u.User).ToListAsync();
-        return all_transactions.Select(MapToTransactionResponseDto).ToList();
+        var query = _context.Transactions.Include(t => t.User).AsQueryable();
+
+        if (role != "Admin"){
+            query = query.Where(t => t.UserId == userId);
         }
-        var user_transactions = await _context.Transactions.Where(t => t.UserId == userId).ToListAsync();
-        return user_transactions.Select(MapToTransactionResponseDto).ToList();
+
+        var totalrecords = await query.CountAsync();
+
+        var items = await query.OrderByDescending(t => t.TransactionTime).Skip((page-1)*pageSize).Take(pageSize).Select(t=> MapToTransactionResponseDto(t)).ToListAsync();
+       
+        return new PagedResult<TransactionResponseDto>
+        {
+            Items = items,
+            Page = page,
+            PageSize = pageSize,
+            TotalRecords = totalrecords,
+            TotalPages = (int)Math.Ceiling(totalrecords/(double)pageSize)
+        };
     }
 
     public async Task<TransactionResponseDto?> GetTransactionByIdAsync(int id)

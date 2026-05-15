@@ -51,14 +51,14 @@ public class TransactionsController: ControllerBase
     // get api/transaction
     [Authorize]
     [HttpGet]
-    public async Task<IActionResult> GetTransactions()
+    public async Task<IActionResult> GetTransactions(int page =1,int pageSize = 20)
     {
         int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         var role = User.FindFirst(ClaimTypes.Role)?.Value;
         
-        var transactions =await _transactionService.GetAllTransactionsAsync(userId, role);
+        var transactions =await _transactionService.GetAllTransactionsAsync(userId, role,page,pageSize);
 
-        return Ok(ApiResponse<List<TransactionResponseDto>>.SuccessResponse(transactions,"All Transactions present!"));
+        return Ok(ApiResponse<PagedResult<TransactionResponseDto>>.SuccessResponse(transactions,"All Transactions present!"));
     }
 
     [Authorize]
