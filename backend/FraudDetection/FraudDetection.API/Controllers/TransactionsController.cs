@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using FraudDetection.API.Services;
 using  Microsoft.AspNetCore.Authorization;
-
+using System.Security.Claims;
 
 namespace FraudDetection.API.Controllers;
 
@@ -23,10 +23,18 @@ public class TransactionsController: ControllerBase
     }
 
 // post   api/transactions
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateTransaction(CreateTransactionDtos dto)
     {
-        var transaction_c = await _transactionService.CreateTransactionAsync(dto);
+        var userIdclaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdclaim == null)
+        {
+            return Unauthorized();
+        }
+        int userId = int.Parse(userIdclaim);
+        var transaction_c = await _transactionService.CreateTransactionAsync(userId,dto);
          if(transaction_c == null)
         {
             return NotFound("User is not present!");
