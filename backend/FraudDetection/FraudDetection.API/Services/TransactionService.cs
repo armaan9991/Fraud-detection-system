@@ -72,10 +72,14 @@ public class TransactionService : ITransactionService
         return MapToTransactionResponseDto(transaction);
     }
 
-    public async Task<List<TransactionResponseDto>> GetAllTransactionsAsync()
+    public async Task<List<TransactionResponseDto>> GetAllTransactionsAsync(int userId , string role)
     {
+        if (role == "Admin"){
         var all_transactions = await _context.Transactions.Include(u=>u.User).ToListAsync();
         return all_transactions.Select(MapToTransactionResponseDto).ToList();
+        }
+        var user_transactions = await _context.Transactions.Where(t => t.UserId == userId).ToListAsync();
+        return user_transactions.Select(MapToTransactionResponseDto).ToList();
     }
 
     public async Task<TransactionResponseDto?> GetTransactionByIdAsync(int id)

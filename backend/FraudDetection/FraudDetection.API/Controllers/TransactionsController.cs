@@ -49,11 +49,14 @@ public class TransactionsController: ControllerBase
 
 
     // get api/transaction
-
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetTransactions()
     {
-        var transactions =await _transactionService.GetAllTransactionsAsync();
+        int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var role = User.FindFirst(ClaimTypes.Role)?.Value;
+        
+        var transactions =await _transactionService.GetAllTransactionsAsync(userId, role);
 
         return Ok(transactions);
     }
