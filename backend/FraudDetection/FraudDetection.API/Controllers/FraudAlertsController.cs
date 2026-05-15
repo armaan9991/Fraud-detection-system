@@ -2,6 +2,7 @@ using FraudDetection.API.DTOs;
 using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using  Microsoft.AspNetCore.Authorization;
+using FraudDetection.API.Models;
 
 namespace FraudDetection.API.Controllers;
 
@@ -21,7 +22,7 @@ public class FraudAlertController : ControllerBase
     {
         var alerts = await _fraudAlert.GetAlertAsync();
 
-        return Ok(alerts);
+        return Ok(ApiResponse<List<FraudAlert>>.SuccessResponse(alerts,"Alert found!!!"));
     }
 
 
@@ -32,10 +33,10 @@ public class FraudAlertController : ControllerBase
 
         if (alert == null)
         {
-            return NotFound();
+            return NotFound(ApiResponse<string>.ErrorResponse($"no alert found with ID: {id}"));
         }
 
-        return Ok(alert);
+        return Ok(ApiResponse<FraudAlert>.SuccessResponse(alert,$"Found alert with id {id}"));
     }
 
     [HttpPost]
@@ -45,13 +46,13 @@ public class FraudAlertController : ControllerBase
 
         if (createdAlert == null)
         {
-            return NotFound("Transaction not found.");
+            return NotFound(ApiResponse<string>.ErrorResponse($"Transaction not found with ID {dto.TransactionId}"));
         }
 
         return CreatedAtAction(
             nameof(GetAlertById),
             new { id = createdAlert.FraudAlertId },
-            createdAlert
+            ApiResponse<FraudAlert>.SuccessResponse(createdAlert, "Alert is created Succesfully!")
         );
     }
 }
