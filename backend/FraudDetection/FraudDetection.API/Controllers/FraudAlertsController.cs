@@ -36,7 +36,7 @@ public class FraudAlertController : ControllerBase
             return NotFound(ApiResponse<string>.ErrorResponse($"no alert found with ID: {id}"));
         }
 
-        return Ok(ApiResponse<FraudAlert>.SuccessResponse(alert,$"Found alert with id {id}"));
+        return Ok(ApiResponse<FraudAlertDto>.SuccessResponse(alert,$"Found alert with id {id}"));
     }
 
     [HttpPost]
@@ -52,7 +52,7 @@ public class FraudAlertController : ControllerBase
         return CreatedAtAction(
             nameof(GetAlertById),
             new { id = createdAlert.FraudAlertId },
-            ApiResponse<FraudAlert>.SuccessResponse(createdAlert, "Alert is created Succesfully!")
+            ApiResponse<FraudAlertDto>.SuccessResponse(createdAlert, "Alert is created Succesfully!")
         );
     }
 }

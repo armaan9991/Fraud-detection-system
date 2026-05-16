@@ -1,4 +1,4 @@
-namespace FraudAlert.API.DTOs;
+namespace FraudDetection.API.DTOs;
 
 public class DeviceResponseDto
 {
