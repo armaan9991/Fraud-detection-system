@@ -10,6 +10,7 @@ public class TransactionService : ITransactionService
     private readonly ApplicationDbContext _context;
     private readonly IFraudAlertService _IFraudAlertService;
     private readonly IMLPredictionService _mLPredictionService;
+    private record FraudScoreResult(int Score,List<string> reason);
     public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice, IMLPredictionService mLPredictionService)
     {
         _context = context;
@@ -25,8 +26,10 @@ public class TransactionService : ITransactionService
         {
             return null;
         }
-
-        int fraud_score = CalculateFraudScore(dto);
+        
+        int fraud_score;
+        List<string> Reasons ;
+        (fraud_score,Reasons) = CalculateFraudScore(dto);
 
         string risk_level = GetRiskLevel(fraud_score);
 
@@ -67,7 +70,7 @@ public class TransactionService : ITransactionService
         
         if (transaction.FraudScore >= 60)
         {
-           await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , risk_level, "Suspicious transaction!!");
+           await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , risk_level, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
         }
         return MapToTransactionResponseDto(transaction);
     }
@@ -227,29 +230,36 @@ public class TransactionService : ITransactionService
     }
 
      
-    public int CalculateFraudScore(CreateTransactionDto dto)
+    private FraudScoreResult CalculateFraudScore(CreateTransactionDto dto)
     {
         int f_score = 0 ;
+        var reason = new List<string>();
         if (dto.Amount > 5000)
         {
             f_score += 40;
+            reason.Add($"High amount ({dto.Amount})");
         }
         if (dto.Country != "canada")
         {
             f_score += 25;
+            reason.Add($"Foriegn Country ({dto.Country})");
         }
         if(dto.Currency.ToLower() != "cad")
         {
             f_score +=10;
+            reason.Add($"Non canadian currency ({dto.Currency})");
+
         }
         int Hour = DateTime.UtcNow.Hour;
     
         if (Hour >=0 && Hour <=5)
         {
             f_score += 15;
+            reason.Add($"Overnight transaction ({Hour})");
+
         }
 
-        return f_score;
+        return new FraudScoreResult(f_score,reason);
     }
     public string GetRiskLevel(int f_score)
     {
