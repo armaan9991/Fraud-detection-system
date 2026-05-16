@@ -15,9 +15,30 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<PagedResult<UserResponseDto>> GetAllUsersAsync(int page, int pageSize)
+    public async Task<PagedResult<UserResponseDto>> GetAllUsersAsync(int page, int pageSize,UserFilterDto filterDto)
     {
         var user_list = _context.Users.AsQueryable(); // get all user in list and doesnt block thread here. wait in background. .
+        if (!string.IsNullOrEmpty(filterDto.Email))
+        {
+            user_list = user_list.Where(t => t.Email == filterDto.Email);
+        }
+        if (!string.IsNullOrEmpty(filterDto.Name))
+        {
+            user_list = user_list.Where(t => t.Name == filterDto.Name);
+        }
+        if (!string.IsNullOrEmpty(filterDto.Role))
+        {
+            user_list = user_list.Where(t => t.Role == filterDto.Role);
+        }
+        if (filterDto.ToDate.HasValue)
+        {
+            user_list.Where(t => t.CreatedAt <= filterDto.ToDate.Value);
+        }
+        if (filterDto.FromData.HasValue)
+        {
+            user_list.Where(t => t.CreatedAt >= filterDto.FromData.Value);
+        }
+
         int list_length = await user_list.CountAsync();
 
         var items = await user_list.OrderByDescending( t =>t.UserId).Skip((page - 1)*pageSize).Take(pageSize).Select(t => new UserResponseDto

@@ -5,7 +5,7 @@ namespace FraudDetection.API.Services;
 
 public interface IUserService
 {
-    Task<PagedResult<UserResponseDto>> GetAllUsersAsync(int page,int pageSize);
+    Task<PagedResult<UserResponseDto>> GetAllUsersAsync(int page,int pageSize,UserFilterDto filterDto);
     Task<User?> GetUserByIdAsync(int id);
     Task<User> CreateUserAsync(CreateUserDto dto);
 }
