@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FraudDetection.API.DTOs;
 
-public class CreateTransactionDtos
+public class CreateTransactionDto
 {
     
     [Required]

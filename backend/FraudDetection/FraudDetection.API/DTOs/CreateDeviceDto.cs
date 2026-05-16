@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FraudDetection.API.DTOs;
 
-public class CreateDeviceDtos
+public class CreateDeviceDto
 {
     [Required]
     [Range(1001,100000)]

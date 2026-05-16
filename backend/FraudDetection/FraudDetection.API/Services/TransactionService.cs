@@ -17,7 +17,7 @@ public class TransactionService : ITransactionService
         _mLPredictionService = mLPredictionService;
     }
 
-    public async Task<TransactionResponseDto?> CreateTransactionAsync(int UserId, CreateTransactionDtos dto)
+    public async Task<TransactionResponseDto?> CreateTransactionAsync(int UserId, CreateTransactionDto dto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u=>u.UserId == UserId);
         
@@ -190,7 +190,7 @@ public class TransactionService : ITransactionService
     }
 
      
-    public int CalculateFraudScore(CreateTransactionDtos dto)
+    public int CalculateFraudScore(CreateTransactionDto dto)
     {
         int f_score = 0 ;
         if (dto.Amount > 5000)

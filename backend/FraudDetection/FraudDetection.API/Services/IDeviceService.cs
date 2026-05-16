@@ -1,4 +1,3 @@
-using FraudAlert.API.DTOs;
 using FraudDetection.API.DTOs;
 using FraudDetection.API.Models;
 
@@ -8,5 +7,5 @@ public interface IDeviceService
 {
     Task<PagedResult<DeviceResponseDto>> GetDeviceAllAsync(int page,int pageSize);
     Task<Device?> GetDeviceByIdAsync(int id);
-    Task<Device> CreateDeviceAsync(CreateDeviceDtos dtos);
+    Task<Device?> CreateDeviceAsync(CreateDeviceDto dto);
 }

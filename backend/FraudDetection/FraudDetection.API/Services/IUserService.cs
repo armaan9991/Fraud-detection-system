@@ -7,5 +7,5 @@ public interface IUserService
 {
     Task<PagedResult<UserResponseDto>> GetAllUsersAsync(int page,int pageSize);
     Task<User?> GetUserByIdAsync(int id);
-    Task<User> CreateUserAsync(CreateUserDtos dto);
+    Task<User> CreateUserAsync(CreateUserDto dto);
 }

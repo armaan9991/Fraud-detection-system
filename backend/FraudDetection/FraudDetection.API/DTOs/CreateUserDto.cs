@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FraudDetection.API.DTOs;
 
-public class CreateUserDtos
+public class CreateUserDto
 {
 
     [Required]

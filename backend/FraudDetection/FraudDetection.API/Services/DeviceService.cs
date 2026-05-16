@@ -1,4 +1,3 @@
-using FraudAlert.API.DTOs;
 using FraudDetection.API.Controllers;
 using FraudDetection.API.Data;
 using FraudDetection.API.DTOs;
@@ -47,9 +46,9 @@ public  class  DeviceService : IDeviceService
         return found_device;
     }
 
-    public async Task<Device> CreateDeviceAsync(CreateDeviceDtos dtos)
+    public async Task<Device?> CreateDeviceAsync(CreateDeviceDto dto)
     {
-       var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == dtos.UserId);
+       var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == dto.UserId);
 
        if (user == null)
         {
@@ -57,9 +56,9 @@ public  class  DeviceService : IDeviceService
         }
         var dev = new Device
         {
-            UserId = dtos.UserId,
-            DeviceName = dtos.DeviceName,
-            IPAddress = dtos.IPAddress,
+            UserId = dto.UserId,
+            DeviceName = dto.DeviceName,
+            IPAddress = dto.IPAddress,
             LastUsed = DateTime.UtcNow
         };
        _context.Devices.Add(dev);
