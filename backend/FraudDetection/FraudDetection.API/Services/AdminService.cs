@@ -44,4 +44,94 @@ public class AdminService : IAdminService
         };
     }
 
+     public async Task<PagedResult<UserResponseDto>> GetUserTransactionAsync(int page,int pageSize, UserFilterDto filterDto)
+    {
+        var query = _context.Users.AsQueryable();
+
+        if (!string.IsNullOrEmpty(filterDto.Role))
+        {
+            query.Where(t => t.Role == filterDto.Role);
+        }
+
+
+        var totalRecords = await query.CountAsync();
+
+        var users = await query
+                    .OrderByDescending( t=> t.UserId)
+                    .Skip((page-1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+        return new PagedResult<UserResponseDto>
+        {
+            Page = page,
+            PageSize =pageSize,
+            TotalPages = (int)Math.Ceiling( totalRecords/(double)pageSize),
+            TotalRecords = (int)totalRecords,
+            Items = users.Select( u => new UserResponseDto
+            {
+                UserId = u.UserId,
+                Name = u.Name,
+                Email = u.Email,
+                Role = u.Role,
+                CreatedAt = u.CreatedAt
+            }).ToList()
+        };
+    }
+
+    public async Task<PagedResult<TransactionResponseDto>> GetUserTransactionAsync(int userId, int page,int pageSize)
+    {
+        var query = _context.Transactions.Where(t=> t.UserId == userId);
+
+        var totalrecords = await query.CountAsync();
+
+        var transactions =await query  
+                            .OrderByDescending( t => t.TransactionTime)
+                            .Skip((page-1)*pageSize)
+                            .Take(pageSize)
+                            .ToListAsync();
+        
+        return new PagedResult<TransactionResponseDto>
+        {
+            TotalRecords =totalrecords,
+            Page = page,
+            PageSize = pageSize,
+            TotalPages = (int)Math.Ceiling((double)totalrecords / pageSize),
+            Items = transactions.Select(t => new TransactionResponseDto
+            {
+                TransactionId = t.TransactionId,
+                UserId = t.UserId,
+                Amount = t.Amount,
+                TransactionTime = t.TransactionTime,
+                Currency = t.Currency,
+                Country = t.Country,
+                FraudScore =t.FraudScore,
+                Status = t.Status
+            }).ToList()
+        };
+    }
+
+
+    public async Task<TransactionResponseDto?> UpdateTransactionStatusAsync(int transactionId,string status)
+    {
+        var transaction =await _context.Transactions.FindAsync(transactionId);
+        if (transaction == null) return null;
+
+        transaction.Status = status.ToUpper();
+
+        await _context.SaveChangesAsync();
+
+        return new TransactionResponseDto
+        {
+            TransactionId =transaction.TransactionId,
+            UserId = transaction.UserId,
+            Amount = transaction.Amount,
+            TransactionTime = transaction.TransactionTime,
+            Currency = transaction.Currency,
+            Country = transaction.Country,
+            FraudScore = transaction.FraudScore,
+            Status = transaction.Status
+        };
+    }
+
+    
 }
