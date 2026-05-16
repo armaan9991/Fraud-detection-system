@@ -14,31 +14,49 @@ public class FraudAlertService : IFraudAlertService
         _context = context;
     }
 
-    public async Task<PagedResult<FraudAlertDto>> GetAlertAsync(int page, int pageSize)
+    public async Task<PagedResult<FraudAlertDto>> GetAlertAsync(int page, int pageSize,FraudAlertFilterDto filterDto)
     {
         var alert_list = _context.FraudAlerts.Include(t => t.Transaction).AsQueryable();
+        if (!string.IsNullOrEmpty(filterDto.Reason))
+        {
+            alert_list = alert_list.Where(f => f.Reason == filterDto.Reason);
+        }
+        if (!string.IsNullOrEmpty(filterDto.RiskLevel))
+        {
+            alert_list = alert_list.Where(f => f.RiskLevel == filterDto.RiskLevel);
+        }
+        if (filterDto.FromCreated.HasValue)
+        {
+            alert_list = alert_list.Where(f => f.CreatedAt >= filterDto.FromCreated.Value);
+        }
+        if (filterDto.ToCreated.HasValue)
+        {
+            alert_list = alert_list.Where(f => f.CreatedAt <= filterDto.ToCreated);
+        }
+        
+        
+        
         var totalRecords = await alert_list.CountAsync();
 
         var items = await alert_list
             .OrderByDescending(t => t.FraudAlertId)
             .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .Select(t => new FraudAlertDto
+            .Take(pageSize).ToListAsync();
+
+        return new PagedResult<FraudAlertDto>
+        {
+            Page = page,
+            PageSize = pageSize,
+            TotalRecords = totalRecords,
+            TotalPages = (int)Math.Ceiling(totalRecords / (double)pageSize),
+            Items = items.Select(t => new FraudAlertDto
             {
                 FraudAlertId = t.FraudAlertId,
                 TransactionId = t.TransactionId,
                 RiskLevel = t.RiskLevel,
                 Reason = t.Reason,
                 CreatedAt = t.CreatedAt
-            }).ToListAsync();
-
-        return new PagedResult<FraudAlertDto>
-        {
-            Items = items,
-            Page = page,
-            PageSize = pageSize,
-            TotalRecords = totalRecords,
-            TotalPages = (int)Math.Ceiling(totalRecords / (double)pageSize)
+            }).ToList()
         };
     }
 
