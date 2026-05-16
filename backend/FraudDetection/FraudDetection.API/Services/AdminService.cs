@@ -44,7 +44,7 @@ public class AdminService : IAdminService
         };
     }
 
-     public async Task<PagedResult<UserResponseDto>> GetUserTransactionAsync(int page,int pageSize, UserFilterDto filterDto)
+     public async Task<PagedResult<UserResponseDto>> GetUsersAsync(int page,int pageSize, UserFilterDto filterDto)
     {
         var query = _context.Users.AsQueryable();
 
