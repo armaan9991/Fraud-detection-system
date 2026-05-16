@@ -15,7 +15,7 @@ public class ApiResponse<T>
             Data = data 
         };
     }
-    public static ApiResponse<T> ErrorResponse(T data,string message = "Failure")
+    public static ApiResponse<T> ErrorResponse(string message = "Failure")
     {
         return new ApiResponse<T>
         {
