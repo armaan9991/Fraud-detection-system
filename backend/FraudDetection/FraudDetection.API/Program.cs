@@ -63,8 +63,8 @@ builder.Services.AddScoped<IUserService , UserService>();
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IFraudAlertService, FraudAlertService>();
 builder.Services.AddScoped<IAuthService,AuthService>();
+builder.Services.AddScoped<IAdminService,AdminService>();
 builder.Services.AddHttpClient<IMLPredictionService,MLPredictionService>();
-
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
 {
