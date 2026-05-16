@@ -25,7 +25,7 @@ public class TransactionsController: ControllerBase
 // post   api/transactions
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> CreateTransaction(CreateTransactionDtos dto)
+    public async Task<IActionResult> CreateTransaction(CreateTransactionDto dto)
     {
         var userIdclaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -51,12 +51,14 @@ public class TransactionsController: ControllerBase
     // get api/transaction
     [Authorize]
     [HttpGet]
-    public async Task<IActionResult> GetTransactions(int page =1,int pageSize = 20)
+    public async Task<IActionResult> GetTransactions(int page =1,int pageSize = 20, TransactionFilterDto filter = null!)
     {
+
         int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         var role = User.FindFirst(ClaimTypes.Role)?.Value;
-        
-        var transactions =await _transactionService.GetAllTransactionsAsync(userId, role,page,pageSize);
+
+        filter ??= new TransactionFilterDto();        
+        var transactions =await _transactionService.GetAllTransactionsAsync(userId, role,page,pageSize,filter);
 
         return Ok(ApiResponse<PagedResult<TransactionResponseDto>>.SuccessResponse(transactions,"All Transactions present!"));
     }
