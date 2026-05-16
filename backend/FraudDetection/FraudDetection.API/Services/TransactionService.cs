@@ -72,13 +72,50 @@ public class TransactionService : ITransactionService
         return MapToTransactionResponseDto(transaction);
     }
 
-    public async Task<PagedResult<TransactionResponseDto>> GetAllTransactionsAsync(int userId , string role ,int page, int pageSize)
+    public async Task<PagedResult<TransactionResponseDto>> GetAllTransactionsAsync(int userId , string role ,int page, int pageSize,TransactionFilterDto filterDto)
     {
         var query = _context.Transactions.Include(t => t.User).AsQueryable();
-
-        if (role != "Admin"){
+        if (role != "Admin")
+        {
             query = query.Where(t => t.UserId == userId);
         }
+        if (!string.IsNullOrEmpty(filterDto.Status))
+        {
+            query = query.Where(t => t.Status == filterDto.Status);
+        }
+        if (!string.IsNullOrEmpty(filterDto.Country))
+        {
+            query = query.Where(t => t.Country == filterDto.Country);
+        }
+        if (!string.IsNullOrEmpty(filterDto.Currency))
+        {
+            query = query.Where(t => t.Currency == filterDto.Currency);
+        }
+        if (filterDto.MinAmount.HasValue)
+        {
+            query = query.Where(t => t.Amount >= filterDto.MinAmount.Value);
+        }
+        if (filterDto.MaxAmount.HasValue)
+        {
+            query = query.Where(t => t.Amount <= filterDto.MaxAmount.Value);
+        }
+        if (filterDto.FromDate.HasValue)
+        {
+            query = query.Where(t => t.TransactionTime >= filterDto.FromDate.Value);
+        }
+        if (filterDto.ToDate.HasValue)
+        {
+            query = query.Where(t => t.TransactionTime <= filterDto.ToDate.Value);
+        }
+        if (filterDto.MinFraudScore.HasValue)
+        {
+            query = query.Where(t => t.FraudScore >= filterDto.MinFraudScore.Value);
+        }
+        if (filterDto.MaxFraudScore.HasValue)
+        {
+            query = query.Where(t => t.FraudScore <= filterDto.MaxFraudScore.Value);
+        }
+       
 
         var totalrecords = await query.CountAsync();
 
