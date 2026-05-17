@@ -15,12 +15,13 @@ public class AuthService : IAuthService
     private readonly ApplicationDbContext _context;
     private readonly IConfiguration _configuration;
     private readonly IUserService _UserService;
-
-    public AuthService(ApplicationDbContext context,IUserService userService,IConfiguration configuration)
+    private readonly IAuditLogService _auditLogService;
+    public AuthService(ApplicationDbContext context,IUserService userService,IConfiguration configuration , IAuditLogService auditLogService)
     {
         _context= context;
         _configuration = configuration;
         _UserService =userService;
+        _auditLogService = auditLogService;
     }
 
     public async Task<AuthResponseDto?> RegisterAsync(RegisterDto dto)
@@ -45,7 +46,8 @@ public class AuthService : IAuthService
         _context.Users.Add(user);
         
         await _context.SaveChangesAsync();
-
+        
+        await _auditLogService.CreateLogAsync(user.UserId, "registered user","user",null,"created new user!");
         string token = GenerateJwtToken(user);
 
         return new AuthResponseDto
@@ -61,7 +63,9 @@ public class AuthService : IAuthService
         var user =  await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
         if (user == null)
         {
+            await _auditLogService.CreateLogAsync(null, "Failed Login attempt", "user", null , $"Failed Attempt to login{dto.Email} , tried password {dto.Password}");
             return null;
+
         }
         bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password,user.PasswordHash);
 
@@ -69,6 +73,9 @@ public class AuthService : IAuthService
         {
             return null;
         }
+
+        await _auditLogService.CreateLogAsync(user.UserId, "Successful Login attempt", "user", null , $"Logged in User' Email{dto.Email} and id {user.UserId}");
+
         string token = GenerateJwtToken(user);
         return new AuthResponseDto
         {
