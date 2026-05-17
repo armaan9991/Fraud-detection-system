@@ -27,9 +27,35 @@ public class AuditLogService : IAuditLogService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<PagedResult<AuditLogDto>> GetLogAsync(int page, int pageSize)
+    public async Task<PagedResult<AuditLogDto>> GetLogAsync(AuditLogFilterDto filterDto, int page, int pageSize)
     {
         var query = _context.AuditLogs.AsQueryable();
+        if (filterDto.UserId.HasValue)
+        {
+            query = query.Where(x=> x.UserId == filterDto.UserId.Value);
+        }
+        if (filterDto.EntityId.HasValue)
+        {
+            query = query.Where(x=> x.EntityId == filterDto.EntityId.Value);
+        }
+              if (!string.IsNullOrEmpty(filterDto.EntityType))
+        {
+            query = query.Where(x => x.EntityType == filterDto.EntityType);
+        }
+        
+        if (!string.IsNullOrEmpty(filterDto.Action))
+        {
+            query = query.Where(x => x.Action.ToLower() == filterDto.Action);
+        }
+        if (filterDto.toCreatedAt.HasValue)
+        {
+            query = query.Where(x => x.CreatedAt <= filterDto.toCreatedAt.Value);
+        }
+         if (filterDto.fromCreatedAt.HasValue)
+        {
+            query = query.Where(x => x.CreatedAt >=  filterDto.fromCreatedAt.Value);
+        }
+  
 
         int Totalrecords = await query.CountAsync();
 

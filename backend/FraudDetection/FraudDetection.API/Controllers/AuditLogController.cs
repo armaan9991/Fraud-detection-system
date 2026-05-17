@@ -15,9 +15,9 @@ public class AuditLogController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetLogs(int page =1 , int pageSize =20)
+    public async Task<IActionResult> GetLogs(AuditLogFilterDto filterDto, int page =1 , int pageSize =20)
     {
-        var logs = await _auditservice.GetLogAsync(page,pageSize);
+        var logs = await _auditservice.GetLogAsync(filterDto,page,pageSize);
 
         return Ok(ApiResponse<PagedResult<AuditLogDto>>.SuccessResponse(logs , "Audit Logs!!"));
     }
