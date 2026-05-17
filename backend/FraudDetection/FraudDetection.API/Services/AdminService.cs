@@ -6,10 +6,12 @@ namespace FraudDetection.API.Services;
 
 public class AdminService : IAdminService
 {
+    private readonly IAuditLogService _auditloggingservice;
     private readonly ApplicationDbContext _context;
-    public AdminService(ApplicationDbContext context)
+    public AdminService(ApplicationDbContext context, IAuditLogService auditLogService)
     {
         _context = context;
+        _auditloggingservice = auditLogService;
     }
 
     public async Task<AdminStatsDto> GetStatsAsync()
@@ -120,6 +122,7 @@ public class AdminService : IAdminService
 
         await _context.SaveChangesAsync();
 
+        await _auditloggingservice.CreateLogAsync(null,"updated transaction staus", "transaction", transaction.TransactionId, "status updated by user!");
         return new TransactionResponseDto
         {
             TransactionId =transaction.TransactionId,
