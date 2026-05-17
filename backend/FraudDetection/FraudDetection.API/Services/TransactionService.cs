@@ -11,11 +11,13 @@ public class TransactionService : ITransactionService
     private readonly IFraudAlertService _IFraudAlertService;
     private readonly IMLPredictionService _mLPredictionService;
     private record FraudScoreResult(int Score,List<string> reason);
-    public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice, IMLPredictionService mLPredictionService)
+    private readonly IAuditLogService _auditLogService;
+    public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice, IMLPredictionService mLPredictionService,IAuditLogService auditLogService)
     {
         _context = context;
         _IFraudAlertService = fraudalertservice;
         _mLPredictionService = mLPredictionService;
+        _auditLogService = auditLogService;
     }
 
     public async Task<TransactionResponseDto?> CreateTransactionAsync(int UserId, CreateTransactionDto dto)
@@ -68,6 +70,7 @@ public class TransactionService : ITransactionService
          _context.Transactions.Add(transaction);
         await _context.SaveChangesAsync();
         
+        await _auditLogService.CreateLogAsync(transaction.UserId,"Created Transaction", "transaction", transaction.TransactionId, $"Transaction of {transaction.Amount} created!");
         if (transaction.FraudScore >= 60)
         {
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , risk_level, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
