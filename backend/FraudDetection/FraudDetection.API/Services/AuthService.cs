@@ -9,6 +9,7 @@ namespace FraudDetection.API.Services;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using System.Security.Cryptography;
 
 public class AuthService : IAuthService
 {
@@ -16,6 +17,7 @@ public class AuthService : IAuthService
     private readonly IConfiguration _configuration;
     private readonly IUserService _UserService;
     private readonly IAuditLogService _auditLogService;
+    
     public AuthService(ApplicationDbContext context,IUserService userService,IConfiguration configuration , IAuditLogService auditLogService)
     {
         _context= context;
@@ -48,11 +50,12 @@ public class AuthService : IAuthService
         await _context.SaveChangesAsync();
         
         await _auditLogService.CreateLogAsync(user.UserId, "registered user","user",null,"created new user!");
-        string token = GenerateJwtToken(user);
+        string Accesstoken = GenerateJwtToken(user);
 
+        // string refreshtoken = await              NEED TO ADD A FUCNTION...
         return new AuthResponseDto
         {
-            Token = token,
+            AccessToken = Accesstoken,
             Email = user.Email,
             Role = user.Role
         };
@@ -79,10 +82,48 @@ public class AuthService : IAuthService
         string token = GenerateJwtToken(user);
         return new AuthResponseDto
         {
-            Token = token,
+            AccessToken = token,
             Email = user.Email,
             Role = user.Role
         };
+    }
+    
+    public async Task<AuthResponseDto?> RefreshTokenAsync(string RefreshToken)
+    {
+        var StoredToken = await _context.RefreshTokens.Include(t => t.user).FirstOrDefaultAsync(r => r.Token == RefreshToken);
+
+        if (StoredToken == null || StoredToken.IsRevoked || StoredToken.ExpiresAt < DateTime.UtcNow)
+        {
+            return null;
+        }
+
+        StoredToken.IsRevoked = true;
+        var newRefreshToken = await CreateRefreshTokenAsync(StoredToken.UserId); 
+        await _context.SaveChangesAsync();
+
+        var newAccessToken = GenerateJwtToken(StoredToken.user);
+
+        return new AuthResponseDto
+        {
+            AccessToken = newAccessToken,
+            RefreshToken = newRefreshToken,
+            Email = StoredToken.user.Email,
+            Role = StoredToken.user.Role
+        };
+    }
+
+    public async Task<bool> LogoutAsync(string refreshtoken)
+    {
+        var storedToken = await _context.RefreshTokens.FirstOrDefaultAsync(r => r.Token == refreshtoken);
+
+        if (storedToken == null)
+        {
+            return false;
+        }
+
+        storedToken.IsRevoked = true;
+        await _context.SaveChangesAsync();
+        return true;
     }
     private string GenerateJwtToken(User user)
     {
@@ -96,9 +137,27 @@ public class AuthService : IAuthService
 
         var key =  new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
         var credentials = new SigningCredentials(key , SecurityAlgorithms.HmacSha256);
-        var token = new JwtSecurityToken(issuer:_configuration["Jwt:Issuer"], audience:_configuration["Jwt:Audience"], claims : claims , expires:DateTime.UtcNow.AddDays(1) , signingCredentials:credentials);
+        var token = new JwtSecurityToken(issuer:_configuration["Jwt:Issuer"], audience:_configuration["Jwt:Audience"], claims : claims , expires:DateTime.UtcNow.AddMinutes(15) , signingCredentials:credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
 
     }
+    private async Task<string> CreateRefreshTokenAsync(int userId)
+    {
+        var tokenValue = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+
+        var refreshtoken = new RefreshToken
+        {
+            UserId = userId,
+            Token = tokenValue,
+            ExpiresAt = DateTime.UtcNow.AddDays(7),
+            IsRevoked =false
+        };
+        _context.RefreshTokens.Add(refreshtoken);
+        await _context.SaveChangesAsync();
+
+        return tokenValue;
+    }
+
+
 }

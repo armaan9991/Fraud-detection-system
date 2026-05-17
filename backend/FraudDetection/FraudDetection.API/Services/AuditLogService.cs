@@ -81,4 +81,5 @@ public class AuditLogService : IAuditLogService
             TotalPages = (int)Math.Ceiling(Totalrecords/(double)pageSize)
         };
     }
+    
 }
