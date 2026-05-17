@@ -9,10 +9,12 @@ namespace FraudDetection.API.Services;
 public class UserService : IUserService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IAuditLogService _auditLogService;
 
-    public UserService(ApplicationDbContext context)
+    public UserService(ApplicationDbContext context, IAuditLogService auditLogService)
     {
         _context = context;
+        _auditLogService = auditLogService;
     }
 
     public async Task<PagedResult<UserResponseDto>> GetAllUsersAsync(UserFilterDto filterDto,int page, int pageSize)
@@ -80,6 +82,7 @@ public class UserService : IUserService
         _context.Users.Add(user);
         
         await _context.SaveChangesAsync();
+        await _auditLogService.CreateLogAsync(user.UserId, "Created new user", "user",null , $"{dto.Name} { dto.Email} of new user");
         
         return user;
     }
