@@ -8,10 +8,12 @@ namespace FraudDetection.API.Services;
 public class FraudAlertService : IFraudAlertService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IAuditLogService _auditLogService;
 
-    public FraudAlertService(ApplicationDbContext context)
+    public FraudAlertService(ApplicationDbContext context,IAuditLogService auditLogService)
     {
         _context = context;
+        _auditLogService = auditLogService;
     }
 
     public async Task<PagedResult<FraudAlertDto>> GetAlertAsync(int page, int pageSize,FraudAlertFilterDto filterDto)
@@ -96,6 +98,7 @@ public class FraudAlertService : IFraudAlertService
         _context.FraudAlerts.Add(alert);
         await _context.SaveChangesAsync();
 
+        await _auditLogService.CreateLogAsync(null,"fraudalert_created!","fraudalert", alert.TransactionId,$"created a fraud alert  for {alert.Reason} ");
         return new FraudAlertDto
         {
             FraudAlertId = alert.FraudAlertId,
