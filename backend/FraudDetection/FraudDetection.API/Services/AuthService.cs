@@ -39,7 +39,7 @@ public class AuthService : IAuthService
             Name = dto.Name,
             Email = dto.Email,
             CreatedAt = DateTime.UtcNow, 
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+            PasswordHash = passwordhash,
             Role = "user"
         };
         
