@@ -13,6 +13,7 @@ public class ApplicationDbContext:DbContext                        // our file A
     public DbSet<Transaction> Transactions => Set<Transaction>();
     public DbSet<FraudAlert> FraudAlerts => Set<FraudAlert>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)  // allows database configuration.
     {
