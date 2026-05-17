@@ -10,9 +10,11 @@ namespace FraudDetection.API.Services;
 public  class  DeviceService : IDeviceService
 {
     private readonly ApplicationDbContext  _context;
-    public DeviceService(ApplicationDbContext context)
+    private readonly IAuditLogService _auditlogservice;
+    public DeviceService(ApplicationDbContext context, IAuditLogService auditLogService)
     {
         _context = context;
+        _auditlogservice = auditLogService;
     }
 
     public async Task<PagedResult<DeviceResponseDto>> GetDeviceAllAsync(int page,int pageSize)
@@ -63,6 +65,7 @@ public  class  DeviceService : IDeviceService
         };
        _context.Devices.Add(dev);
        await _context.SaveChangesAsync();
+       await _auditlogservice.CreateLogAsync(dev.UserId, "Registered new device","device",dev.DeviceId,$"new device is registered device id:{dev.DeviceId} user id :{dto.UserId};"  );
 
        return dev;
     }
