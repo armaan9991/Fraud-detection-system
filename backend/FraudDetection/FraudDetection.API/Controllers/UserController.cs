@@ -26,9 +26,9 @@ public class UserController :ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUsers(int page=1, int pageSize=20)
+    public async Task<IActionResult> GetUsers(UserFilterDto filterDto,int page=1, int pageSize=20)
     {
-        var user_list = await _userService.GetAllUsersAsync(page,pageSize);
+        var user_list = await _userService.GetAllUsersAsync(filterDto,page,pageSize);
         if (user_list == null)
         {
             return NotFound(ApiResponse<string>.ErrorResponse("no user is present!"));
@@ -49,7 +49,7 @@ public class UserController :ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser(CreateUserDtos dto)
+    public async Task<IActionResult> CreateUser(CreateUserDto dto)
     {
         var  createdUser = await _userService.CreateUserAsync(dto);
         return CreatedAtAction(

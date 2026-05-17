@@ -15,7 +15,7 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<PagedResult<UserResponseDto>> GetAllUsersAsync(int page, int pageSize,UserFilterDto filterDto)
+    public async Task<PagedResult<UserResponseDto>> GetAllUsersAsync(UserFilterDto filterDto,int page, int pageSize)
     {
         var user_list = _context.Users.AsQueryable(); // get all user in list and doesnt block thread here. wait in background. .
         if (!string.IsNullOrEmpty(filterDto.Email))

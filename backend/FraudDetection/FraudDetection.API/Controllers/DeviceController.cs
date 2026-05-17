@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using FraudDetection.API.Services;
 using  Microsoft.AspNetCore.Authorization;
-using FraudAlert.API.DTOs;
 
 
 
@@ -49,7 +48,7 @@ public class DeviceController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult>  CreateDevice(CreateDeviceDtos dtos)
+    public async Task<IActionResult>  CreateDevice(CreateDeviceDto dtos)
     {
      var CreateDevice = await _deviceService.CreateDeviceAsync(dtos);
      
