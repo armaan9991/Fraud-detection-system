@@ -67,11 +67,11 @@ public class AdminService : IAdminService
         }
         if(!string.IsNullOrEmpty(filterDto.Email))
         {
-            query.Where(t => t.Email == filterDto.Email.ToLower());
+        query = query.Where(t => t.Email.Contains(filterDto.Email.ToLower()));
         }
         if(!string.IsNullOrEmpty(filterDto.Name))
         {
-            query.Where(t => t.Name == filterDto.Name.ToLower());
+            query.Where(t => t.Name.Contains(filterDto.Name.ToLower()));
         }
         if(filterDto.FromData.HasValue)
         {
