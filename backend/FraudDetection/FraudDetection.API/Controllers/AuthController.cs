@@ -4,6 +4,8 @@ using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
 using  Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace FraudDetection.API.Controllers;
 
@@ -18,6 +20,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
+    [EnableRateLimiting("auth")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
         var response = await _authService.RegisterAsync(dto);
@@ -31,6 +34,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [EnableRateLimiting("auth")]
     public async Task<IActionResult> Login(LoginDto dto)
     {
         var response = await _authService.LoginAsync(dto);
@@ -40,6 +44,29 @@ public class AuthController : ControllerBase
         }
 
         return Ok(ApiResponse<AuthResponseDto>.SuccessResponse(response, "Login successfull!"));
+    }
+
+    [HttpPost("refresh")]
+    [EnableRateLimiting("auth")]
+    public async Task<IActionResult> Refresh(RefreshTokenRequestDto dto)
+    {
+        var res = await _authService.RefreshTokenAsync(dto.RefreshToken);
+        if (res == null)
+        {
+            return NotFound(ApiResponse<string>.ErrorResponse("Cant Refresh token"));
+        }
+
+        return Ok(ApiResponse<AuthResponseDto>.SuccessResponse(res, "Token is Refreshed!"));
+    }
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout(RefreshTokenRequestDto dto)
+    {
+        var response = await _authService.LogoutAsync(dto.RefreshToken);
+        if(response == false)
+        {
+            return NotFound(ApiResponse<string>.ErrorResponse("User was not logged in!!"));
+        }
+        return Ok(ApiResponse<bool>.SuccessResponse(response, "Logout successfull!"));
     }
 
     [Authorize]
