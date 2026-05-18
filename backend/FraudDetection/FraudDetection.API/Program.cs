@@ -68,6 +68,7 @@ builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IAdminService,AdminService>();
 builder.Services.AddHttpClient<IMLPredictionService,MLPredictionService>();
 builder.Services.AddScoped<IAuditLogService,AuditLogService>();
+builder.Services.AddScoped<ICacheService,CacheService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
 {

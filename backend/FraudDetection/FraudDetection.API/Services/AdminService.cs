@@ -8,14 +8,22 @@ public class AdminService : IAdminService
 {
     private readonly IAuditLogService _auditloggingservice;
     private readonly ApplicationDbContext _context;
-    public AdminService(ApplicationDbContext context, IAuditLogService auditLogService)
+    private readonly ICacheService _cacheservice;
+    public AdminService(ApplicationDbContext context, IAuditLogService auditLogService, ICacheService cacheService)
     {
         _context = context;
         _auditloggingservice = auditLogService;
+        _cacheservice = cacheService;
     }
 
     public async Task<AdminStatsDto> GetStatsAsync()
     {
+        const string cacheKey = "admin_stats";
+
+        var cached = await _cacheservice.GetAsync<AdminStatsDto>(cacheKey);
+
+        if(cached != null) return cached;
+
         var totalUsers = await _context.Users.CountAsync();
         var totalTransactions = await _context.Transactions.CountAsync();
         var totalAlerts = await _context.FraudAlerts.CountAsync();
@@ -34,7 +42,7 @@ public class AdminService : IAdminService
         var avgScore = totalTransactions >0 ?
                     await _context.Transactions.AverageAsync(t => (double)t.FraudScore) : 0;
 
-        return new AdminStatsDto
+        var stats= new AdminStatsDto
         {
             TotalUsers = totalUsers,
             TotalTranction = totalTransactions,
@@ -44,6 +52,9 @@ public class AdminService : IAdminService
             TransactionsByStatus = byStatus,
             AlertRiskLevel = byRisk
         };
+
+        await _cacheservice.setAsync(cacheKey,stats,TimeSpan.FromMinutes(5));
+        return stats;
     }
 
      public async Task<PagedResult<UserResponseDto>> GetUsersAsync(int page,int pageSize, UserFilterDto filterDto)
@@ -54,11 +65,22 @@ public class AdminService : IAdminService
         {
             query = query.Where(t => t.Role == filterDto.Role.ToLower());
         }
+        if(!string.IsNullOrEmpty(filterDto.Email))
         {
-            query.Where(t => t.Role == filterDto.Role);
+            query.Where(t => t.Email == filterDto.Email.ToLower());
         }
-
-
+        if(!string.IsNullOrEmpty(filterDto.Name))
+        {
+            query.Where(t => t.Name == filterDto.Name.ToLower());
+        }
+        if(filterDto.FromData.HasValue)
+        {
+            query.Where(t => t.CreatedAt >= filterDto.FromData);
+        }
+        if (filterDto.ToDate.HasValue)
+        {
+            query.Where( t=> t.CreatedAt <= filterDto.ToDate);
+        }
         var totalRecords = await query.CountAsync();
 
         var users = await query
