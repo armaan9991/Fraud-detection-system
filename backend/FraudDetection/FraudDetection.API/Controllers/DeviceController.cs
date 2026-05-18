@@ -43,7 +43,7 @@ public class DeviceController : ControllerBase
             return NotFound(ApiResponse<string>.ErrorResponse($"No device of {id} is present!"));
             // return NotFound();
         }
-        return Ok(ApiResponse<Device>.SuccessResponse(found_device ,$"Device with id {id} is found"));
+        return Ok(ApiResponse<DeviceResponseDto>.SuccessResponse(found_device ,$"Device with id {id} is found"));
         // return Ok(found_device);
     }
 
@@ -59,7 +59,7 @@ public class DeviceController : ControllerBase
      return CreatedAtAction(
         nameof(GetDeviceById),
         new {id = CreateDevice.DeviceId}
-        ,ApiResponse<Device>.SuccessResponse(CreateDevice, "device is created!!")
+        ,ApiResponse<DeviceResponseDto>.SuccessResponse(CreateDevice, "device is created!!")
      );
 
     }

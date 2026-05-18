@@ -15,7 +15,7 @@ namespace FraudDetection.API.Controllers;
 
 [ApiController]
 [Route("api/[Controller]")]
-[Authorize]
+[Authorize(Roles ="Admin")]
 public class UserController :ControllerBase
 {
     private readonly IUserService _userService;

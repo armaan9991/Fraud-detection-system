@@ -42,17 +42,28 @@ public  class  DeviceService : IDeviceService
         };
     }
 
-    public  async Task<Device?> GetDeviceByIdAsync(int id)
+    public  async Task<DeviceResponseDto?> GetDeviceByIdAsync(int id)
     {
         var found_device = await _context.Devices.Include(d => d.User).FirstOrDefaultAsync(d => d.DeviceId ==  id);
-        return found_device;
+        if (found_device == null)
+        {
+            return null;
+        }
+        return new DeviceResponseDto
+        {
+          DeviceId = found_device.DeviceId,
+          UserId = found_device.UserId,
+          DeviceName = found_device.DeviceName,
+          IPAddress = found_device.IPAddress,
+          LastUsed =  found_device.LastUsed  
+        };
     }
 
-    public async Task<Device?> CreateDeviceAsync(CreateDeviceDto dto)
+    public async Task<DeviceResponseDto?> CreateDeviceAsync(CreateDeviceDto dto)
     {
-       var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == dto.UserId);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == dto.UserId);
 
-       if (user == null)
+        if (user == null)
         {
             return null;
         }
@@ -63,10 +74,17 @@ public  class  DeviceService : IDeviceService
             IPAddress = dto.IPAddress,
             LastUsed = DateTime.UtcNow
         };
-       _context.Devices.Add(dev);
-       await _context.SaveChangesAsync();
-       await _auditlogservice.CreateLogAsync(dev.UserId, "Registered new device","device",dev.DeviceId,$"new device is registered device id:{dev.DeviceId} user id :{dto.UserId};"  );
+        _context.Devices.Add(dev);
+        await _context.SaveChangesAsync();
+        await _auditlogservice.CreateLogAsync(dev.UserId, "Registered new device","device",dev.DeviceId,$"new device is registered device id:{dev.DeviceId} user id :{dto.UserId};"  );
 
-       return dev;
+        return new DeviceResponseDto
+        {
+            DeviceId = dev.UserId,
+            UserId = dev.UserId,
+            DeviceName = dev.DeviceName,
+            IPAddress = dev.IPAddress,
+            LastUsed = dev.LastUsed
+        };
     }
 }
