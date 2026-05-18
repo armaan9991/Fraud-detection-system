@@ -52,7 +52,7 @@ public class AuthService : IAuthService
         await _auditLogService.CreateLogAsync(user.UserId, "registered user","user",null,"created new user!");
         string Accesstoken = GenerateJwtToken(user);
 
-        // string refreshtoken = await              NEED TO ADD A FUCNTION...
+        string refreshtoken = await CreateRefreshTokenAsync(user.UserId);
         return new AuthResponseDto
         {
             AccessToken = Accesstoken,
@@ -66,7 +66,7 @@ public class AuthService : IAuthService
         var user =  await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
         if (user == null)
         {
-            await _auditLogService.CreateLogAsync(null, "Failed Login attempt", "user", null , $"Failed Attempt to login{dto.Email} , tried password {dto.Password}");
+            await _auditLogService.CreateLogAsync(null, "Failed Login attempt", "user", null , $"Failed Attempt to login{dto.Email} ");
             return null;
 
         }
