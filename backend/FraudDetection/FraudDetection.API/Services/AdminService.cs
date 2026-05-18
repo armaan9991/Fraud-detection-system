@@ -148,6 +148,8 @@ public class AdminService : IAdminService
         await _context.SaveChangesAsync();
 
         await _auditloggingservice.CreateLogAsync(null,"updated transaction staus", "transaction", transaction.TransactionId, "status updated by user!");
+       
+       await _cacheservice.RemoveAsync("admin_stats");
         return new TransactionResponseDto
         {
             TransactionId =transaction.TransactionId,
