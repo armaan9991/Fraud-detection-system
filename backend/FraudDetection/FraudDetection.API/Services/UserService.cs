@@ -30,7 +30,7 @@ public class UserService : IUserService
         }
         if (!string.IsNullOrEmpty(filterDto.Role))
         {
-            user_list = user_list.Where(t => t.Role == filterDto.Role);
+            user_list = user_list.Where(t => t.Role == filterDto.Role.ToLower());
         }
         if (filterDto.ToDate.HasValue)
         {
@@ -87,6 +87,7 @@ public class UserService : IUserService
             Email = dto.Email,
             CreatedAt = DateTime.UtcNow, 
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+            Role = dto.Role.ToLower()
         };
         
         _context.Users.Add(user);

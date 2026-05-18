@@ -15,4 +15,5 @@ public class CreateUserDto
     [Required]
     [MinLength(6)]
     public string Password{get;set;}=string.Empty;
+    public string? Role{get;set;}= string.Empty;
 }

@@ -1,11 +1,13 @@
 using FraudDetection.API.DTOs;
 using FraudDetection.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FraudDetection.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles ="admin")]
 public class AuditLogController : ControllerBase
 {
     private readonly IAuditLogService _auditservice;

@@ -49,7 +49,7 @@ public class TransactionService : ITransactionService
         {
         Amount = transaction.Amount,
 
-        IsForeignTransaction = transaction.Country.ToLower() != "Canada"  ? 1 : 0,
+        IsForeignTransaction = transaction.Country.ToLower() != "canada"  ? 1 : 0,
 
         IsNightTransaction =  DateTime.UtcNow.Hour < 6 ? 1 : 0,
 
@@ -73,7 +73,7 @@ public class TransactionService : ITransactionService
         await _auditLogService.CreateLogAsync(transaction.UserId,"Created Transaction", "transaction", transaction.TransactionId, $"Transaction of {transaction.Amount} created!");
         if (transaction.FraudScore >= 60)
         {
-           await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , risk_level, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
+           await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , transaction.Status, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
         }
         return MapToTransactionResponseDto(transaction);
     }

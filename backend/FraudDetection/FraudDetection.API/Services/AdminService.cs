@@ -52,6 +52,9 @@ public class AdminService : IAdminService
 
         if (!string.IsNullOrEmpty(filterDto.Role))
         {
+            query = query.Where(t => t.Role == filterDto.Role.ToLower());
+        }
+        {
             query.Where(t => t.Role == filterDto.Role);
         }
 
