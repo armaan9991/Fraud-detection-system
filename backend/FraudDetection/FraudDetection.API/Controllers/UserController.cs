@@ -45,7 +45,7 @@ public class UserController :ControllerBase
         {
             return NotFound(ApiResponse<string>.ErrorResponse("no user of this id is present!"));
         }
-        return Ok(ApiResponse<User>.SuccessResponse(found_user,"user found!!"));
+        return Ok(ApiResponse<UserResponseDto>.SuccessResponse(found_user,"user found!!"));
     }
 
     [HttpPost]
@@ -55,7 +55,7 @@ public class UserController :ControllerBase
         return CreatedAtAction(
             nameof(GetUserById),
             new { id = createdUser.UserId},
-            ApiResponse<User>.SuccessResponse(createdUser,"user is created!")
+            ApiResponse<UserResponseDto>.SuccessResponse(createdUser,"user is created!")
         );
     }
 

@@ -62,14 +62,24 @@ public class UserService : IUserService
         };
     }
 
-    public async Task<User?> GetUserByIdAsync(int id)
+    public async Task<UserResponseDto?> GetUserByIdAsync(int id)
     {
         var  found_user = await _context.Users.FirstOrDefaultAsync(t => t.UserId == id );    // first or null
-        
-        return found_user;
+        if (found_user != null)
+        {
+            return null;
+        }
+        return new UserResponseDto
+        {
+            UserId = found_user.UserId,
+            Name= found_user.Name,
+            Email = found_user.Email, 
+            Role = found_user.Role,
+            CreatedAt = found_user.CreatedAt
+        };
     }
 
-    public async Task<User> CreateUserAsync(CreateUserDto  dto)
+    public async Task<UserResponseDto> CreateUserAsync(CreateUserDto  dto)
     {
         var user = new User
         {
@@ -83,7 +93,16 @@ public class UserService : IUserService
         
         await _context.SaveChangesAsync();
         await _auditLogService.CreateLogAsync(user.UserId, "Created new user", "user",null , $"{dto.Name} { dto.Email} of new user");
-        
-        return user;
+         
+        return new UserResponseDto
+        {
+            UserId = user.UserId,
+            Name = user.Name,
+            Email = user.Email,
+            Role = user.Role,
+            CreatedAt = user.CreatedAt
+        };
+
+        // return user;
     }
 }
