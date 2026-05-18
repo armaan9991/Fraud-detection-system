@@ -12,6 +12,8 @@ using Microsoft.OpenApi.Models;
 using FraudDetection.API.Middleware;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
+using Hangfire;
+using Hangfire.PostgreSql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -121,6 +123,15 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "FraudDection_";
 });
 
+// background jobs
+
+builder.Services.AddHangfire(config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                                        .UseSimpleAssemblyNameTypeSerializer()
+                                        .UseRecommendedSerializerSettings()
+                                        .UsePostgreSqlStorage(options =>
+                                        options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))));
+
+builder.Services.AddHangfireServer()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
