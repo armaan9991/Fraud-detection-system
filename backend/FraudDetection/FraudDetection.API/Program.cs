@@ -10,6 +10,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Models;
 using FraudDetection.API.Middleware;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,6 +83,36 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
+// Rate limiting
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("auth",config =>
+    {
+        config.PermitLimit = 5;
+        config.Window = TimeSpan.FromMinutes(5);
+        config.QueueLimit = 0;
+        config.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
+    options.AddFixedWindowLimiter("api",config =>
+    {
+        config.PermitLimit = 60;
+        config.QueueProcessingOrder = 0;
+        config.Window = TimeSpan.FromMinutes(1);
+    });
+
+    options.OnRejected = async(context, CancellationToken) =>
+    {
+        context.HttpContext.Response.StatusCode = 429;
+        await context.HttpContext.Response.WriteAsJsonAsync(new
+        {
+            success = false,
+            message = "Too many requests. Please try again later.",
+            retryAfter = "1 minute"
+        }, CancellationToken);
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -92,7 +124,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
-
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 
