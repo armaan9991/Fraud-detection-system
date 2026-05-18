@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using FraudDetection.API.Services;
 using  Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace FraudDetection.API.Controllers;
 
 [ApiController]
+[EnableRateLimiting("api")]
 [Route("api/[controller]")]
 [Authorize]
 public class TransactionsController: ControllerBase

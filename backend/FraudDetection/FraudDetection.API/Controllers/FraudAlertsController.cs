@@ -3,10 +3,12 @@ using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using  Microsoft.AspNetCore.Authorization;
 using FraudDetection.API.Models;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace FraudDetection.API.Controllers;
 
 [ApiController]
+[EnableRateLimiting("api")]
 [Route("api/[controller]")]
 [Authorize(Roles ="Admin")]
 public class FraudAlertController : ControllerBase

@@ -5,6 +5,7 @@ using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Mvc;
 // using ]
 using  Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace FraudDetection.API.Controllers;
 
@@ -15,6 +16,7 @@ namespace FraudDetection.API.Controllers;
 
 [ApiController]
 [Route("api/[Controller]")]
+[EnableRateLimiting("auth")]
 [Authorize(Roles ="Admin")]
 public class UserController :ControllerBase
 {
@@ -36,6 +38,7 @@ public class UserController :ControllerBase
         return Ok(ApiResponse<PagedResult<UserResponseDto>>.SuccessResponse(user_list,"List of all user present!"));
     }
 
+    [EnableRateLimiting("api")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)
     {
@@ -48,6 +51,7 @@ public class UserController :ControllerBase
         return Ok(ApiResponse<UserResponseDto>.SuccessResponse(found_user,"user found!!"));
     }
 
+    [EnableRateLimiting("api")]
     [HttpPost]
     public async Task<IActionResult> CreateUser(CreateUserDto dto)
     {

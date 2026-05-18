@@ -2,9 +2,11 @@ using FraudDetection.API.DTOs;
 using FraudDetection.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace FraudDetection.API.Controllers;
 
+[EnableRateLimiting("auth")]
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(Roles ="admin")]

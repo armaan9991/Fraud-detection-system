@@ -5,11 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using FraudDetection.API.Services;
 using  Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.RateLimiting;
 
 
 
 namespace FraudDetection.API.Controllers;
 [ApiController]
+[EnableRateLimiting("api")]
 [Route("api/[controller]")]
 [Authorize]
 public class DeviceController : ControllerBase
