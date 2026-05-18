@@ -113,6 +113,13 @@ builder.Services.AddRateLimiter(options =>
     };
 });
 
+// Redis
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["Redis:ConnectionString"];
+    options.InstanceName = "FraudDection_";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
