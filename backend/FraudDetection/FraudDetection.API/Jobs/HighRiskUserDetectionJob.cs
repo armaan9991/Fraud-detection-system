@@ -1,4 +1,6 @@
 using FraudDetection.API.Data;
+using FraudDetection.API.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FraudDetection.API.Jobs;
@@ -6,9 +8,11 @@ namespace FraudDetection.API.Jobs;
 public class HighRiskUserDetectionJob :IHighRiskUserDetectionJob
 {
     private readonly ApplicationDbContext _context;
-    public HighRiskUserDetectionJob(ApplicationDbContext context)
+    private readonly IEmailService _service;
+    public HighRiskUserDetectionJob(ApplicationDbContext context, IEmailService service)
     {
         _context = context;
+        _service =service;
     } 
     public async Task ExecuteAsync()
     {
@@ -29,6 +33,8 @@ public class HighRiskUserDetectionJob :IHighRiskUserDetectionJob
             user.IsFlagged =  true;
             user.FlagReason = $"{suspiciousUser.Count} High Risk tranasction in last 24 hours..";
 
+            var emailbody = $"Account Security \n hello {user.Name}, \n Your account is flagged! \n we have detected an unusual activity";
+            await _service.SendEmailAsync(user.Email,"Account Flagged high risk",emailbody);
         }
 
         await _context.SaveChangesAsync();
