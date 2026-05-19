@@ -12,12 +12,14 @@ public class TransactionService : ITransactionService
     private readonly IMLPredictionService _mLPredictionService;
     private record FraudScoreResult(int Score,List<string> reason);
     private readonly IAuditLogService _auditLogService;
-    public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice, IMLPredictionService mLPredictionService,IAuditLogService auditLogService)
+    private readonly IEmailService _emailService;
+    public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice, IMLPredictionService mLPredictionService,IAuditLogService auditLogService, IEmailService emailService)
     {
         _context = context;
         _IFraudAlertService = fraudalertservice;
         _mLPredictionService = mLPredictionService;
         _auditLogService = auditLogService;
+        _emailService = emailService;
     }
 
     public async Task<TransactionResponseDto?> CreateTransactionAsync(int UserId, CreateTransactionDto dto)
@@ -74,6 +76,8 @@ public class TransactionService : ITransactionService
         if (transaction.FraudScore >= 60)
         {
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , transaction.Status, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
+            var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n If it was not you Call GILL";
+            await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
         }
         return MapToTransactionResponseDto(transaction);
     }
