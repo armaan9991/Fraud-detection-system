@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 using Hangfire;
 using Hangfire.PostgreSql;
+using FraudDetection.API.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,6 +72,10 @@ builder.Services.AddScoped<IAdminService,AdminService>();
 builder.Services.AddHttpClient<IMLPredictionService,MLPredictionService>();
 builder.Services.AddScoped<IAuditLogService,AuditLogService>();
 builder.Services.AddScoped<ICacheService,CacheService>();
+builder.Services.AddScoped<IRefreshTokenCleanupJob,RefreshTokenCleanupJob>();
+builder.Services.AddScoped<IDailyFraudReportJob,DailyFraudReportJob>();
+builder.Services.AddScoped<IHighRiskUserDetectionJob,HighRiskUserDetectionJob>();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
 {
@@ -124,14 +129,14 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 // background jobs
-
+// hangfire were we store , serialize  data
 builder.Services.AddHangfire(config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                                        .UseSimpleAssemblyNameTypeSerializer()
+                                        .UseSimpleAssemblyNameTypeSerializer() 
                                         .UseRecommendedSerializerSettings()
                                         .UsePostgreSqlStorage(options =>
                                         options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))));
-
-builder.Services.AddHangfireServer()
+// start hangfire server!
+builder.Services.AddHangfireServer();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -143,6 +148,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseHangfireDashboard("/hangfire");
+RecurringJob.AddOrUpdate<IRefreshTokenCleanupJob>("refresh-token-cleanup",job => job.ExecuteAsync(), Cron.Daily);
+RecurringJob.AddOrUpdate<IDailyFraudReportJob>("daily-fraud-report",job => job.ExecuteAsync(),"0 0 * * *"); 
+RecurringJob.AddOrUpdate<IHighRiskUserDetectionJob>("High-risk-user-detection",job => job.ExecuteAsync(),Cron.Hourly); 
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
