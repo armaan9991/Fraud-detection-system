@@ -56,6 +56,7 @@ public class AuthService : IAuthService
         return new AuthResponseDto
         {
             AccessToken = Accesstoken,
+            RefreshToken = refreshtoken,
             Email = user.Email,
             Role = user.Role
         };
