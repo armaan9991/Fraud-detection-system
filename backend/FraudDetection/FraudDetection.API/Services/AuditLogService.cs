@@ -55,6 +55,7 @@ public class AuditLogService : IAuditLogService
         {
             query = query.Where(x => x.CreatedAt >=  filterDto.fromCreatedAt.Value);
         }
+        
   
 
         int Totalrecords = await query.CountAsync();

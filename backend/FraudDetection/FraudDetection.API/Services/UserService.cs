@@ -40,6 +40,10 @@ public class UserService : IUserService
         {
             user_list.Where(t => t.CreatedAt >= filterDto.FromData.Value);
         }
+        if (filterDto.IsFlagged.HasValue)
+        {
+            user_list.Where( t => t.IsFlagged == filterDto.IsFlagged);
+        }
 
         int list_length = await user_list.CountAsync();
 
@@ -49,7 +53,8 @@ public class UserService : IUserService
             Name = t.Name,
             Email = t.Email,
             Role = t.Role,
-            CreatedAt = t.CreatedAt
+            CreatedAt = t.CreatedAt,
+            IsFlagged = t.IsFlagged
         }).ToListAsync();
         // adding user DTO
         return new PagedResult<UserResponseDto>
@@ -75,7 +80,8 @@ public class UserService : IUserService
             Name= found_user.Name,
             Email = found_user.Email, 
             Role = found_user.Role,
-            CreatedAt = found_user.CreatedAt
+            CreatedAt = found_user.CreatedAt,
+            IsFlagged = found_user.IsFlagged
         };
     }
 
@@ -101,7 +107,8 @@ public class UserService : IUserService
             Name = user.Name,
             Email = user.Email,
             Role = user.Role,
-            CreatedAt = user.CreatedAt
+            CreatedAt = user.CreatedAt,
+            IsFlagged = user.IsFlagged
         };
 
         // return user;

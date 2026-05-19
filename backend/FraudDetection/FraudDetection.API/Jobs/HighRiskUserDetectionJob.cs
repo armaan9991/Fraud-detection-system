@@ -20,5 +20,17 @@ public class HighRiskUserDetectionJob :IHighRiskUserDetectionJob
         .Where(g => g.Count() >=3)
         .Select(g => new {UserId = g.Key, Count = g.Count()})
         .ToListAsync();
+
+        foreach(var suspiciousUser in suspiciousUsers)
+        {
+            var user = await _context.Users.FindAsync(suspiciousUser.UserId);
+            if (user == null || user.IsFlagged) continue;
+
+            user.IsFlagged =  true;
+            user.FlagReason = $"{suspiciousUser.Count} High Risk tranasction in last 24 hours..";
+
+        }
+
+        await _context.SaveChangesAsync();
     }
 }

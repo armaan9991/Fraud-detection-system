@@ -31,5 +31,9 @@ public class CacheService : ICacheService
 
         await _cache.SetStringAsync(key,data,options);
     }
-    
+
+    public async Task RemoveAsync(string key)
+    {
+        await _cache.RemoveAsync(key);
+    }
 }

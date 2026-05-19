@@ -10,7 +10,8 @@ public class User
     public string PasswordHash {get;set;} = string.Empty;
     public string Role{get;set;}="user";
     public DateTime CreatedAt {get; set;} = DateTime.UtcNow;
-
+    public bool IsFlagged {get;set;}
+    public string? FlagReason {get;set;}
     public List<Transaction> Transactions {get; set;} = new();
 
 }

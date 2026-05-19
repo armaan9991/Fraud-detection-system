@@ -81,6 +81,11 @@ public class AdminService : IAdminService
         {
             query.Where( t=> t.CreatedAt <= filterDto.ToDate);
         }
+        if (filterDto.IsFlagged == true)
+        {
+            query.Where( t=> t.IsFlagged == filterDto.IsFlagged);
+
+        }
         var totalRecords = await query.CountAsync();
 
         var users = await query
@@ -100,7 +105,8 @@ public class AdminService : IAdminService
                 Name = u.Name,
                 Email = u.Email,
                 Role = u.Role,
-                CreatedAt = u.CreatedAt
+                CreatedAt = u.CreatedAt,
+                IsFlagged = u.IsFlagged
             }).ToList()
         };
     }

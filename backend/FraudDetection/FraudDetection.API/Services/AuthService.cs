@@ -42,7 +42,7 @@ public class AuthService : IAuthService
             Email = dto.Email,
             CreatedAt = DateTime.UtcNow, 
             PasswordHash = passwordhash,
-            Role = "user"
+            Role = "user",
         };
         
         _context.Users.Add(user);

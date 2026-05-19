@@ -63,7 +63,7 @@ public class TransactionService : ITransactionService
             transaction.FraudScore=(int)(prediction.FraudProbability *100);
             if (prediction.Prediction == 1)
             {
-                transaction.Status = "HIGH_RISK";
+                transaction.Status = "HIGH";
             }
         }
 
@@ -117,6 +117,7 @@ public class TransactionService : ITransactionService
         {
             query = query.Where(t => t.FraudScore >= filterDto.MinFraudScore.Value);
         }
+        
         if (filterDto.MaxFraudScore.HasValue)
         {
             query = query.Where(t => t.FraudScore <= filterDto.MaxFraudScore.Value);
