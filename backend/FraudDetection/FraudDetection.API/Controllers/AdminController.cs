@@ -48,4 +48,17 @@ public class AdminController :ControllerBase
         }
         return Ok(ApiResponse<TransactionResponseDto>.SuccessResponse(updated_t,"this is success"));
     }
+
+    [HttpPatch("users")]
+    public async Task<IActionResult> UnflagUser(int userId)
+    {
+        var result = await _adminservice.UnflagUserAsync(userId);
+
+        if (result == null)
+        {
+           return NotFound(ApiResponse<string>.ErrorResponse("No user found!!"));
+        }
+        return Ok(ApiResponse<UserResponseDto>.SuccessResponse(result,"user unflagged success"));
+
+    }
 }
