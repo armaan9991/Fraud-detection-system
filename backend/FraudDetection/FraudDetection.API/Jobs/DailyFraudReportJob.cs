@@ -17,7 +17,7 @@ public class DailyFraudReportJob: IDailyFraudReportJob
 
     public async Task ExecuteAsync()
     {
-        var yesterday = DateTime.UtcNow.AddDays(-1);
+        var yesterday = DateTime.UtcNow.Date.AddDays(-1);
         var today = DateTime.UtcNow.Date;
 
         var transaction = await _context.Transactions.Where(t=> t.TransactionTime >= yesterday && t.TransactionTime <= today).ToListAsync();
