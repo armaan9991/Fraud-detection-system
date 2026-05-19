@@ -16,8 +16,8 @@ public class EmailService : IEmailService
         var email = new MimeMessage();
 
         email.From.Add(new MailboxAddress(
-                    _config["Email:SenderName"],
-                    _config["Email:SenderEmail"]
+                    _config["EmailSettings:SenderName"],
+                    _config["EmailSettings:SenderEmail"]
         ));
 
         email.To.Add(MailboxAddress.Parse(toEmail));
@@ -30,13 +30,13 @@ public class EmailService : IEmailService
         using var smpt = new SmtpClient();
 
         await smpt.ConnectAsync(
-               _config["Email:SmtpHost"],
-            int.Parse(_config["Email:SmtpPort"]!),
+               _config["EmailSettings:SmtpServer"],
+            int.Parse(_config["EmailSettings:Port"]!),
             MailKit.Security.SecureSocketOptions.StartTls
         );
 
-        await smpt.AuthenticateAsync(_config["Email:Username"],
-            _config["Email:Password"]);
+        await smpt.AuthenticateAsync(_config["EmailSettings:Username"],
+            _config["EmailSettings:Password"]);
 
         await smpt.SendAsync(email);
         await smpt.DisconnectAsync(true);
