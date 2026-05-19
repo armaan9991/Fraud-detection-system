@@ -1,7 +1,6 @@
 using FraudDetection.API.Data;
 using FraudDetection.API.Services;
 using Microsoft.EntityFrameworkCore;
-using FraudDetection.API.Services;
 using FraudDetection.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
