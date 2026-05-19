@@ -7,6 +7,6 @@ public interface IAdminService
     Task<PagedResult<UserResponseDto>> GetUsersAsync(int page,int pageSize, UserFilterDto filterDto);
     Task<PagedResult<TransactionResponseDto>> GetUserTransactionAsync(int userId, int page, int pageSize);
     Task<TransactionResponseDto?> UpdateTransactionStatusAsync(int transactionId, string status);
-    Task<PagedResult<UserResponseDto?>> UnflagUserAsync(int userId);
+    Task<UserResponseDto?> UnflagUserAsync(int userId);
 
 }

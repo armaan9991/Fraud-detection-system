@@ -169,5 +169,28 @@ public class AdminService : IAdminService
         };
     }
 
+    public async Task<UserResponseDto?> UnflagUserAsync(int userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null) return null;
+
+        user.IsFlagged =false;
+        user.FlagReason = null;
+
+        await _context.SaveChangesAsync();
+
+
+        return new UserResponseDto
+        {
+            UserId = user.UserId,
+            Name = user.Name,
+            Email = user.Email,
+            Role = user.Role,
+            CreatedAt = user.CreatedAt,
+            IsFlagged = user.IsFlagged,
+            FlagReason = user.FlagReason
+        };
+    }
+
     
 }
