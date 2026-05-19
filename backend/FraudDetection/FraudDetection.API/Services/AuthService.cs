@@ -81,9 +81,11 @@ public class AuthService : IAuthService
         await _auditLogService.CreateLogAsync(user.UserId, "Successful Login attempt", "user", null , $"Logged in User' Email{dto.Email} and id {user.UserId}");
 
         string token = GenerateJwtToken(user);
+        string refreshtoken = await CreateRefreshTokenAsync(user.UserId);
         return new AuthResponseDto
         {
             AccessToken = token,
+            RefreshToken =refreshtoken,
             Email = user.Email,
             Role = user.Role
         };
