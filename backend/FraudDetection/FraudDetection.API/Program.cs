@@ -14,6 +14,7 @@ using System.Threading.RateLimiting;
 using Hangfire;
 using Hangfire.PostgreSql;
 using FraudDetection.API.Jobs;
+using FraudDetection.API.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -148,7 +149,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseHangfireDashboard("/hangfire");
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization= [new HangfireAuthorizationFilter()
+    ]
+});
 RecurringJob.AddOrUpdate<IRefreshTokenCleanupJob>("refresh-token-cleanup",job => job.ExecuteAsync(), Cron.Daily);
 RecurringJob.AddOrUpdate<IDailyFraudReportJob>("daily-fraud-report",job => job.ExecuteAsync(),"0 0 * * *"); 
 RecurringJob.AddOrUpdate<IHighRiskUserDetectionJob>("High-risk-user-detection",job => job.ExecuteAsync(),Cron.Hourly); 
