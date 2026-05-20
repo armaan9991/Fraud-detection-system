@@ -12,3 +12,4 @@ venv/
 *.pkl
 # secrets
 **/appsettings.Development.json
+
