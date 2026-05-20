@@ -130,11 +130,15 @@ public class TransactionService : ITransactionService
 
         var totalrecords = await query.CountAsync();
 
-        var items = await query.OrderByDescending(t => t.TransactionTime).Skip((page-1)*pageSize).Take(pageSize).Select(t=> MapToTransactionResponseDto(t)).ToListAsync();
+        var items = await query
+                    .OrderByDescending(t => t.TransactionTime)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
        
         return new PagedResult<TransactionResponseDto>
         {
-            Items = items,
+            Items = items.Select( t=> MapToTransactionResponseDto(t)).ToList(),
             Page = page,
             PageSize = pageSize,
             TotalRecords = totalrecords,

@@ -12,6 +12,7 @@ public class CacheService : ICacheService
     }
     public async Task<T?> GetAsync<T>(string key)
     {
+        try{
         var data = await _cache.GetStringAsync(key);
 
         if (data == null)
@@ -19,9 +20,15 @@ public class CacheService : ICacheService
             return default;
         }
         return JsonSerializer.Deserialize<T>(data);
+        }
+        catch
+        {
+            return default;
+        }
     }
-    public async Task setAsync<T>(string key, T value, TimeSpan expiry)
+    public async Task SetAsync<T>(string key, T value, TimeSpan expiry)
     {
+        try{
         var options = new DistributedCacheEntryOptions
         {
             AbsoluteExpirationRelativeToNow = expiry
@@ -30,10 +37,18 @@ public class CacheService : ICacheService
         var data = JsonSerializer.Serialize(value);
 
         await _cache.SetStringAsync(key,data,options);
+        }
+        catch
+        {
+            
+        }
     }
 
     public async Task RemoveAsync(string key)
     {
+        try{
         await _cache.RemoveAsync(key);
+        }
+        catch{}
     }
 }

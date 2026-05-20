@@ -53,7 +53,7 @@ public class TransactionsController: ControllerBase
     // get api/transaction
     [Authorize]
     [HttpGet]
-    public async Task<IActionResult> GetTransactions(int page =1,int pageSize = 20, TransactionFilterDto filter = null!)
+    public async Task<IActionResult> GetTransactions(int page =1,int pageSize = 20,[FromQuery] TransactionFilterDto filter = null!)
     {
 
         int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);

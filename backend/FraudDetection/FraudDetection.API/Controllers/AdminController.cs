@@ -9,7 +9,7 @@ namespace FraudDetection.API.Controllers;
 [EnableRateLimiting("auth")]
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles ="admin")]
+[Authorize(Roles ="Admin")]
 public class AdminController :ControllerBase
 {
     private readonly IAdminService _adminservice;
@@ -26,7 +26,7 @@ public class AdminController :ControllerBase
     }
 
     [HttpGet("users")]
-    public async Task<IActionResult> GetUsers(int page=1, int pageSize =20, UserFilterDto filter = null!)
+    public async Task<IActionResult> GetUsers(int page=1, int pageSize =20, [FromQuery]UserFilterDto filter = null!)
     {
         filter ??=new UserFilterDto();
         var result = await _adminservice.GetUsersAsync(page,pageSize,filter);
@@ -49,7 +49,7 @@ public class AdminController :ControllerBase
         return Ok(ApiResponse<TransactionResponseDto>.SuccessResponse(updated_t,"this is success"));
     }
 
-    [HttpPatch("users")]
+    [HttpPatch("users/{userId}/unflag")]
     public async Task<IActionResult> UnflagUser(int userId)
     {
         var result = await _adminservice.UnflagUserAsync(userId);

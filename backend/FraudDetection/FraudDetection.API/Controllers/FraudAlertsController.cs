@@ -20,7 +20,7 @@ public class FraudAlertController : ControllerBase
     }
 
      [HttpGet]
-    public async Task<IActionResult> GetAlerts(int page =1,int pageSize =20, FraudAlertFilterDto filterDto = null!)
+    public async Task<IActionResult> GetAlerts(int page =1,int pageSize =20, [FromQuery]FraudAlertFilterDto filterDto = null!)
     {
         filterDto = new FraudAlertFilterDto();
         var alerts = await _fraudAlert.GetAlertAsync(page,pageSize,filterDto);
