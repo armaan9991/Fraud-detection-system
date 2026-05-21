@@ -34,7 +34,7 @@ export const useAuthStore = create<AuthState>()(
                     isAuthenticated:false
                 }),
             }),
-        {name: ' auth-storage'}               // save data using auth - storage in localstorage.
+        {name: 'auth-storage'}               // save data using auth - storage in localstorage.
     ) 
 );
 

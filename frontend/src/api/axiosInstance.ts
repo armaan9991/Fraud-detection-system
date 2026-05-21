@@ -2,7 +2,7 @@ import axois from 'axios';           // to call  http req.
 import { useAuthStore } from '../store/authstore';
 import { Navigate, replace } from 'react-router-dom';
 
-const api = axois.create({
+export const api = axois.create({
     baseURL :'http://localhost:5297/api',
 });
 
