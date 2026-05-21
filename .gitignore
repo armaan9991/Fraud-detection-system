@@ -8,9 +8,30 @@ __pycache__/
 
 venv/
 .venv/
+ml/venv/
 
+# Python cache
+__pycache__/
+*.pyc
+
+# VSCode
+.vscode/
+
+# dotenv
+.env
 *.pkl
 # secrets
 **/appsettings.Development.json
 
 UI planing.docx
+
+node_modules/
+npm-debug.log*
+
+# Build folders
+dist/
+build/
+
+
+.env
+.env.local

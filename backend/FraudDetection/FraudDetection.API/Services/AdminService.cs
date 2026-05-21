@@ -53,7 +53,7 @@ public class AdminService : IAdminService
             AlertRiskLevel = byRisk
         };
 
-        await _cacheservice.setAsync(cacheKey,stats,TimeSpan.FromMinutes(5));
+        await _cacheservice.SetAsync(cacheKey,stats,TimeSpan.FromMinutes(5));
         return stats;
     }
 
