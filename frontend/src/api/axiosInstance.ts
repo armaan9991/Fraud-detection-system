@@ -1,6 +1,5 @@
 import axois from 'axios';           // to call  http req.
 import { useAuthStore } from '../store/authstore';
-import { Navigate, replace } from 'react-router-dom';
 
 export const api = axois.create({
     baseURL :'http://localhost:5297/api',
@@ -35,7 +34,7 @@ api.interceptors.response.use(                // here response has 2 values (suc
             }
             else{
                 useAuthStore.getState().logout();
-                <Navigate to='/login' replace/>;
+                window.location.href = '/login';
             }
         }
         return Promise.reject(error);

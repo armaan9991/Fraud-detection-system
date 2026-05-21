@@ -1,4 +1,7 @@
 import { BrowserRouter, Navigate, Route } from "react-router-dom";
+import {LoginPage} ;
+import {DashboardPage} ;
+import ProtectedRoute from './guards/ProtectedRoute';
 
 export default function App(){
   return(
