@@ -1,6 +1,6 @@
-import { BrowserRouter, Navigate, Route } from "react-router-dom";
-import {LoginPage} ;
-import {DashboardPage} ;
+import { BrowserRouter, Routes,Navigate, Route } from "react-router-dom";
+import LoginPage from './auth/LoginPage';
+// import {DashboardPage} ;
 import ProtectedRoute from './guards/ProtectedRoute';
 
 export default function App(){
@@ -10,7 +10,7 @@ export default function App(){
         <Route path="/login" element={<LoginPage />} />
     
         <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
+            {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
         </Route>
       
         <Route path="*" element={<Navigate to = "/login" replace />} />  

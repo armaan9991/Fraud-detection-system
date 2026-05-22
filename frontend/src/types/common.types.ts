@@ -12,7 +12,7 @@ export interface PagedResult<T>{
 }
 export interface AuthResponse{
     accessToken: string;
-    refrehToken :string;
+    refreshToken :string;
     email : string;
     role: string;
 }

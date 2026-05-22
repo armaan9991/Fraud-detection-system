@@ -1,12 +1,12 @@
 import { api } from "./axiosInstance";
-import { ApiResponse, AuthResponse } from '../types/common.types';
+import type { ApiResponse, AuthResponse } from '../types/common.types';
 
-export const login = async(email:string,password:string) : Promise<ApiResponse> =>{
+export const login = async(email:string,password:string) : Promise<AuthResponse> =>{
     const response = await api.post<ApiResponse<AuthResponse>>('/Auth/login', {email,password});
     return response.data.data;
 };
 
-export const register = async (name:string, email:string,password:string): Promise<ApiResponse> =>{
+export const register = async (name:string, email:string,password:string): Promise<AuthResponse> =>{
     const response = await api.post<ApiResponse<AuthResponse>>('/Auth/register',{name,email,password});
     return response.data.data;
 };
