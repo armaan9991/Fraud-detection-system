@@ -1,0 +1,319 @@
+/* ── Banner ── */
+.dashboardBanner {
+  background: linear-gradient(135deg, #002C5F 0%, #003d7a 70%, #01306e 100%);
+  padding: 2rem 2rem 4.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboardBanner::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 280px;
+  height: 280px;
+  background: rgba(236, 17, 26, 0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.dashboardBanner::after {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  left: 35%;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.dashboardBannerInner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboardWelcome {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.4px;
+  margin: 0;
+}
+
+.dashboardSubtext {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0.3rem 0 0;
+}
+
+/* ── Body (pulls up over banner) ── */
+.dashboardBody {
+  padding: 0 2rem 2rem;
+  margin-top: -2.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Stat Cards ── */
+.dashboardStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 1rem;
+}
+
+.dashboardStatCard {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.dashboardStatCard:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.dashboardStatIconArea {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.dashboardStatIconRed    { background: rgba(236, 17, 26, 0.1); }
+.dashboardStatIconBlue   { background: rgba(37, 99, 235, 0.1); }
+.dashboardStatIconYellow { background: rgba(245, 158, 11, 0.1); }
+.dashboardStatIconGreen  { background: rgba(16, 185, 129, 0.1); }
+.dashboardStatIconNavy   { background: rgba(0, 44, 95, 0.1); }
+
+.dashboardStatBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.dashboardStatLabel {
+  font-size: 0.71rem;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dashboardStatValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.dashboardStatFooter {
+  font-size: 0.71rem;
+  color: #9CA3AF;
+}
+
+/* ── Section Card ── */
+.dashboardSectionCard {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.dashboardSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.dashboardSectionTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.dashboardSectionCount {
+  font-size: 0.72rem;
+  color: #6B7280;
+  background: #F3F4F6;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+/* ── Table ── */
+.dashboardTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboardTable th {
+  text-align: left;
+  font-size: 0.69rem;
+  font-weight: 600;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.7rem 1.5rem;
+  background: #FAFAFA;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.dashboardTable td {
+  padding: 0.85rem 1.5rem;
+  font-size: 0.84rem;
+  color: #374151;
+  border-bottom: 1px solid #F9FAFB;
+  vertical-align: middle;
+}
+
+.dashboardTable tr:last-child td {
+  border-bottom: none;
+}
+
+.dashboardTable tr:hover td {
+  background: #FAFAFA;
+}
+
+.dashboardTableIdCell {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: #9CA3AF;
+}
+
+/* ── Fraud Score Bar ── */
+.dashboardScoreWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dashboardScoreBar {
+  height: 6px;
+  border-radius: 99px;
+  background: #F3F4F6;
+  flex: 1;
+  min-width: 60px;
+  overflow: hidden;
+}
+
+.dashboardScoreFill {
+  height: 100%;
+  border-radius: 99px;
+}
+
+.dashboardScoreFillHigh   { background: #EC111A; }
+.dashboardScoreFillMedium { background: #F59E0B; }
+.dashboardScoreFillLow    { background: #10B981; }
+
+.dashboardScoreText {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #374151;
+  min-width: 28px;
+}
+
+/* ── Status Badge ── */
+.dashboardBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.dashboardBadgeHigh   { background: rgba(236, 17, 26, 0.1);  color: #EC111A; }
+.dashboardBadgeMedium { background: rgba(245, 158, 11, 0.1); color: #B45309; }
+.dashboardBadgeLow    { background: rgba(16, 185, 129, 0.1); color: #059669; }
+
+/* ── Chart ── */
+.dashboardChartWrapper {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+/* ── Loading / Empty ── */
+.dashboardLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 0.75rem;
+  color: #9CA3AF;
+  font-size: 0.875rem;
+}
+
+.dashboardSpinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #E5E7EB;
+  border-top-color: #EC111A;
+  border-radius: 50%;
+  animation: dashboardSpin 0.7s linear infinite;
+}
+
+@keyframes dashboardSpin {
+  to { transform: rotate(360deg); }
+}
+
+.dashboardEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  gap: 0.5rem;
+  color: #9CA3AF;
+  font-size: 0.875rem;
+}
+
+.dashboardEmptyIcon {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .dashboardBanner {
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  .dashboardBody {
+    padding: 0 1rem 1.5rem;
+  }
+
+  .dashboardStatsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dashboardTable th,
+  .dashboardTable td {
+    padding: 0.75rem 1rem;
+  }
+}

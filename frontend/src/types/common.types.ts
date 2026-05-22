@@ -25,6 +25,7 @@ export interface Transaction{
     country : string;
     fraudScore: number;
     transactionTime : string;
+    status:string;
 }
 
 export interface Device{
