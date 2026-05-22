@@ -15,6 +15,7 @@ using Hangfire;
 using Hangfire.PostgreSql;
 using FraudDetection.API.Jobs;
 using FraudDetection.API.Infrastructure;
+using System.Drawing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -137,8 +138,21 @@ builder.Services.AddHangfire(config => config.SetDataCompatibilityLevel(Compatib
                                         options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))));
 // start hangfire server!
 builder.Services.AddHangfireServer();
-var app = builder.Build();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+    policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+    });
+});
+
+
+var app = builder.Build();
+app.UseCors("AllowFrontend");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
