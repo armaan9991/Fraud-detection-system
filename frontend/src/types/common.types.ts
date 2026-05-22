@@ -51,3 +51,12 @@ export interface User{
     isFlagged:boolean;
     flagReason?:string;
 }
+export interface AdminStats{
+    totalUsers: number;
+    totalTransaction : number;
+    totalFraudAlerts : number;
+    totalTransactionAmount: number;
+    AverageFraudScore : number;
+    transactionByStatus:Record<string, number>;
+    alertRiskLevel : Record<string,number>;
+}
