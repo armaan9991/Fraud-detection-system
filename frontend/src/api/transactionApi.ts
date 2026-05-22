@@ -1,10 +1,9 @@
 import { api } from "./axiosInstance";
 import type{ ApiResponse,AuthResponse,PagedResult,Transaction } from "../types/common.types";
-import type { TreemapNode } from "recharts";
 
-export const getTransaction = async (page =1,pageSize =20):Promise<PagedResult<Transaction>> =>{
-    const response = await api.get<ApiResponse<PagedResult<Transaction>>>(
-        `/Transaction?page=${page}&pageSize=${pageSize}`
+export const getTransaction = async (page =1,pageSize =20):Promise<PagedResult<Transaction>> =>{   // means it will return this promise
+    const response = await api.get<ApiResponse<PagedResult<Transaction>>>(   //send  get request 
+        `/Transaction?page=${page}&pageSize=${pageSize}`   // this template literal.
     );
     return response.data.data;
 };
