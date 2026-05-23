@@ -15,8 +15,3 @@ Promise<Transaction> => {
 }
 
 
-export const CreateUserAsync =async(name:string, email:string,role:string,password:string):
- Promise<ApiResponse<User>> => {
-    const resp = await api.post<ApiResponse<User>>('User',{name,email,role,password});
-    return resp;
- }

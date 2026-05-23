@@ -317,3 +317,20 @@
     padding: 1.25rem;
   }
 }
+
+.loginFooter {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #6B7280;
+}
+
+.loginFooterLink {
+  color: #002C5F;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.loginFooterLink:hover {
+  text-decoration: underline;
+}

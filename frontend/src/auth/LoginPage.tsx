@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { useAuthStore } from "../store/authstore";
 import { useState } from "react";
 import { z } from "zod";
@@ -120,6 +120,10 @@ export default function LoginPage() {
             >
               {isSubmitting ? 'Signing in...' : 'Sign in'}
             </button>
+            <p className={styles.loginFooter}>
+              Dont have account!{' '}
+              <Link to="/register" className={styles.loginFooterLink}>Sign up</Link>
+            </p>
 
           </form>
 
