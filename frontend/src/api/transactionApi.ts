@@ -1,5 +1,5 @@
 import { api } from "./axiosInstance";
-import type{ ApiResponse,AuthResponse,PagedResult,Transaction } from "../types/common.types";
+import type{ ApiResponse,PagedResult,Transaction } from "../types/common.types";
 
 export const getTransactions = async (page =1,pageSize =20):Promise<PagedResult<Transaction>> =>{   // means it will return this promise
     const response = await api.get<ApiResponse<PagedResult<Transaction>>>(   //send  get request 

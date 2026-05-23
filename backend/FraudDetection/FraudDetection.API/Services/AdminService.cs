@@ -45,7 +45,7 @@ public class AdminService : IAdminService
         var stats= new AdminStatsDto
         {
             TotalUsers = totalUsers,
-            TotalTranction = totalTransactions,
+            TotalTransaction = totalTransactions,
             TotalFraudAlerts = totalAlerts,
             TotalTransactionAmount = totalAmount,
             AverageFraudScore = avgScore,
