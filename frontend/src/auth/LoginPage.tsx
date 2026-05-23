@@ -12,7 +12,7 @@ const schema = z.object({
   password: z.string().min(1, 'Password is required'),
 });
 
-type LoginForm = z.infer<typeof schema>;
+type LoginForm = z.infer<typeof schema>;     // here is creates TS type from validation schema
 
 export default function LoginPage() {
   const navigate = useNavigate();

@@ -45,12 +45,15 @@ function LoadingState() {
 }
 
 function UserDashboard() {
+
+
   const { data, isLoading } = useQuery({
     queryKey: ['transactions'],
     queryFn: () => getTransactions(1, 10),
   });
 
   const transactions = data?.items ?? [];
+  const transactioncount = data?.totalRecords;
   const highCount = transactions.filter((t: Transaction) => t.status === 'HIGH').length;
   const mediumCount = transactions.filter((t: Transaction) => t.status === 'MEDIUM').length;
 
@@ -61,7 +64,7 @@ function UserDashboard() {
           <div className={`${styles.dashboardStatIconArea} ${styles.dashboardStatIconBlue}`}>💳</div>
           <div className={styles.dashboardStatBody}>
             <span className={styles.dashboardStatLabel}>Total Transactions</span>
-            <span className={styles.dashboardStatValue}>{data?.totalRecords ?? '—'}</span>
+            <span className={styles.dashboardStatValue}>{transactioncount ?? '—'}</span>
             <span className={styles.dashboardStatFooter}>All time</span>
           </div>
         </div>
@@ -125,6 +128,8 @@ function AdminDashboard() {
     queryKey: ['adminStats'],
     queryFn: getAdminStats,
   });
+  
+  
 
   if (isLoading) return <LoadingState />;
 
@@ -132,6 +137,7 @@ function AdminDashboard() {
     status, count,
   }));
 
+  
   return (
     <>
       <div className={styles.dashboardStatsGrid}>
