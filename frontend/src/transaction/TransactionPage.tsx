@@ -10,7 +10,7 @@ import styles from './TransactionPage.module.css';
 const schema = z.object({
   amount: z.coerce.number().min(1, 'Amount must be at least 1'),
   currency: z.string().min(2, 'Enter a valid currency code').max(5),
-  country: z.string().min(2, 'Enter a valid country'),
+  country: z.string().min(2, 'Enter a valid Country'),
 });
 
 type FormData = z.infer<typeof schema>;
