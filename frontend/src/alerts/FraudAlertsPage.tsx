@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getFraudAlerts } from '../api/fraudAlertApi';
 import type { FraudAlert } from '../types/common.types';
-import styles from './AlertsPage.module.css';
+import styles from './FraudAlertsPage.module.css';
 
 function RiskBadge({ level }: { level: string }) {
   const cls =
