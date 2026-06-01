@@ -19,9 +19,7 @@ export default function App(){
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/transactions" element={<TransactionsPage />} />
             <Route path="/alerts" element={<AlertsPage/>} />
-            <Route element={<AdminRoute />}>
-              {/* <Route path="/admin/register-user" element={</ />} /> */}
-              
+            <Route element={<AdminRoute />}>              
             </Route>
         </Route>
         </Route>
