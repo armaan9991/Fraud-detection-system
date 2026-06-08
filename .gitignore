@@ -19,7 +19,7 @@ __pycache__/
 
 # dotenv
 .env
-*.pkl
+(Get-Content .gitignore) -replace '\*\.pkl', '' | Set-Content .gitignore
 # secrets
 **/appsettings.Development.json
 
