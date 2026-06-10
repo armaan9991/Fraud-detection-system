@@ -1,3 +1,5 @@
+import { boolean, number, string } from "zod";
+
 export interface ApiResponse<T>{
     success:boolean;
     message: string;
@@ -60,4 +62,14 @@ export interface AdminStats{
     AverageFraudScore : number;
     transactionByStatus:Record<string, number>;
     alertRiskLevel : Record<string,number>;
+}
+export interface UserResponseDto
+{
+    UserId : number;
+    Name   : string;
+    Email  : string;
+    Role   : string; 
+    CreatedAt : string;
+    IsFlagged : boolean ;
+    FlagReason :string ;
 }
