@@ -1,5 +1,5 @@
 import { api } from "./axiosInstance";
-import type { ApiResponse,AdminStats, PagedResult,User} from "../types/common.types";
+import type { ApiResponse,AdminStats, PagedResult,User,Transaction} from "../types/common.types";
 
 export const getAdminStats = async() :Promise<AdminStats> =>{
     const resp = await api.get<ApiResponse<AdminStats>>('/Admin/stats');
@@ -22,3 +22,14 @@ export const unflagUser = async(userId:number) : Promise<User | null> =>{
     }
 }
 
+export const updatetransactionStatus = async(transactionId : number,status :string ) : Promise<Transaction | null> =>{
+    try {
+        const resp = await api.patch<ApiResponse<Transaction>>(`/Admin/transactions/${transactionId}/status`,null,{params:{status}});
+        return resp.data.data;
+    } catch (error:any) {
+        if(error.response?.status ===404){
+            return null;
+        }
+        throw error;
+    }
+}
