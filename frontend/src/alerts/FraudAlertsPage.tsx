@@ -41,7 +41,7 @@ export default function AlertsPage() {
       <div className={styles.alertBody}>
         <div className={styles.alertCard}>
           <div className={styles.alertCardHeader}>
-            <h3 className={styles.alertCardTitle}>All Alerts</h3>
+            <h3 className={styles.alertCardTitle}>All  Alerts</h3>
             <span className={styles.alertCardCount}>{data?.totalRecords ?? 0} records</span>
           </div>
 
