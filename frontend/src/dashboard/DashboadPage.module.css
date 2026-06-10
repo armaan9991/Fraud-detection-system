@@ -317,3 +317,7 @@
     padding: 0.75rem 1rem;
   }
 }
+
+.dashboardTableRowClickable { cursor: pointer; }
+.dashboardTableRowClickable:hover td { background: #F0F4FF; }
+.dashboardUserLink { color: #2563EB !important; text-decoration: underline; cursor: pointer; }
