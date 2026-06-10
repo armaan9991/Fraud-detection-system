@@ -15,3 +15,7 @@ Promise<Transaction> => {
 }
 
 
+export const getTransactionById = async (id: number): Promise<Transaction> => {
+  const resp = await api.get<ApiResponse<Transaction>>(`/Transactions/${id}`);
+  return resp.data.data;
+};
