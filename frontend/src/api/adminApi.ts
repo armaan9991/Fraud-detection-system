@@ -33,3 +33,7 @@ export const updateTransactionStatus = async(transactionId : number,status :stri
         throw error;
     }
 }
+export const getUserById = async (userId: number): Promise<User> => {
+    const resp = await api.get<ApiResponse<User>>(`/User/${userId}`);
+    return resp.data.data;
+}
