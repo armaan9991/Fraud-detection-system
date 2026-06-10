@@ -7,6 +7,7 @@ import ProtectedRoute from './guards/ProtectedRoute';
 import RegisterPage from "./admin/RegisterUserPage";
 import TransactionsPage from "./transaction/TransactionPage";
 import AlertsPage from "./alerts/FraudAlertsPage";
+import AdminUsersPage from "./admin/AdminUserPage";
 
 export default function App(){
   return(
@@ -20,6 +21,7 @@ export default function App(){
             <Route path="/transactions" element={<TransactionsPage />} />
             <Route path="/alerts" element={<AlertsPage/>} />
             <Route element={<AdminRoute />}>              
+              <Route path="/admin/users" element={<AdminUsersPage/>}/>
             </Route>
         </Route>
         </Route>

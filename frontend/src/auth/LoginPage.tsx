@@ -27,7 +27,7 @@ export default function LoginPage() {
     setServerError(null);
     try {
       const result = await login(data.email, data.password);
-      setAuth(result.accessToken, result.refreshToken, result.email, result.role);
+      setAuth(result.accessToken, result.refreshToken, result.email, result.role.toLowerCase());
       navigate('/dashboard');
     } catch {
       setServerError('Invalid email or password. Please try again.');

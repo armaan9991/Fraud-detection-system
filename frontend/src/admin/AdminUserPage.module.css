@@ -1,0 +1,133 @@
+.banner {
+  background: linear-gradient(135deg, #002C5F 0%, #003d7a 70%, #01306e 100%);
+  padding: 2rem 2rem 4.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.banner::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: rgba(236,17,26,0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.bannerInner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.bannerTitle { font-size: 1.5rem; font-weight: 700; color: #fff; margin: 0; letter-spacing: -0.4px; }
+.bannerSub   { font-size: 0.85rem; color: rgba(255,255,255,0.55); margin: 0.3rem 0 0; }
+.bannerStat  {
+  align-self: center;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.body { padding: 0 2rem 2rem; margin-top: -2.75rem; position: relative; z-index: 2; }
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid #F3F4F6;
+}
+.cardTitle { font-size: 0.9rem; font-weight: 600; color: #111827; margin: 0; }
+.cardCount  { font-size: 0.72rem; color: #6B7280; background: #F3F4F6; padding: 0.2rem 0.6rem; border-radius: 20px; }
+
+.table { width: 100%; border-collapse: collapse; }
+.table th {
+  text-align: left;
+  font-size: 0.69rem; font-weight: 600;
+  color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 0.7rem 1.5rem;
+  background: #FAFAFA;
+  border-bottom: 1px solid #F3F4F6;
+}
+.table td {
+  padding: 0.85rem 1.5rem;
+  font-size: 0.84rem; color: #374151;
+  border-bottom: 1px solid #F9FAFB;
+  vertical-align: middle;
+}
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: #FAFAFA; }
+
+.idCell    { font-family: monospace; font-size: 0.78rem; color: #9CA3AF; }
+.emailCell { color: #6B7280; font-size: 0.82rem; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  padding: 0.22rem 0.65rem; border-radius: 20px;
+  font-size: 0.7rem; font-weight: 700;
+}
+.badgeAdmin   { background: rgba(99,102,241,0.1); color: #4F46E5; }
+.badgeUser    { background: rgba(16,185,129,0.1); color: #059669; }
+.badgeFlagged { background: rgba(236,17,26,0.1);  color: #EC111A; }
+.badgeClean   { background: rgba(16,185,129,0.1); color: #059669; }
+
+.unflagBtn {
+  background: #FEF2F2; border: 1px solid #FECACA;
+  color: #DC2626; padding: 0.3rem 0.7rem;
+  border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; transition: background 0.15s;
+}
+.unflagBtn:hover:not(:disabled) { background: #FEE2E2; }
+.unflagBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; padding: 1rem 1.5rem;
+  border-top: 1px solid #F3F4F6;
+}
+.pageBtn {
+  background: #F3F4F6; border: 1px solid #E5E7EB; color: #374151;
+  padding: 0.4rem 0.9rem; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: background 0.15s;
+}
+.pageBtn:hover:not(:disabled) { background: #E5E7EB; }
+.pageBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pageInfo { font-size: 0.82rem; color: #6B7280; }
+
+.loading {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 3rem; gap: 0.75rem;
+  color: #9CA3AF; font-size: 0.875rem;
+}
+.spinner {
+  width: 28px; height: 28px;
+  border: 3px solid #E5E7EB; border-top-color: #4F46E5;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 3rem; gap: 0.5rem; color: #9CA3AF; font-size: 0.875rem;
+}
+.emptyIcon { font-size: 2rem; margin-bottom: 0.25rem; }
+
+@media (max-width: 768px) {
+  .banner { padding: 1.5rem 1rem 4rem; }
+  .body   { padding: 0 1rem 1.5rem; }
+  .table th, .table td { padding: 0.75rem 1rem; }
+}

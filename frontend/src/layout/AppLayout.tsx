@@ -14,7 +14,7 @@ const adminNavLinks = [
   { to: '/transactions', icon: '💳', label: 'Transactions' },
   { to: '/alerts', icon: '🚨', label: 'Fraud Alerts' },
   { to: '/admin/users', icon: '👥', label: 'Users' },
-  { to: '/admin/transactions', icon: '⚙️', label: 'Admin' },
+  // { to: '/admin/transactions', icon: '⚙️', label: 'Admin' },
 ];
 
 const pageTitles: Record<string, string> = {
@@ -22,7 +22,7 @@ const pageTitles: Record<string, string> = {
   '/transactions': 'Transactions',
   '/alerts': 'Fraud Alerts',
   '/admin/users': 'User Management',
-  '/admin/transactions': 'Admin Panel',
+  // '/admin/transactions': 'Admin Panel',
 };
 
 export default function AppLayout() {
@@ -30,7 +30,7 @@ export default function AppLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navLinks = role === 'Admin' ? adminNavLinks : userNavLinks;
+  const navLinks = role?.toLowerCase() === 'admin' ? adminNavLinks : userNavLinks;
   const pageTitle = pageTitles[location.pathname] ?? 'Dashboard';
   const initials = email ? email.slice(0, 2).toUpperCase() : 'U';
 
