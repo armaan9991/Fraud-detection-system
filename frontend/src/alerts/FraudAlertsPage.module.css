@@ -218,3 +218,6 @@
   .alertTable th, .alertTable td { padding: 0.75rem 1rem; }
   .alertReasonCell { max-width: 160px; }
 }
+.alertRowClickable { cursor: pointer; }
+.alertRowClickable:hover td { background: #FFF7ED !important; }
+

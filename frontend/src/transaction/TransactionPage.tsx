@@ -145,6 +145,7 @@ export default function TransactionsPage() {
           transaction={selectedTx}
           onClose={() => setSelectedTx(null)}
           onViewUser={(userId) => setSelectedUser(userId)}
+          isAdmin={isAdmin}
         />
       )}
 
