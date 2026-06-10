@@ -362,3 +362,55 @@
   .txBody { padding: 0 1rem 1.5rem; }
   .txTable th, .txTable td { padding: 0.75rem 1rem; }
 }
+
+.txStatusSelect {
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  color: #374151;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.txStatusSelect:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.txBadgeFailed { background: rgba(107,114,128,0.1); color: #4B5563; }
+
+.txApproveBtn {
+  background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+  color: #059669; padding: 0.3rem 0.7rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.txApproveBtn:hover:not(:disabled) { background: rgba(16,185,129,0.2); }
+
+.txFlagBtn {
+  background: rgba(236,17,26,0.1); border: 1px solid rgba(236,17,26,0.3);
+  color: #EC111A; padding: 0.3rem 0.7rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.txFlagBtn:hover:not(:disabled) { background: rgba(236,17,26,0.2); }
+
+.txApproveBtn:disabled, .txFlagBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.txBadgeFailed { background: rgba(107,114,128,0.1); color: #4B5563; }
+
+.txApproveBtn {
+  background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+  color: #059669; padding: 0.3rem 0.75rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+  white-space: nowrap;
+}
+.txApproveBtn:hover:not(:disabled) { background: rgba(16,185,129,0.2); }
+
+.txFlagBtn {
+  background: rgba(236,17,26,0.1); border: 1px solid rgba(236,17,26,0.3);
+  color: #EC111A; padding: 0.3rem 0.75rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+  white-space: nowrap;
+}
+.txFlagBtn:hover:not(:disabled) { background: rgba(236,17,26,0.2); }
+
+.txApproveBtn:disabled, .txFlagBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.txNoAction { color: #D1D5DB; font-size: 0.9rem; }

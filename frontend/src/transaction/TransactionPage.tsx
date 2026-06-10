@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { getTransactions, createTransaction } from '../api/transactionApi';
+import { updateTransactionStatus } from '../api/adminApi';
+import { useAuthStore } from '../store/authstore';
 import type { Transaction } from '../types/common.types';
 import styles from './TransactionPage.module.css';
 
@@ -16,13 +18,14 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 function StatusBadge({ status }: { status: string }) {
+  const s = status || 'PENDING';
   const cls =
-    status === 'HIGH' ? styles.txBadgeHigh :
-    status === 'MEDIUM' ? styles.txBadgeMedium :
+    s === 'FLAGGED' ? styles.txBadgeHigh :
+    s === 'PENDING' ? styles.txBadgeMedium :
+    s === 'FAILED'  ? styles.txBadgeFailed :
     styles.txBadgeLow;
-  return <span className={`${styles.txBadge} ${cls}`}>● {status}</span>;
+  return <span className={`${styles.txBadge} ${cls}`}>● {s}</span>;
 }
-
 function FraudScoreBar({ score }: { score: number }) {
   const fillCls =
     score >= 60 ? styles.txScoreFillHigh :
@@ -38,16 +41,62 @@ function FraudScoreBar({ score }: { score: number }) {
   );
 }
 
+function AdminStatusToggle({
+  transactionId,
+  status,
+  isUpdating,
+  onUpdate,
+}: {
+  transactionId: number;
+  status: string;
+  isUpdating: boolean;
+  onUpdate: (id: number, status: string) => void;
+}) {
+  if (status === 'FLAGGED') {
+    return (
+      <button
+        className={styles.txApproveBtn}
+        disabled={isUpdating}
+        onClick={() => onUpdate(transactionId, 'APPROVED')}
+      >
+        ✓ Approve
+      </button>
+    );
+  }
+  if (status === 'APPROVED') {
+    return (
+      <button
+        className={styles.txFlagBtn}
+        disabled={isUpdating}
+        onClick={() => onUpdate(transactionId, 'FLAGGED')}
+      >
+        ⚑ Flag
+      </button>
+    );
+  }
+  
+
+return <span className={styles.txNoAction}>—</span>;
+}
+
 export default function TransactionsPage() {
   const [page, setPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [serverError, setServerError] = useState('');
   const queryClient = useQueryClient();
   const pageSize = 15;
+  const role = useAuthStore((s) => s.role);
+  const isAdmin = role?.toLowerCase() === 'admin';
 
   const { data, isLoading } = useQuery({
     queryKey: ['transactions', page],
     queryFn: () => getTransactions(page, pageSize),
+  });
+
+  const { mutate: doStatusUpdate, isPending: isUpdating } = useMutation({
+    mutationFn: ({ id, status }: { id: number; status: string }) =>
+      updateTransactionStatus(id, status),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['transactions'] }),
   });
 
   const transactions = data?.items ?? [];
@@ -76,11 +125,15 @@ export default function TransactionsPage() {
         <div className={styles.txBannerInner}>
           <div>
             <h1 className={styles.txTitle}>Transactions</h1>
-            <p className={styles.txSubtext}>Your full transaction history with fraud scores</p>
+            <p className={styles.txSubtext}>
+              {isAdmin ? 'All transactions across the platform' : 'Your full transaction history with fraud scores'}
+            </p>
           </div>
-          <button className={styles.txAddBtn} onClick={() => setShowModal(true)}>
-            + New Transaction
-          </button>
+          {!isAdmin && (
+            <button className={styles.txAddBtn} onClick={() => setShowModal(true)}>
+              + New Transaction
+            </button>
+          )}
         </div>
       </div>
 
@@ -106,24 +159,37 @@ export default function TransactionsPage() {
               <thead>
                 <tr>
                   <th>ID</th>
+                  {isAdmin && <th>User ID</th>}
                   <th>Amount</th>
                   <th>Currency</th>
                   <th>Country</th>
                   <th>Fraud Score</th>
                   <th>Status</th>
                   <th>Date</th>
+                  {isAdmin && <th>Override</th>}
                 </tr>
               </thead>
               <tbody>
                 {transactions.map((t: Transaction) => (
                   <tr key={t.transactionId}>
                     <td className={styles.txIdCell}>#{t.transactionId}</td>
+                    {isAdmin && <td className={styles.txIdCell}>#{t.userId}</td>}
                     <td><strong>{t.amount.toLocaleString()}</strong></td>
                     <td>{t.currency}</td>
                     <td>{t.country}</td>
                     <td><FraudScoreBar score={t.fraudScore} /></td>
                     <td><StatusBadge status={t.status} /></td>
                     <td>{new Date(t.transactionTime).toLocaleDateString()}</td>
+                    {isAdmin && (
+                      <td>
+                        <AdminStatusToggle
+                          transactionId={t.transactionId}
+                          status={t.status}
+                          isUpdating={isUpdating}
+                          onUpdate={(id, status) => doStatusUpdate({ id, status })}
+                        />
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

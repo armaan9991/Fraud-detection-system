@@ -22,7 +22,7 @@ export const unflagUser = async(userId:number) : Promise<User | null> =>{
     }
 }
 
-export const updatetransactionStatus = async(transactionId : number,status :string ) : Promise<Transaction | null> =>{
+export const updateTransactionStatus = async(transactionId : number,status :string ) : Promise<Transaction | null> =>{
     try {
         const resp = await api.patch<ApiResponse<Transaction>>(`/Admin/transactions/${transactionId}/status`,null,{params:{status}});
         return resp.data.data;
