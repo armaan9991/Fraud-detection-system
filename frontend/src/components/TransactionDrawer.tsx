@@ -3,14 +3,14 @@ import { getUserById, unflagUser, updateTransactionStatus } from '../api/adminAp
 import type { Transaction } from '../types/common.types';
 import styles from './TransactionDrawer.module.css';
 
-const ALL_STATUSES = ['PENDING', 'APPROVED', 'FLAGGED', 'FAILED'];
+const ALL_STATUSES = ['HIGH', 'MEDIUM', 'LOW', 'APPROVED', 'FLAGGED'];
 
 export function StatusBadge({ status }: { status: string }) {
   const s = status || 'PENDING';
   const cls =
-    s === 'FLAGGED' ? styles.badgeHigh :
-    s === 'PENDING' ? styles.badgeMedium :
-    s === 'FAILED'  ? styles.badgeFailed :
+    (s === 'FLAGGED' || s === 'HIGH')   ? styles.badgeHigh :
+    (s === 'PENDING' || s === 'MEDIUM') ? styles.badgeMedium :
+    s === 'FAILED'                      ? styles.badgeFailed :
     styles.badgeLow;
   return <span className={`${styles.badge} ${cls}`}>● {s}</span>;
 }
@@ -160,11 +160,14 @@ export function TransactionDrawer({
                   disabled={isUpdating || s === currentStatus}
                   onClick={() => doStatusUpdate({ id: transaction.transactionId, status: s })}
                   className={`${styles.statusBtn} ${
-                    s === currentStatus ? styles.statusBtnActive :
-                    s === 'FLAGGED'     ? styles.statusBtnFlag :
-                    s === 'APPROVED'    ? styles.statusBtnApprove :
-                    s === 'FAILED'      ? styles.statusBtnFailed :
-                    styles.statusBtnPending
+                   s === currentStatus  ? styles.statusBtnActive :
+                   s === 'HIGH'         ? styles.statusBtnFlag :
+                   s === 'FLAGGED'      ? styles.statusBtnFlag :
+                   s === 'APPROVED'     ? styles.statusBtnApprove :
+                   s === 'MEDIUM'       ? styles.statusBtnPending :
+                   s === 'LOW'          ? styles.statusBtnApprove :
+                       styles.statusBtnFailed
+
                   }`}
                 >
                   {s}
