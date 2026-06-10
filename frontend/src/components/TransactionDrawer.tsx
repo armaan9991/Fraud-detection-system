@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserById, unflagUser, updateTransactionStatus } from '../api/adminApi';
 import type { Transaction } from '../types/common.types';
@@ -94,13 +95,16 @@ export function TransactionDrawer({
   transaction,
   onClose,
   onViewUser,
+  isAdmin = false,
 }: {
   transaction: Transaction;
   onClose: () => void;
   onViewUser: (userId: number) => void;
+  isAdmin?: boolean;
 }) {
+  const [localStatus, setLocalStatus] = useState(transaction.status || 'PENDING');
   const queryClient = useQueryClient();
-  const currentStatus = transaction.status || 'PENDING';
+  const currentStatus = localStatus;
 
   const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ['adminUser', transaction.userId],
@@ -110,7 +114,10 @@ export function TransactionDrawer({
   const { mutate: doStatusUpdate, isPending: isUpdating } = useMutation({
     mutationFn: ({ id, status }: { id: number; status: string }) =>
       updateTransactionStatus(id, status),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['transactions'] }),
+    onSuccess: (updated) => {
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      if (updated) setLocalStatus(updated.status);
+    },
   });
 
   return (
@@ -151,30 +158,30 @@ export function TransactionDrawer({
             </div>
           </div>
 
-          <div className={styles.drawerSection}>
-            <h3 className={styles.drawerSectionTitle}>Change Status</h3>
-            <div className={styles.statusBtnGroup}>
-              {ALL_STATUSES.map((s) => (
-                <button
-                  key={s}
-                  disabled={isUpdating || s === currentStatus}
-                  onClick={() => doStatusUpdate({ id: transaction.transactionId, status: s })}
-                  className={`${styles.statusBtn} ${
-                   s === currentStatus  ? styles.statusBtnActive :
-                   s === 'HIGH'         ? styles.statusBtnFlag :
-                   s === 'FLAGGED'      ? styles.statusBtnFlag :
-                   s === 'APPROVED'     ? styles.statusBtnApprove :
-                   s === 'MEDIUM'       ? styles.statusBtnPending :
-                   s === 'LOW'          ? styles.statusBtnApprove :
-                       styles.statusBtnFailed
-
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
+          {isAdmin && (
+            <div className={styles.drawerSection}>
+              <h3 className={styles.drawerSectionTitle}>Change Status</h3>
+              <div className={styles.statusBtnGroup}>
+                {ALL_STATUSES.map((s) => (
+                  <button
+                    key={s}
+                    disabled={isUpdating || s === currentStatus}
+                    onClick={() => doStatusUpdate({ id: transaction.transactionId, status: s })}
+                    className={`${styles.statusBtn} ${
+                      s === currentStatus ? styles.statusBtnActive :
+                      (s === 'HIGH' || s === 'FLAGGED') ? styles.statusBtnFlag :
+                      s === 'APPROVED'    ? styles.statusBtnApprove :
+                      s === 'MEDIUM'      ? styles.statusBtnPending :
+                      s === 'LOW'         ? styles.statusBtnApprove :
+                      styles.statusBtnFailed
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className={styles.drawerSection}>
             <h3 className={styles.drawerSectionTitle}>User</h3>
