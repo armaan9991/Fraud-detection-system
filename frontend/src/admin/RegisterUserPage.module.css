@@ -1,0 +1,188 @@
+/* ── Banner ── */
+.registerBanner {
+  background: linear-gradient(135deg, #002C5F 0%, #003d7a 70%, #01306e 100%);
+  padding: 2rem 2rem 4.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.registerBanner::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: rgba(236, 17, 26, 0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.registerBannerInner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.registerTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.registerSubtext {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  margin: 0.3rem 0 0;
+}
+
+.registerBackBtn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.registerBackBtn:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+/* ── Body ── */
+.registerBody {
+  padding: 0 2rem 2rem;
+  margin-top: -2.75rem;
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+}
+
+/* ── Card ── */
+.registerCard {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* ── Banners ── */
+.registerSuccessBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.5rem;
+  background: rgba(16,185,129,0.08);
+  border-bottom: 1px solid rgba(16,185,129,0.2);
+  font-size: 0.84rem;
+  color: #059669;
+  font-weight: 500;
+}
+
+.registerSuccessDismiss {
+  background: none;
+  border: none;
+  color: #059669;
+  cursor: pointer;
+  font-size: 0.78rem;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.registerErrorBanner {
+  padding: 0.85rem 1.5rem;
+  background: rgba(236,17,26,0.06);
+  border-bottom: 1px solid rgba(236,17,26,0.15);
+  font-size: 0.84rem;
+  color: #EC111A;
+  font-weight: 500;
+}
+
+/* ── Form ── */
+.registerForm {
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.registerField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.registerLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.2px;
+}
+
+.registerInput {
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: #111827;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+
+.registerInput:focus {
+  border-color: #002C5F;
+  box-shadow: 0 0 0 3px rgba(0,44,95,0.08);
+}
+
+.registerInputError {
+  border-color: #EC111A;
+}
+
+.registerInputError:focus {
+  box-shadow: 0 0 0 3px rgba(236,17,26,0.08);
+}
+
+.registerFieldError {
+  font-size: 0.74rem;
+  color: #EC111A;
+  font-weight: 500;
+}
+
+.registerSubmitBtn {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #EC111A;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.registerSubmitBtn:hover:not(:disabled) {
+  background: #c90e15;
+  transform: translateY(-1px);
+}
+
+.registerSubmitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .registerBanner { padding: 1.5rem 1rem 4rem; }
+  .registerBody { padding: 0 1rem 1.5rem; }
+}

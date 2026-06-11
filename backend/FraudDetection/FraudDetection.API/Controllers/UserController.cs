@@ -55,6 +55,7 @@ public class UserController :ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUser(CreateUserDto dto)
     {
+        Console.WriteLine("creating user dto",dto);
         var  createdUser = await _userService.CreateUserAsync(dto);
         return CreatedAtAction(
             nameof(GetUserById),

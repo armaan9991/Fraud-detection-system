@@ -33,6 +33,6 @@ public class DailyFraudReportJob: IDailyFraudReportJob
             AverageFraudScore = transaction.Any()? transaction.Average(t =>t.FraudScore) : 0 // ANY() means if transaction have any row in it then calculate the average for that..
         };
 
-        await _service.setAsync($"Fraud Report _ {yesterday:yyyy-MM-dd}",report,TimeSpan.FromDays(30));
+        await _service.SetAsync($"Fraud Report _ {yesterday:yyyy-MM-dd}",report,TimeSpan.FromDays(30));
     }
 }

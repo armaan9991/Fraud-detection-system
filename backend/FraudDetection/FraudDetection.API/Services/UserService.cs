@@ -70,7 +70,7 @@ public class UserService : IUserService
     public async Task<UserResponseDto?> GetUserByIdAsync(int id)
     {
         var  found_user = await _context.Users.FirstOrDefaultAsync(t => t.UserId == id );    // first or null
-        if (found_user != null)
+        if (found_user == null)
         {
             return null;
         }

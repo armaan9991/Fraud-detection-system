@@ -49,24 +49,20 @@ public class TransactionService : ITransactionService
 
         var mlrequest = new MLPredictionRequestDto
         {
-        Amount = transaction.Amount,
+           Amount = transaction.Amount,
+           IsForeignTransaction = transaction.Country.ToLower() != "canada" ? 1 : 0,
+           IsNightTransaction = DateTime.UtcNow.Hour < 6 ? 1 : 0,
+           Hour = DateTime.UtcNow.Hour,
+           IsNonCadCurrency = transaction.Currency.ToUpper() != "CAD" ? 1 : 0
 
-        IsForeignTransaction = transaction.Country.ToLower() != "canada"  ? 1 : 0,
-
-        IsNightTransaction =  DateTime.UtcNow.Hour < 6 ? 1 : 0,
-
-        FraudScore = transaction.FraudScore
         };
 
         var prediction = await _mLPredictionService.PredictFraudAsync(mlrequest);
         
         if (prediction != null)
         {
-            transaction.FraudScore=(int)(prediction.FraudProbability *100);
-            if (prediction.Prediction == 1)
-            {
-                transaction.Status = "HIGH";
-            }
+            transaction.FraudScore = (int)(prediction.FraudProbability * 100);
+            transaction.Status = prediction.Prediction == 1 ? "HIGH" : GetRiskLevel(fraud_score);
         }
 
          _context.Transactions.Add(transaction);
@@ -76,7 +72,7 @@ public class TransactionService : ITransactionService
         if (transaction.FraudScore >= 60)
         {
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , transaction.Status, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
-            var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n If it was not you Call GILL";
+            var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n";
             await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
         }
         return MapToTransactionResponseDto(transaction);

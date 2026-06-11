@@ -1,0 +1,547 @@
+/* ── Banner ── */
+.txBanner {
+  background: linear-gradient(135deg, #002C5F 0%, #003d7a 70%, #01306e 100%);
+  padding: 2rem 2rem 4.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.txBanner::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: rgba(236, 17, 26, 0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.txBannerInner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.txTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.txSubtext {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  margin: 0.3rem 0 0;
+}
+
+.txAddBtn {
+  background: #EC111A;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+  align-self: center;
+}
+
+.txAddBtn:hover {
+  background: #c90e15;
+  transform: translateY(-1px);
+}
+
+/* ── Body ── */
+.txBody {
+  padding: 0 2rem 2rem;
+  margin-top: -2.75rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Card ── */
+.txCard {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.txCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.txCardTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.txCardCount {
+  font-size: 0.72rem;
+  color: #6B7280;
+  background: #F3F4F6;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+/* ── Table ── */
+.txTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.txTable th {
+  text-align: left;
+  font-size: 0.69rem;
+  font-weight: 600;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.7rem 1.5rem;
+  background: #FAFAFA;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.txTable td {
+  padding: 0.85rem 1.5rem;
+  font-size: 0.84rem;
+  color: #374151;
+  border-bottom: 1px solid #F9FAFB;
+  vertical-align: middle;
+}
+
+.txTable tr:last-child td { border-bottom: none; }
+.txTable tr:hover td { background: #FAFAFA; }
+
+.txIdCell {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: #9CA3AF;
+}
+
+/* ── Score Bar ── */
+.txScoreWrapper { display: flex; align-items: center; gap: 0.5rem; }
+.txScoreBar {
+  height: 6px;
+  border-radius: 99px;
+  background: #F3F4F6;
+  flex: 1;
+  min-width: 60px;
+  overflow: hidden;
+}
+.txScoreFill { height: 100%; border-radius: 99px; }
+.txScoreFillHigh   { background: #EC111A; }
+.txScoreFillMedium { background: #F59E0B; }
+.txScoreFillLow    { background: #10B981; }
+.txScoreText { font-size: 0.78rem; font-weight: 600; color: #374151; min-width: 28px; }
+
+/* ── Badge ── */
+.txBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.txBadgeHigh   { background: rgba(236,17,26,0.1);  color: #EC111A; }
+.txBadgeMedium { background: rgba(245,158,11,0.1); color: #B45309; }
+.txBadgeLow    { background: rgba(16,185,129,0.1); color: #059669; }
+
+/* ── Pagination ── */
+.txPagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #F3F4F6;
+}
+
+.txPageBtn {
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  color: #374151;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.txPageBtn:hover:not(:disabled) { background: #E5E7EB; }
+.txPageBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.txPageInfo { font-size: 0.82rem; color: #6B7280; }
+
+/* ── Loading / Empty ── */
+.txLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 0.75rem;
+  color: #9CA3AF;
+  font-size: 0.875rem;
+}
+
+.txSpinner {
+  width: 28px; height: 28px;
+  border: 3px solid #E5E7EB;
+  border-top-color: #EC111A;
+  border-radius: 50%;
+  animation: txSpin 0.7s linear infinite;
+}
+
+@keyframes txSpin { to { transform: rotate(360deg); } }
+
+.txEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  gap: 0.5rem;
+  color: #9CA3AF;
+  font-size: 0.875rem;
+}
+
+.txEmptyIcon { font-size: 2rem; margin-bottom: 0.25rem; }
+
+/* ── Modal ── */
+.txModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 1rem;
+}
+
+.txModal {
+  background: #ffffff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.txModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.txModalTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.txModalClose {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #9CA3AF;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.txModalClose:hover { color: #374151; }
+
+.txModalError {
+  margin: 0.75rem 1.5rem 0;
+  padding: 0.65rem 0.875rem;
+  background: rgba(236,17,26,0.06);
+  border: 1px solid rgba(236,17,26,0.15);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #EC111A;
+  font-weight: 500;
+}
+
+.txModalForm {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.txModalField { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.txModalLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.txModalInput {
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.txModalInput:focus {
+  border-color: #002C5F;
+  box-shadow: 0 0 0 3px rgba(0,44,95,0.08);
+}
+
+.txModalInputError { border-color: #EC111A; }
+.txModalInputError:focus { box-shadow: 0 0 0 3px rgba(236,17,26,0.08); }
+
+.txModalFieldError { font-size: 0.74rem; color: #EC111A; font-weight: 500; }
+
+.txModalActions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.txModalCancelBtn {
+  flex: 1;
+  padding: 0.7rem;
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.txModalCancelBtn:hover { background: #E5E7EB; }
+
+.txModalSubmitBtn {
+  flex: 1;
+  padding: 0.7rem;
+  background: #EC111A;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.txModalSubmitBtn:hover:not(:disabled) { background: #c90e15; }
+.txModalSubmitBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .txBanner { padding: 1.5rem 1rem 4rem; }
+  .txBody { padding: 0 1rem 1.5rem; }
+  .txTable th, .txTable td { padding: 0.75rem 1rem; }
+}
+
+.txStatusSelect {
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  color: #374151;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.txStatusSelect:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.txBadgeFailed { background: rgba(107,114,128,0.1); color: #4B5563; }
+
+.txApproveBtn {
+  background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+  color: #059669; padding: 0.3rem 0.7rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.txApproveBtn:hover:not(:disabled) { background: rgba(16,185,129,0.2); }
+
+.txFlagBtn {
+  background: rgba(236,17,26,0.1); border: 1px solid rgba(236,17,26,0.3);
+  color: #EC111A; padding: 0.3rem 0.7rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.txFlagBtn:hover:not(:disabled) { background: rgba(236,17,26,0.2); }
+
+.txApproveBtn:disabled, .txFlagBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.txBadgeFailed { background: rgba(107,114,128,0.1); color: #4B5563; }
+
+.txApproveBtn {
+  background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+  color: #059669; padding: 0.3rem 0.75rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+  white-space: nowrap;
+}
+.txApproveBtn:hover:not(:disabled) { background: rgba(16,185,129,0.2); }
+
+.txFlagBtn {
+  background: rgba(236,17,26,0.1); border: 1px solid rgba(236,17,26,0.3);
+  color: #EC111A; padding: 0.3rem 0.75rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+  white-space: nowrap;
+}
+.txFlagBtn:hover:not(:disabled) { background: rgba(236,17,26,0.2); }
+
+.txApproveBtn:disabled, .txFlagBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.txNoAction { color: #D1D5DB; font-size: 0.9rem; }
+
+/* ── Clickable row ── */
+.txRowClickable { cursor: pointer; }
+.txRowClickable:hover td { background: #F0F4FF !important; }
+
+/* ── Drawer overlay ── */
+.drawerOverlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 100;
+  display: flex; justify-content: flex-end;
+}
+
+/* ── Drawer panel ── */
+.drawer {
+  width: 420px; max-width: 95vw;
+  height: 100%;
+  background: #fff;
+  display: flex; flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+  overflow: hidden;
+}
+
+.drawerHeader {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid #F3F4F6;
+  background: linear-gradient(135deg, #002C5F, #003d7a);
+}
+.drawerHeaderSub { font-size: 0.72rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; display: block; }
+.drawerHeaderTitle { font-size: 1.25rem; font-weight: 700; color: #fff; margin: 0.2rem 0 0; }
+.drawerClose {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: #fff; width: 30px; height: 30px; border-radius: 6px;
+  cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+}
+.drawerClose:hover { background: rgba(255,255,255,0.2); }
+
+.drawerBody { flex: 1; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; }
+
+.drawerSection {
+  background: #FAFAFA; border: 1px solid #F3F4F6;
+  border-radius: 10px; padding: 1rem;
+}
+.drawerSectionTitle { font-size: 0.72rem; font-weight: 700; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.75rem; }
+
+.drawerGrid { display: flex; flex-direction: column; gap: 0.5rem; }
+.drawerRow { display: flex; justify-content: space-between; align-items: center; }
+.drawerLabel { font-size: 0.8rem; color: #6B7280; }
+.drawerValue { font-size: 0.84rem; color: #111827; text-align: right; }
+.drawerMuted { font-size: 0.82rem; color: #9CA3AF; margin: 0; }
+
+/* ── Status buttons ── */
+.statusBtnGroup { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.statusBtn {
+  padding: 0.35rem 0.8rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 700; cursor: pointer;
+  border: 1px solid transparent; transition: opacity 0.15s;
+}
+.statusBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+.statusBtnActive  { background: #E5E7EB; color: #6B7280; border-color: #D1D5DB; cursor: default; }
+.statusBtnApprove { background: rgba(16,185,129,0.1); color: #059669; border-color: rgba(16,185,129,0.3); }
+.statusBtnApprove:hover:not(:disabled) { background: rgba(16,185,129,0.2); }
+.statusBtnFlag    { background: rgba(236,17,26,0.1); color: #EC111A; border-color: rgba(236,17,26,0.3); }
+.statusBtnFlag:hover:not(:disabled) { background: rgba(236,17,26,0.2); }
+.statusBtnFailed  { background: rgba(107,114,128,0.1); color: #4B5563; border-color: rgba(107,114,128,0.3); }
+.statusBtnFailed:hover:not(:disabled) { background: rgba(107,114,128,0.2); }
+.statusBtnPending { background: rgba(245,158,11,0.1); color: #B45309; border-color: rgba(245,158,11,0.3); }
+.statusBtnPending:hover:not(:disabled) { background: rgba(245,158,11,0.2); }
+
+/* ── User section ── */
+.flaggedYes { font-size: 0.78rem; color: #EC111A; font-weight: 600; }
+.flaggedNo  { font-size: 0.78rem; color: #059669; font-weight: 600; }
+.viewUserLink {
+  display: inline-block; margin-top: 0.75rem;
+  font-size: 0.82rem; color: #2563EB; font-weight: 500; text-decoration: none;
+}
+.viewUserLink:hover { text-decoration: underline; }
+
+/* ── Failed badge ── */
+.txBadgeFailed { background: rgba(107,114,128,0.1); color: #4B5563; }
+
+.userModal {
+  width: 360px; max-width: 95vw;
+  height: 100%;
+  background: #fff;
+  display: flex; flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+}
+
+.userCard {
+  display: flex; align-items: center; gap: 0.75rem;
+  width: 100%; background: #fff;
+  border: 1px solid #E5E7EB; border-radius: 8px;
+  padding: 0.75rem; cursor: pointer;
+  transition: background 0.15s; text-align: left;
+}
+.userCard:hover { background: #F9FAFB; }
+
+.userCardAvatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #002C5F; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 700; flex-shrink: 0;
+}
+.userCardInfo { flex: 1; display: flex; flex-direction: column; }
+.userCardName { font-size: 0.84rem; font-weight: 600; color: #111827; }
+.userCardId   { font-size: 0.72rem; color: #9CA3AF; font-family: monospace; }
+.userCardArrow { color: #9CA3AF; font-size: 1.1rem; }
+
+.unflagBtn {
+  margin-top: 0.75rem;
+  background: #FEF2F2; border: 1px solid #FECACA;
+  color: #DC2626; padding: 0.4rem 0.9rem;
+  border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; transition: background 0.15s;
+}
+.unflagBtn:hover:not(:disabled) { background: #FEE2E2; }
+.unflagBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.userModalOverlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 150;
+  display: flex; justify-content: flex-end;
+}
+
+.txUserLink { color: #2563EB !important; cursor: pointer; text-decoration: underline; }
+.txUserLink:hover { color: #1D4ED8 !important; }
+
