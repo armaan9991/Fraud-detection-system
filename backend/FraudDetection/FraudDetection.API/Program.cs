@@ -144,7 +144,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
     policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("http://localhost:5173",
+            builder.Configuration["Frontend:Url"] ?? "http://localhost:5173"
+            )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
     });
@@ -177,4 +179,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Run($"http://0.0.0.0:{port}");
