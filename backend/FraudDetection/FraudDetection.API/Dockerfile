@@ -1,14 +1,16 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 8080
-
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY . .
-WORKDIR "/src/backend/FraudDetection/FraudDetection.API"
-RUN dotnet publish -c Release -o /app/publish
 
-FROM base AS final
+# copy everything
+COPY . .
+
+# find correct project path explicitly
+RUN dotnet publish backend/FraudDetection/FraudDetection.API/FraudDetection.API.csproj -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
+
 COPY --from=build /app/publish .
+
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "FraudDetection.API.dll"]
