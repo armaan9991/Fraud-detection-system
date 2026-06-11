@@ -28,11 +28,13 @@ export default function RegisterPage() {
   const onSubmit = async (data: FormData) => {
     setServerError('');
     try {
-      await CreateUserAsync(data.name, data.email, 'User', data.password);
+      await CreateUserAsync(data.name, data.email,  data.password);
       navigate('/login');
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })
         ?.response?.data?.message ?? 'Registration failed. Please try again.';
+        console.log(msg);
+
       setServerError(msg);
     }
   };

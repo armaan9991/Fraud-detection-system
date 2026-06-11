@@ -11,6 +11,7 @@ public class MLPredictionService : IMLPredictionService
 
     public async Task<MLPredictionResponseDto?> PredictFraudAsync(MLPredictionRequestDto dto)
     {
+    try{
        var json =JsonSerializer.Serialize( dto, new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -37,5 +38,10 @@ public class MLPredictionService : IMLPredictionService
         Console.WriteLine(result?.Prediction);
         Console.WriteLine(result?.FraudProbability);
         return result;
+        }
+        catch (HttpRequestException)
+        {
+            return null;
+        }
     }
 }

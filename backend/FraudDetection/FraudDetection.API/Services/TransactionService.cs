@@ -55,7 +55,6 @@ public class TransactionService : ITransactionService
 
         IsNightTransaction =  DateTime.UtcNow.Hour < 6 ? 1 : 0,
 
-        FraudScore = transaction.FraudScore
         };
 
         var prediction = await _mLPredictionService.PredictFraudAsync(mlrequest);
