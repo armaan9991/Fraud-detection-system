@@ -22,8 +22,8 @@ class Transactiondata(BaseModel):
 
 
 def predict_fraud(data : Transactiondata):
-    print(data)
-    print(data.model_dump())
+    # print(data)
+    # print(data.model_dump())
     features = pd.DataFrame([{
         'amount' : data.amount,
         'isForeignTransaction' : data.isForeignTransaction,

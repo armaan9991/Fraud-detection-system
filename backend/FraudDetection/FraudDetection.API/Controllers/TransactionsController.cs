@@ -7,6 +7,7 @@ using FraudDetection.API.Services;
 using  Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.RateLimiting;
+using StackExchange.Redis;
 
 namespace FraudDetection.API.Controllers;
 
@@ -87,6 +88,7 @@ public class TransactionsController: ControllerBase
     }
 
     [HttpGet("ml-data")]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> GetMLTrainingData()
     {
         var data = await _transactionService.GetMLTrainingDataAsync();
@@ -95,7 +97,6 @@ public class TransactionsController: ControllerBase
     }
 
     // to generate random data.
-    [HttpPost("seed")]
     public async Task<IActionResult> SeedTransaction()
     {
         int count = await _transactionService.SeedTransactionAsync();

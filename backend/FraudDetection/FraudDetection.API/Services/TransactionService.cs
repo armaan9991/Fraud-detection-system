@@ -72,7 +72,7 @@ public class TransactionService : ITransactionService
         if (transaction.FraudScore >= 60)
         {
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , transaction.Status, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
-            var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n If it was not you Call GILL";
+            var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n";
             await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
         }
         return MapToTransactionResponseDto(transaction);

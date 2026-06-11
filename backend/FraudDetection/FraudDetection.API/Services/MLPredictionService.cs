@@ -17,13 +17,13 @@ public class MLPredictionService : IMLPredictionService
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         });
 
-        Console.WriteLine(json);
+        // Console.WriteLine(json);
 
         var content = new StringContent(json,System.Text.Encoding.UTF8,"application/json");
 
         var response = await _httpClient.PostAsync("http://127.0.0.1:8000/predict",content);
 
-        Console.WriteLine(json);
+        // Console.WriteLine(json);
 
 
         if (!response.IsSuccessStatusCode)

@@ -222,6 +222,7 @@ function AdminDashboard() {
           transaction={selectedTx}
           onClose={() => setSelectedTx(null)}
           onViewUser={(userId) => setSelectedUser(userId)}
+          isAdmin={true}
         />
       )}
       {selectedUser !== null && (
