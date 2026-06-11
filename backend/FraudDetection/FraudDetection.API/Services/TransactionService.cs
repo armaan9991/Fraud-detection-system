@@ -61,11 +61,8 @@ public class TransactionService : ITransactionService
         
         if (prediction != null)
         {
-            transaction.FraudScore=(int)(prediction.FraudProbability *100);
-            if (prediction.Prediction == 1)
-            {
-                transaction.Status = "HIGH";
-            }
+            transaction.FraudScore = (int)(prediction.FraudProbability * 100);
+            transaction.Status = prediction.Prediction == 1 ? "HIGH" : GetRiskLevel(fraud_score);
         }
 
          _context.Transactions.Add(transaction);
