@@ -14,19 +14,11 @@ class Transactiondata(BaseModel):
     amount: float
     isForeignTransaction : int
     isNightTransaction : int
+    hour : int
+    isNonCadCurreny : int
 
 # prediction endpoint
 @app.post("/predict")
-
-# def predict_fraud(data: Transactiondata):
-#     features = np.array([
-#         [
-#             data.amount,
-#             data.isForeignTransaction,
-#             data.isNightTransaction,
-#             data.fraudScore
-#         ]
-#     ])
 
 
 def predict_fraud(data : Transactiondata):
@@ -36,12 +28,13 @@ def predict_fraud(data : Transactiondata):
         'amount' : data.amount,
         'isForeignTransaction' : data.isForeignTransaction,
         'isNightTransaction' : data.isNightTransaction,
+        'hour' : data.hour,
+        'isNonCadCurreny' : data.isNonCadCurreny,
     }])
 
-    prediction = Model.predict(features)[0]
-
     probabilty = Model.predict_proba(features)[0][1]
-    threshold = 0.3
+    prediction = 1 if probabilty >= 0.35 else 0
+
     print(prediction ,"  ", probabilty)
     return {
         "prediction" : int(prediction),
