@@ -5,8 +5,13 @@ import joblib
 import numpy as np
 import pandas as pd
 
-Model = joblib.load("../models/fraud_model.pkl")
+import os
+import joblib
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "..", "models", "fraud_model.pkl")
+
+Model = joblib.load(MODEL_PATH)
 app = FastAPI()
 
 # Request schema
