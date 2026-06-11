@@ -16,9 +16,7 @@ print(df)
 X = df [[
     "amount",
     "isForeignTransaction",
-    "isNightTransaction",
-    "fraudScore"
-    ]]
+    "isNightTransaction"    ]]
 
 #   Label
 y = df["isFraud"]
