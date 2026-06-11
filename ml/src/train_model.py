@@ -17,11 +17,12 @@ if 'hour' not in df.columns:
 if 'isNonCadCurrency' not in df.columns:
     df['isNonCadCurrency'] = df['isForeignTransaction']
 
-fraud_sample = pd.DataFrame([{
-    'amount' : a, 'isForeignTransaction' :1,
-    'isNightTransaction': 1, 'isFraud': 1
+fraud_samples = pd.DataFrame([{
+    'amount': a, 'isForeignTransaction': 1,
+    'isNightTransaction': 1, 'hour': h,
+    'isNonCadCurrency': 1, 'isFraud': 1
 } for a in [8000, 12000, 15000, 9500, 11000, 7500, 18000, 6500]
-for h in [1,2,3,4]])
+  for h in [1, 2, 3, 4]])
 print(df)
 
 legit_samples = pd.DataFrame([{
@@ -31,7 +32,7 @@ legit_samples = pd.DataFrame([{
 } for a in [500, 1000, 1500, 200, 800, 300, 1200, 2000]
   for h in [9, 10, 14, 15]])
 
-df = pd.concat([df, fraud_sample, legit_samples], ignore_index=True)
+df = pd.concat([df, fraud_samples, legit_samples], ignore_index=True)
 print(f"Total: {len(df)}, Fraud: {df['isFraud'].sum()}, Legit: {(df['isFraud']==0).sum()}")
 
 #  Features

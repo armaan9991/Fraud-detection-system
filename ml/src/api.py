@@ -15,7 +15,7 @@ class Transactiondata(BaseModel):
     isForeignTransaction : int
     isNightTransaction : int
     hour : int
-    isNonCadCurreny : int
+    isNonCadCurrency : int
 
 # prediction endpoint
 @app.post("/predict")
@@ -29,7 +29,7 @@ def predict_fraud(data : Transactiondata):
         'isForeignTransaction' : data.isForeignTransaction,
         'isNightTransaction' : data.isNightTransaction,
         'hour' : data.hour,
-        'isNonCadCurreny' : data.isNonCadCurreny,
+        'isNonCadCurrency' : data.isNonCadCurrency,
     }])
 
     probabilty = Model.predict_proba(features)[0][1]
