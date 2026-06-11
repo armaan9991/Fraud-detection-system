@@ -49,11 +49,11 @@ public class TransactionService : ITransactionService
 
         var mlrequest = new MLPredictionRequestDto
         {
-        Amount = transaction.Amount,
-
-        IsForeignTransaction = transaction.Country.ToLower() != "canada"  ? 1 : 0,
-
-        IsNightTransaction =  DateTime.UtcNow.Hour < 6 ? 1 : 0,
+           Amount = transaction.Amount,
+           IsForeignTransaction = transaction.Country.ToLower() != "canada" ? 1 : 0,
+           IsNightTransaction = DateTime.UtcNow.Hour < 6 ? 1 : 0,
+           Hour = DateTime.UtcNow.Hour,
+           IsNonCadCurrency = transaction.Currency.ToUpper() != "CAD" ? 1 : 0
 
         };
 
