@@ -22,7 +22,7 @@ api.interceptors.response.use(                // here response has 2 values (suc
             const refreshToken = useAuthStore.getState().refreshToken;       // get refresh token
             if (refreshToken){                                               // if refresh token is actually present
                 try{    
-                    const {data} = await axois.post('http://localhost:5297/api/Auth/refresh', {refreshToken});        // try to refresh  
+                    const {data} = await axois.post( `${import.meta.env.VITE_API_URL}/Auth/refresh`,  { refreshToken });        // try to refresh  
                     const newToken = data.data.accessToken;                                       // get accesstoken
                     useAuthStore.getState().setAccessToken(newToken);                               // set new access token
                     original.headers.Authorization = `Bearer ${newToken}`;                          // new jwt token
