@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useAuthStore } from '../store/authstore';
 import { getTransactions } from '../api/transactionApi';
 import { getAdminStats } from '../api/adminApi';
@@ -8,11 +7,11 @@ import { TransactionDrawer, UserDetailModal, StatusBadge, FraudScoreBar } from '
 import type { Transaction } from '../types/common.types';
 import styles from './DashboadPage.module.css';
 
-const STATUS_COLORS: Record<string, string> = {
-  HIGH: '#EC111A',
-  MEDIUM: '#F59E0B',
-  LOW: '#10B981',
-};
+// const STATUS_COLORS: Record<string, string> = {
+//   HIGH: '#EC111A',
+//   MEDIUM: '#F59E0B',
+//   LOW: '#10B981',
+// };
 
 function LoadingState() {
   return (
@@ -113,7 +112,7 @@ function AdminDashboard() {
 
   if (statsLoading) return <LoadingState />;
 
-  const chartData = Object.entries(stats?.transactionByStatus ?? {}).map(([status, count]) => ({ status, count }));
+  // const chartData = Object.entries(stats?.transactionByStatus ?? {}).map(([status, count]) => ({ status, count }));
   const transactions = txData?.items ?? [];
 
   return (
