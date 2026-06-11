@@ -2,7 +2,7 @@ import axois from 'axios';           // to call  http req.
 import { useAuthStore } from '../store/authstore';
 
 export const api = axois.create({
-    baseURL :'http://localhost:5297/api',
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5297/api',
 });
 
 api.interceptors.request.use((config) =>{
