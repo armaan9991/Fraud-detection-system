@@ -165,6 +165,12 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
+
 app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
     Authorization= [new HangfireAuthorizationFilter()
