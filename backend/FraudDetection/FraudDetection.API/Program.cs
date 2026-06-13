@@ -79,6 +79,7 @@ builder.Services.AddScoped<IRefreshTokenCleanupJob,RefreshTokenCleanupJob>();
 builder.Services.AddScoped<IDailyFraudReportJob,DailyFraudReportJob>();
 builder.Services.AddScoped<IHighRiskUserDetectionJob,HighRiskUserDetectionJob>();
 builder.Services.AddScoped<IEmailService,EmailService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
 {
