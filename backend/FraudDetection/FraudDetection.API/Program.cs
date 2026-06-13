@@ -16,6 +16,8 @@ using Hangfire.PostgreSql;
 using FraudDetection.API.Jobs;
 using FraudDetection.API.Infrastructure;
 using System.Drawing;
+using Microsoft.AspNetCore.Identity;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -168,7 +170,10 @@ app.UseMiddleware<ExceptionMiddleware>();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
+
     db.Database.Migrate();
+    await DataSeeder.SeedAsync(db, hasher);
 }
 
 app.UseHangfireDashboard("/hangfire", new DashboardOptions
