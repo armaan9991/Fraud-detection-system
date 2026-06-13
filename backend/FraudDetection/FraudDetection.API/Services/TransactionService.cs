@@ -2,6 +2,7 @@ using FraudDetection.API.DTOs;
 using FraudDetection.API.Data;
 using FraudDetection.API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net;
 
 namespace FraudDetection.API.Services;
 
@@ -13,6 +14,7 @@ public class TransactionService : ITransactionService
     private record FraudScoreResult(int Score,List<string> reason);
     private readonly IAuditLogService _auditLogService;
     private readonly IEmailService _emailService;
+    
     public TransactionService(ApplicationDbContext context , IFraudAlertService fraudalertservice, IMLPredictionService mLPredictionService,IAuditLogService auditLogService, IEmailService emailService)
     {
         _context = context;
@@ -73,7 +75,14 @@ public class TransactionService : ITransactionService
         {
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , transaction.Status, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
             var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n";
+         try{
             await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
+         }
+         catch (Exception e)
+            {
+                Console.Write(e+" failed to send email.");
+               await _auditLogService.CreateLogAsync(user.UserId,"Failed email","User",user.UserId,"Transation Saved but failed to send email");
+            }
         }
         return MapToTransactionResponseDto(transaction);
     }
