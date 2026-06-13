@@ -90,7 +90,7 @@ public class TransactionService : ITransactionService
     public async Task<PagedResult<TransactionResponseDto>> GetAllTransactionsAsync(int userId , string role ,int page, int pageSize,TransactionFilterDto filterDto)
     {
         var query = _context.Transactions.Include(t => t.User).AsQueryable();
-        if (role != "Admin")
+        if (role != "admin")
         {
             query = query.Where(t => t.UserId == userId);
         }
