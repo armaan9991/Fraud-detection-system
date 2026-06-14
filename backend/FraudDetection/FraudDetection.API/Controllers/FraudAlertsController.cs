@@ -10,7 +10,7 @@ namespace FraudDetection.API.Controllers;
 [ApiController]
 [EnableRateLimiting("api")]
 [Route("api/[controller]")]
-[Authorize(Roles ="Admin")]
+[Authorize(Roles ="admin")]
 public class FraudAlertController : ControllerBase
 {
     private readonly IFraudAlertService _fraudAlert;
