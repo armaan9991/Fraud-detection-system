@@ -5,6 +5,7 @@ using FraudDetection.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Net.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Models;
@@ -72,7 +73,11 @@ builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IFraudAlertService, FraudAlertService>();
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IAdminService,AdminService>();
-builder.Services.AddHttpClient<IMLPredictionService,MLPredictionService>();
+builder.Services.AddHttpClient<IMLPredictionService,MLPredictionService>(client =>
+    {
+        client.Timeout =  TimeSpan.FromSeconds(5);
+    }
+);
 builder.Services.AddScoped<IAuditLogService,AuditLogService>();
 builder.Services.AddScoped<ICacheService,CacheService>();
 builder.Services.AddScoped<IRefreshTokenCleanupJob,RefreshTokenCleanupJob>();
