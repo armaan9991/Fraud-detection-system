@@ -70,7 +70,10 @@ public class AuthService : IAuthService
 
         try
         {
+            Console.WriteLine("Sending email!");
             _ = Task.Run(() => _emailService.SendEmailAsync(user.Email,"Registration",emailbody));
+            Console.WriteLine("Sending email!");
+
         }
         catch(Exception e)
         {

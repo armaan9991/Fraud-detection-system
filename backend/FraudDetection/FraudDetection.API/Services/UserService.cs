@@ -107,7 +107,10 @@ public class UserService : IUserService
      
         try
         {
-            _ = Task.Run(() => _emailService.SendEmailAsync(user.Email,"Registration",emailbody));
+            Console.WriteLine("Sending email!");
+            _ = Task.Run(async () => await _emailService.SendEmailAsync(user.Email,"Registration",emailbody));
+            Console.WriteLine("Sent email!");
+
         }
         catch(Exception e)
         {
