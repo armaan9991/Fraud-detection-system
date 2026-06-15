@@ -51,22 +51,33 @@ public class AuthService : IAuthService
         
         await _context.SaveChangesAsync();
         var emailbody =$"Hello {user.Name} \n Thankyou for registering .\n  Always ready to detect fraud transaction.\n Receive Live notifications and tracking of transactions. \n";
-        
-    //    _ = Task.Run(async () =>
-    //     {
+
+        //    _ = Task.Run(async () =>
+        // //     {
+        //     try
+        //     {
+        //         await _emailService.SendEmailAsync(user.Email, "Created New User", emailbody);
+        //         Console.Write("email sent!");
+        //     }
+        //         catch (Exception e)
+        //     {       
+        //         Console.WriteLine("EMAIL FAILED: " + e.Message);    
+        //         Console.WriteLine("STACK: " + e.StackTrace);
+        //         await _auditLogService.CreateLogAsync(user.UserId,"Failed to register User!","User",user.UserId,"failed to send user!!");
+        //     }   
+        // }
+        // );
+
         try
         {
-            await _emailService.SendEmailAsync(user.Email, "Created New User", emailbody);
-            Console.Write("email sent!");
+            _ = Task.Run(() => _emailService.SendEmailAsync(user.Email,"Registration",emailbody));
         }
-            catch (Exception e)
-        {       
-            Console.WriteLine("EMAIL FAILED: " + e.Message);    
-            Console.WriteLine("STACK: " + e.StackTrace);
-            await _auditLogService.CreateLogAsync(user.UserId,"Failed to register User!","User",user.UserId,"failed to send user!!");
-        }   
-    // }
-    // );
+        catch(Exception e)
+        {
+            Console.Write(e+" failed to register user.");
+            await _auditLogService.CreateLogAsync(user.UserId,"Failed to send user email","User",user.UserId,"User Saved but failed to send email");
+
+        }
 
         await _auditLogService.CreateLogAsync(user.UserId, "registered user","user",null,"created new user!");
         string Accesstoken = GenerateJwtToken(user);

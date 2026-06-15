@@ -75,24 +75,24 @@ public class TransactionService : ITransactionService
         {
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , transaction.Status, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
             var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n";
-            //  try{
-            //     // await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
-            //     _ = Task.Run(() => _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody));
-            //  }
-            //  catch (Exception e)
-            //     {
-            //         Console.Write(e+" failed to send email.");
-            //        await _auditLogService.CreateLogAsync(user.UserId,"Failed email","User",user.UserId,"Transation Saved but failed to send email");
-            //     }
-            try
-            {
-                 await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
-            }
-            catch(Exception e)
-            {
-                Console.Write(e+" failed to send email.");
-                await _auditLogService.CreateLogAsync(user.UserId,"Failed email","User",user.UserId,"Transation Saved but failed to send email");
-            }
+             try{
+                // await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
+                _ = Task.Run(() => _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody));
+             }
+             catch (Exception e)
+                {
+                    Console.Write(e+" failed to send email.");
+                   await _auditLogService.CreateLogAsync(user.UserId,"Failed email","User",user.UserId,"Transation Saved but failed to send email");
+                }
+            // try
+            // {
+            //      await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
+            // }
+            // catch(Exception e)
+            // {
+            //     Console.Write(e+" failed to send email.");
+            //     await _auditLogService.CreateLogAsync(user.UserId,"Failed email","User",user.UserId,"Transation Saved but failed to send email");
+            // }
 
         }
         return MapToTransactionResponseDto(transaction);
