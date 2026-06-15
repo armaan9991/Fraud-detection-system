@@ -17,13 +17,15 @@ public class AuthService : IAuthService
     private readonly IConfiguration _configuration;
     private readonly IUserService _UserService;
     private readonly IAuditLogService _auditLogService;
+    private readonly IEmailService _emailService;
     
-    public AuthService(ApplicationDbContext context,IUserService userService,IConfiguration configuration , IAuditLogService auditLogService)
+    public AuthService(ApplicationDbContext context,IUserService userService,IConfiguration configuration , IAuditLogService auditLogService,IEmailService emailService)
     {
         _context= context;
         _configuration = configuration;
         _UserService =userService;
         _auditLogService = auditLogService;
+        _emailService = emailService;
     }
 
     public async Task<AuthResponseDto?> RegisterAsync(RegisterDto dto)
@@ -48,7 +50,19 @@ public class AuthService : IAuthService
         _context.Users.Add(user);
         
         await _context.SaveChangesAsync();
-        
+        var emailbody =$"Hello {user.Name} \n Thankyou for registering .\n  Always ready to detect fraud transaction.\n Receive Live notifications and tracking of transactions. \n";
+        try
+        {
+            _=Task.Run(() => _emailService.SendEmailAsync(user.Email,"Created New User",emailbody));
+            
+        }
+        catch(Exception e)
+        {
+            Console.Write(e+" failed to send email.");
+            await _auditLogService.CreateLogAsync(user.UserId, "failed to register","User", user.UserId,"failed to save user");
+            // await _auditLogService.CreateLogAsync(user.UserId,"Failed email","User",user.UserId,"Transation Saved but failed to send email");
+
+        }
         await _auditLogService.CreateLogAsync(user.UserId, "registered user","user",null,"created new user!");
         string Accesstoken = GenerateJwtToken(user);
 
