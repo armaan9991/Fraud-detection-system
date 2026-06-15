@@ -68,19 +68,17 @@ public class AuthService : IAuthService
         // }
         // );
 
-        try
-        {
-            Console.WriteLine("Sending email!");
-            _ = Task.Run(() => _emailService.SendEmailAsync(user.Email,"Registration",emailbody));
-            Console.WriteLine("Sending email!");
-
-        }
-        catch(Exception e)
-        {
-            Console.Write(e+" failed to register user.");
-            await _auditLogService.CreateLogAsync(user.UserId,"Failed to send user email","User",user.UserId,"User Saved but failed to send email");
-
-        }
+       _ = Task.Run(async () =>
+{
+    try
+    {
+        await _emailService.SendEmailAsync(user.Email, "Fraud Alert", emailbody);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine("EMAIL FAILED: " + e.Message);
+    }
+});
 
         await _auditLogService.CreateLogAsync(user.UserId, "registered user","user",null,"created new user!");
         string Accesstoken = GenerateJwtToken(user);

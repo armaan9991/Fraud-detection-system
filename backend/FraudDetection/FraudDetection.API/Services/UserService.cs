@@ -105,19 +105,18 @@ public class UserService : IUserService
         var emailbody =$"Hello {user.Name} \n Thankyou for registering .\n  Always ready to detect fraud transaction.\n Receive Live notifications and tracking of transactions. \n";
     
      
-        try
-        {
-            Console.WriteLine("Sending email!");
-            _ = Task.Run(async () => await _emailService.SendEmailAsync(user.Email,"Registration",emailbody));
-            Console.WriteLine("Sent email!");
+        _ = Task.Run(async () =>
+{
+    try
+    {
+        await _emailService.SendEmailAsync(user.Email, "Fraud Alert", emailbody);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine("EMAIL FAILED: " + e.Message);
+    }
+});
 
-        }
-        catch(Exception e)
-        {
-            Console.Write(e+" failed to register user.");
-            await _auditLogService.CreateLogAsync(user.UserId,"Failed to send user email","User",user.UserId,"User Saved but failed to send email");
-
-        }
 
         await _auditLogService.CreateLogAsync(user.UserId, "Created new user", "user",null , $"{dto.Name} { dto.Email} of new user");
          
