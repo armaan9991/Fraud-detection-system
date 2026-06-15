@@ -10,11 +10,13 @@ public class UserService : IUserService
 {
     private readonly ApplicationDbContext _context;
     private readonly IAuditLogService _auditLogService;
+    private readonly IEmailService _emailService;
 
-    public UserService(ApplicationDbContext context, IAuditLogService auditLogService)
+    public UserService(ApplicationDbContext context, IAuditLogService auditLogService,IEmailService emailService)
     {
         _context = context;
         _auditLogService = auditLogService;
+        _emailService = emailService;
     }
 
     public async Task<PagedResult<UserResponseDto>> GetAllUsersAsync(UserFilterDto filterDto,int page, int pageSize)
@@ -99,6 +101,15 @@ public class UserService : IUserService
         _context.Users.Add(user);
         
         await _context.SaveChangesAsync();
+        var emailbody =$"Hello {user.Name} \n Thankyou for registering .\n  Always ready to detect fraud transaction.\n Receive Live notifications and tracking of transactions. \n";
+        try
+        {
+            _=Task.Run(() => _emailService.SendEmailAsync(user.Email,"Created New User",emailbody));
+        }
+        catch(Exception e)
+        {
+            Console.Write(e+" failed to send email.");
+        }
         await _auditLogService.CreateLogAsync(user.UserId, "Created new user", "user",null , $"{dto.Name} { dto.Email} of new user");
          
         return new UserResponseDto
