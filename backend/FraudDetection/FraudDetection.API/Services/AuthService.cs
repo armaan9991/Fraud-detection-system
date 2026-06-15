@@ -59,9 +59,11 @@ public class AuthService : IAuthService
         await _emailService.SendEmailAsync(user.Email, "Created New User", emailbody);
         }
         catch (Exception e)
-        {   
-        Console.WriteLine(e + " failed to send email.");
-        }
+    {       
+    Console.WriteLine("EMAIL FAILED: " + e.Message);
+    Console.WriteLine("STACK: " + e.StackTrace);
+    }   
+
     });
 
         await _auditLogService.CreateLogAsync(user.UserId, "registered user","user",null,"created new user!");
