@@ -51,18 +51,19 @@ public class AuthService : IAuthService
         
         await _context.SaveChangesAsync();
         var emailbody =$"Hello {user.Name} \n Thankyou for registering .\n  Always ready to detect fraud transaction.\n Receive Live notifications and tracking of transactions. \n";
-        try
+        
+       _ = Task.Run(async () =>
+    {
+     try
         {
-            await _emailService.SendEmailAsync(user.Email,"Created New User",emailbody);
-            
+        await _emailService.SendEmailAsync(user.Email, "Created New User", emailbody);
         }
-        catch(Exception e)
-        {
-            Console.Write(e+" failed to send email.");
-            await _auditLogService.CreateLogAsync(user.UserId, "failed to register","User", user.UserId,"failed to save user");
-            // await _auditLogService.CreateLogAsync(user.UserId,"Failed email","User",user.UserId,"Transation Saved but failed to send email");
+        catch (Exception e)
+        {   
+        Console.WriteLine(e + " failed to send email.");
+        }
+    });
 
-        }
         await _auditLogService.CreateLogAsync(user.UserId, "registered user","user",null,"created new user!");
         string Accesstoken = GenerateJwtToken(user);
 
