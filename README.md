@@ -110,7 +110,7 @@ GitHub: https://github.com/armaan9991/Fraud-detection-system
 ## Future Improvements
 
 * Enhanced ML model trained on larger real-world datasets
-* Improved email notification infrastructure
+* Improved email notification infrastructure              (DONE)
 * Monitoring and observability dashboards
 * CI/CD automation
 * Integration testing coverage
