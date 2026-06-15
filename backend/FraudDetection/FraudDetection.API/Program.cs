@@ -152,13 +152,15 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
     policy =>
     {
-        policy.WithOrigins("http://localhost:5173",
-            builder.Configuration["Frontend:Url"] ?? "http://localhost:5173"
-            )
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+        policy.SetIsOriginAllowed(origin =>
+            origin == "http://localhost:5173" ||
+            origin.EndsWith(".vercel.app")
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
+
 
 
 var app = builder.Build();
