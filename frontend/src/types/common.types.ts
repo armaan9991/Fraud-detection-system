@@ -59,7 +59,7 @@ export interface AdminStats{
     totalTransaction : number;
     totalFraudAlerts : number;
     totalTransactionAmount: number;
-    AverageFraudScore : number;
+    averageFraudScore : number;
     transactionByStatus:Record<string, number>;
     alertRiskLevel : Record<string,number>;
 }

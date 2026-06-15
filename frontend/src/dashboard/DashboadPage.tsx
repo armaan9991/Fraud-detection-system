@@ -150,7 +150,7 @@ function AdminDashboard() {
           <div className={`${styles.dashboardStatIconArea} ${styles.dashboardStatIconYellow}`}>📊</div>
           <div className={styles.dashboardStatBody}>
             <span className={styles.dashboardStatLabel}>Avg Fraud Score</span>
-            <span className={styles.dashboardStatValue}>{(stats?.AverageFraudScore ?? 0).toFixed(1)}</span>
+            <span className={styles.dashboardStatValue}>{(stats?.averageFraudScore ?? 0).toFixed(1)}</span>
             <span className={styles.dashboardStatFooter}>out of 100</span>
           </div>
         </div>
