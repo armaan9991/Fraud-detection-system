@@ -147,6 +147,7 @@ builder.Services.AddHangfire(config => config.SetDataCompatibilityLevel(Compatib
 // start hangfire server!
 builder.Services.AddHangfireServer();
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
