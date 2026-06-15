@@ -17,7 +17,7 @@ public class EmailService : IEmailService
 
         email.From.Add(new MailboxAddress(
                     _config["EmailSettings:SenderName"],
-                    _config["EmailSettings:SenderEmail"]
+                    _config["EmailSettings:Username"]
         ));
 
         email.To.Add(MailboxAddress.Parse(toEmail));

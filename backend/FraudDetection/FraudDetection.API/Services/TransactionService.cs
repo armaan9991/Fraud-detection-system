@@ -2,7 +2,7 @@ using FraudDetection.API.DTOs;
 using FraudDetection.API.Data;
 using FraudDetection.API.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Net;
+// using Microsoft.Net;
 
 namespace FraudDetection.API.Services;
 
@@ -76,7 +76,8 @@ public class TransactionService : ITransactionService
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , transaction.Status, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
             var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n";
          try{
-            await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
+            // await _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody);
+            _ = Task.Run(() => _emailService.SendEmailAsync(user.Email,"Fraud Alert",emailbody));
          }
          catch (Exception e)
             {
