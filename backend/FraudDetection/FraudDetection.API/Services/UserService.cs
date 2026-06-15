@@ -109,6 +109,9 @@ public class UserService : IUserService
         catch(Exception e)
         {
             Console.Write(e+" failed to send email.");
+            await _auditLogService.CreateLogAsync(user.UserId, "failed to register","User", user.UserId,"failed to save user");
+            // await _auditLogService.CreateLogAsync(user.UserId,"Failed email","User",user.UserId,"Transation Saved but failed to send email");
+
         }
         await _auditLogService.CreateLogAsync(user.UserId, "Created new user", "user",null , $"{dto.Name} { dto.Email} of new user");
          
