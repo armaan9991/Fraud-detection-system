@@ -105,7 +105,7 @@ public class UserService : IUserService
         var emailbody =$"Hello {user.Name} \n Thankyou for registering .\n  Always ready to detect fraud transaction.\n Receive Live notifications and tracking of transactions. \n";
         try
         {
-            _=Task.Run(() => _emailService.SendEmailAsync(user.Email,"Created New User",emailbody));
+           await _emailService.SendEmailAsync(user.Email,"Created New User",emailbody);
             
         }
         catch(Exception e)
