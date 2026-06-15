@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(git -C c:/AG-DEV/Fraud-detection-system log --oneline)",
-      "Bash(git -C c:/AG-DEV/Fraud-detection-system branch -a)"
-    ]
-  }
-}
