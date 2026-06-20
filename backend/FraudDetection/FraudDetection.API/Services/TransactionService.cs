@@ -64,15 +64,16 @@ public class TransactionService : ITransactionService
         if (prediction != null)
         {
             transaction.FraudScore = (int)(prediction.FraudProbability * 100);
-            transaction.Status = prediction.Prediction == 1 ? "HIGH" : GetRiskLevel(fraud_score);
+            transaction.Status = GetRiskLevel(transaction.FraudScore);
         }
-
          _context.Transactions.Add(transaction);
         await _context.SaveChangesAsync();
         
         await _auditLogService.CreateLogAsync(transaction.UserId,"Created Transaction", "transaction", transaction.TransactionId, $"Transaction of {transaction.Amount} created!");
+        
         if (transaction.FraudScore >= 60)
         {
+
            await _IFraudAlertService.CreateAutomaticAlertAsync(transaction.TransactionId , transaction.Status, Reasons.Count>0? string.Join(";", Reasons) :"suspicious reasons");
             var emailbody =$"Fraud Alert \n hello {user.Name} \n a suspicious transacion is made \n  Amount:{transaction.Amount}\n Currency : {transaction.Currency} \n Country: {transaction.Country} \nRisk Level:{transaction.Status}\n Fraud Score: {transaction.FraudScore} \n Time {transaction.TransactionTime:yyyy-MM-dd HH:mm} UTC \n";
             _ = Task.Run(async () =>
