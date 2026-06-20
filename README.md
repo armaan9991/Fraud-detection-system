@@ -12,6 +12,12 @@ GitHub: https://github.com/armaan9991/Fraud-detection-system
 
 ---
 
+## Problem Statement
+
+Financial fraud detection systems must identify suspicious transactions quickly while minimizing false positives. This project combines rule-based analysis and machine learning predictions to provide explainable fraud scoring, automated alerts, and administrative oversight for transaction monitoring.
+
+---
+
 ## Architecture
 
 * Frontend: React + TypeScript (Vercel)
@@ -41,6 +47,7 @@ GitHub: https://github.com/armaan9991/Fraud-detection-system
 * Automated Fraud Alerts
 * Transaction Monitoring
 * Risk-Level Classification
+* Email Notifications for High-Risk Transactions
 
 ### Administration
 
@@ -92,7 +99,7 @@ GitHub: https://github.com/armaan9991/Fraud-detection-system
 2. The rule engine evaluates transaction risk factors.
 3. The ML service generates a fraud probability score.
 4. Results are combined into a final fraud score.
-5. High-risk transactions automatically generate fraud alerts.
+5. High-risk transactions automatically generate fraud alerts and email notifications.
 6. Audit logs and reports are created for monitoring and analysis.
 
 ---
@@ -103,19 +110,49 @@ GitHub: https://github.com/armaan9991/Fraud-detection-system
 * Backend API deployed on Render
 * ML Microservice deployed on Render
 * PostgreSQL hosted on Neon
+* Redis caching enabled
 * Dockerized backend deployment
+
+---
+
+## Monitoring & Operations
+
+* Structured application logging
+* Centralized error handling middleware
+* Hangfire Dashboard for background job monitoring
+* Health monitoring through Render deployments
+* PostgreSQL and infrastructure monitoring through Neon and Render dashboards
+
+---
+
+## Project Status
+
+Fully deployed across Vercel, Render, and Neon
+
+End-to-end transaction processing workflow
+
+JWT authentication and refresh token support
+
+Rule-based and machine learning fraud detection
+
+Automated fraud alert generation and email notifications
+
+Background job processing with Hangfire
+
+Redis caching integration
+
+PostgreSQL persistence with Entity Framework Core
+
+Production deployment and monitoring
 
 ---
 
 ## Future Improvements
 
-* Enhanced ML model trained on larger real-world datasets
-* Improved email notification infrastructure              (DONE)
-* Monitoring and observability dashboards
-* CI/CD automation
-* Integration testing coverage
-* Advanced fraud detection features
-* Performance optimization and scalability improvements
+* Improve the fraud detection model with larger and more representative datasets
+* Implement automated CI/CD testing pipelines with GitHub Actions
+* Expand integration and end-to-end test coverage
+* Explore advanced fraud detection techniques and feature engineering
 
 ---
 
@@ -123,15 +160,16 @@ GitHub: https://github.com/armaan9991/Fraud-detection-system
 
 This project provided hands-on experience with:
 
-* Full-stack application development
-* ASP.NET Core and Entity Framework Core
-* JWT authentication and authorization
-* Cloud deployment and infrastructure management
+* Full-stack application development using React and ASP.NET Core
+* Designing and building secure REST APIs
+* JWT authentication, refresh tokens, and role-based authorization
+* Cloud deployment across Vercel, Render, and Neon
 * Database migrations and PostgreSQL administration
 * Microservice communication between .NET and Python services
-* Redis caching and background job processing
-* Machine learning integration in production-style applications
+* Redis caching and Hangfire background job processing
+* Integrating machine learning models into production-style applications
 * Debugging, monitoring, and troubleshooting distributed systems
+* Managing environment variables, deployments, and infrastructure configuration
 
 ---
 
