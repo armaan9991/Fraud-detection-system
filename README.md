@@ -73,14 +73,10 @@ Financial fraud detection systems must identify suspicious transactions quickly 
 
 ### Frontend
 
-* React 19
+* React 
 * TypeScript
 * Vite
 * TailwindCSS
-* Zustand
-* TanStack Query
-* Axios
-* Recharts
 
 ### Machine Learning
 
